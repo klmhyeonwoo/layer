@@ -25,4 +25,5 @@ export const AUTH_COOKIE_OPTIONS = {
 
 export const LOCAL_STORAGE_KEYS = {
   utmParamsKey: "UTM_PARAMS",
+  recentSocialLoginType: "RECENT_SOCIAL_LOGIN_TYPE",
 } as const;

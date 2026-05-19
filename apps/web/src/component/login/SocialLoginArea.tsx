@@ -1,17 +1,21 @@
 import { css, Interpolation, Theme } from "@emotion/react";
 import Cookies from "js-cookie";
-import { HTMLAttributes, useEffect } from "react";
+import { HTMLAttributes, useEffect, useState } from "react";
 
 import { ButtonProvider } from "@/component/common/button";
+import { Tooltip } from "@/component/common/tip";
 import { SocialLoginButton } from "@/component/login/SocialLoginButton.tsx";
 import { usePostAppleLogin } from "@/hooks/api/login/usePostAppleToken.ts";
+import { SocialLoginKind } from "@/types/loginType";
 import { isMobile } from "@/utils/etc";
+import { getRecentSocialLoginType } from "@/utils/login/recentSocialLogin";
 
 export function SocialLoginArea({
   onlyContainerStyle,
   ...props
 }: Omit<HTMLAttributes<HTMLDivElement>, "type"> & { onlyContainerStyle?: Interpolation<Theme> }) {
   const { mutate: postAppleLogin, isPending } = usePostAppleLogin();
+  const [recentSocialLoginType, setRecentSocialLoginType] = useState<SocialLoginKind | null>(null);
 
   window.AppleID.auth.init({
     clientId: `${import.meta.env.VITE_APPLE_CLIENT_ID}`,
@@ -26,6 +30,8 @@ export function SocialLoginArea({
     if (typeof window.Kakao !== "undefined" && !window.Kakao.isInitialized()) {
       window.Kakao.init(import.meta.env.VITE_KAKAO_KEY);
     }
+
+    setRecentSocialLoginType(getRecentSocialLoginType());
   }, []);
 
   const kakaoLoginRedirection = () => {
@@ -73,6 +79,21 @@ export function SocialLoginArea({
     window.location.href = link;
   };
 
+  const renderSocialLoginButton = (type: SocialLoginKind, handler: () => void) => {
+    const button = <SocialLoginButton type={type} handler={handler} />;
+
+    if (recentSocialLoginType !== type) {
+      return button;
+    }
+
+    return (
+      <Tooltip>
+        <Tooltip.Trigger>{button}</Tooltip.Trigger>
+        <Tooltip.Content message="최근 로그인한 방법이에요!" placement="top-start" offsetY={15} hideOnClick={true} autoHide={false} />
+      </Tooltip>
+    );
+  };
+
   return (
     <div
       {...props}
@@ -81,9 +102,9 @@ export function SocialLoginArea({
       `}
     >
       <ButtonProvider onlyContainerStyle={onlyContainerStyle} isProgress={isPending}>
-        <SocialLoginButton type="kakao" handler={kakaoLogin} />
-        <SocialLoginButton type="apple" handler={appleLogin} />
-        <SocialLoginButton type="google" handler={googleLogin} />
+        {renderSocialLoginButton("kakao", kakaoLogin)}
+        {renderSocialLoginButton("apple", appleLogin)}
+        {renderSocialLoginButton("google", googleLogin)}
       </ButtonProvider>
     </div>
   );
