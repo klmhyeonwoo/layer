@@ -16,7 +16,7 @@ import { encryptId } from "@/utils/space/cryptoKey";
 type InviteMemberModalProps = {
   isOpen: boolean;
   onClose: () => void;
-  spaceId: string;
+  spaceId: number;
 };
 
 export function InviteMemberModal({ isOpen, onClose, spaceId }: InviteMemberModalProps) {

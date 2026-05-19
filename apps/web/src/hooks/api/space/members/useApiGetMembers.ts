@@ -4,13 +4,13 @@ import { api } from "@/api";
 
 type MembersResponse = {
   avatar: string | null;
-  id: string;
+  id: number;
   isLeader: boolean;
   name: string;
 };
 
-export const useApiGetMemers = (spaceId: string) => {
-  const getMembers = async (spaceId: string) => {
+export const useApiGetMemers = (spaceId: number) => {
+  const getMembers = async (spaceId: number) => {
     const res = await api.get<MembersResponse[]>(`/api/space/members/${spaceId}`);
     return res.data;
   };

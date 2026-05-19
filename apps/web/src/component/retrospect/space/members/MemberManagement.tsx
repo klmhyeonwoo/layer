@@ -17,7 +17,7 @@ import { useApiOptionsGetSpaceInfo } from "@/hooks/api/space/useApiOptionsGetSpa
 import { useQueries } from "@tanstack/react-query";
 import { InviteMemberModal } from "@/component/common/Modal/Member/InviteMemberModal";
 
-export default function MemberManagement({ spaceId }: { spaceId: string }) {
+export default function MemberManagement({ spaceId }: { spaceId: number }) {
   const [{ data: spaceInfo }] = useQueries({
     queries: [useApiOptionsGetSpaceInfo(spaceId)],
   });
@@ -90,7 +90,7 @@ export default function MemberManagement({ spaceId }: { spaceId: string }) {
     changeLeader(
       {
         spaceId,
-        memberId: String(selectedLeaderId),
+        memberId: selectedLeaderId as number,
       },
       {
         onSuccess: () => {
@@ -113,7 +113,7 @@ export default function MemberManagement({ spaceId }: { spaceId: string }) {
     kickMember(
       {
         spaceId,
-        memberId: String(selectedDeleteMemberId),
+        memberId: selectedDeleteMemberId as number,
       },
       {
         onSuccess: () => {

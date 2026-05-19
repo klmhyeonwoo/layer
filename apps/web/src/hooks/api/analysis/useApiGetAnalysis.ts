@@ -31,7 +31,7 @@ export type AnalysisType = {
   individualAnalyze: IndividualAnalyzeType;
 };
 
-export const useApiGetAnalysis = ({ spaceId, retrospectId }: { spaceId: string; retrospectId: string }) => {
+export const useApiGetAnalysis = ({ spaceId, retrospectId }: { spaceId: number; retrospectId: number }) => {
   const { track } = useMixpanel();
 
   const getAnalysis = () => {
@@ -42,8 +42,8 @@ export const useApiGetAnalysis = ({ spaceId, retrospectId }: { spaceId: string; 
         throw error;
       });
     track("RESULT_ANALYSIS_VIEW", {
-      retrospectId: +retrospectId,
-      spaceId: +spaceId,
+      retrospectId,
+      spaceId,
     });
     return res;
   };

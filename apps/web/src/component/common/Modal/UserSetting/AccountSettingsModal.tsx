@@ -101,7 +101,7 @@ export function AccountSettingsModal({ isOpen, onClose }: AccountSettingsModalPr
       const booleans = [deleteReasons.notUseful, deleteReasons.uncomfortable, deleteReasons.other];
 
       deleteUser({
-        memberId: memberId,
+        memberId: Number(memberId),
         booleans: booleans,
         description: feedbackInput.value,
       });

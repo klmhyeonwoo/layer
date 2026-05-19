@@ -17,7 +17,7 @@ export type PersonalActionItemListType = {
   }[];
 };
 
-export const useGetSpaceActionItemList = ({ spaceId }: { spaceId: string }) => {
+export const useGetSpaceActionItemList = ({ spaceId }: { spaceId: number }) => {
   const getActionItemList = () => {
     const res = api.get<PersonalActionItemListType>(`/api/action-item/space/${spaceId}`).then((res) => res.data);
     return res;

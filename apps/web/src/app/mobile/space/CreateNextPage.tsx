@@ -14,7 +14,7 @@ import Recommend from "@/assets/lottie/space/recommend.json";
 
 export function CreateNextPage() {
   const navigate = useNavigate();
-  const { spaceId } = useLocation().state as { spaceId: string };
+  const { spaceId } = useLocation().state as { spaceId: number };
   const { data } = useApiGetSpace(spaceId);
 
   if (!data) return null;
@@ -59,7 +59,7 @@ export function CreateNextPage() {
         <ButtonProvider.Primary onClick={() => navigate(PATHS.retrospectRecommend(), { state: { spaceId } })}>
           회고 템플릿 추천 받기
         </ButtonProvider.Primary>
-        <div css={laterTextStyles} onClick={() => navigate(PATHS.spaceDetail(spaceId))}>
+        <div css={laterTextStyles} onClick={() => navigate(PATHS.spaceDetail(`${spaceId}`))}>
           다음에 하기
         </div>
       </ButtonProvider>

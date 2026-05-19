@@ -9,10 +9,10 @@ import { createTemplateArr } from "@/utils/retrospect/createTemplateArr";
 import { useAtomValue } from "jotai";
 import { retrospectInitialState } from "@/store/retrospect/retrospectInitial";
 
-export function RecommendSearch({ newTempTemplateId }: { newTempTemplateId: string }) {
+export function RecommendSearch({ newTempTemplateId }: { newTempTemplateId: number }) {
   const { spaceId } = useAtomValue(retrospectInitialState);
-  const TemplateArr = createTemplateArr(newTempTemplateId as unknown as TemplateKey);
-  const { data, isLoading } = useApiGetSpace(spaceId);
+  const TemplateArr = createTemplateArr(newTempTemplateId as TemplateKey);
+  const { data, isLoading } = useApiGetSpace(spaceId ?? 0, false, { enabled: spaceId != null });
 
   if (isLoading) return <LoadingModal />;
 
@@ -23,7 +23,7 @@ export function RecommendSearch({ newTempTemplateId }: { newTempTemplateId: stri
       <Header title={`${data?.name}${particle} 어울리는\n회고 템플릿을 찾는중...`} />
       <Spacing size={13} />
       <div>
-        <CardCarousel templateId={newTempTemplateId} spaceId={spaceId} templateArr={TemplateArr} />
+        <CardCarousel templateId={newTempTemplateId} spaceId={spaceId ?? undefined} templateArr={TemplateArr} />
       </div>
     </>
   );

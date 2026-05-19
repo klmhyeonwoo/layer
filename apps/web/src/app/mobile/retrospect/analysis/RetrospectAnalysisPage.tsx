@@ -27,10 +27,10 @@ export const RetrospectAnalysisPage = () => {
   const { tabs, curTab, selectTab } = useTabs(tabNames);
   const selectedTab = tabMappings[curTab];
   const queryParams = new URLSearchParams(location.search);
-  const spaceId = queryParams.get("spaceId") as string;
-  const retrospectId = queryParams.get("retrospectId") as string;
+  const spaceId = Number(queryParams.get("spaceId"));
+  const retrospectId = Number(queryParams.get("retrospectId"));
   const { data, isLoading } = useGetAnalysisAnswer({ spaceId: spaceId, retrospectId: retrospectId });
-  const { data: spaceInfo } = useApiGetSpacePrivate(Number(spaceId));
+  const { data: spaceInfo } = useApiGetSpacePrivate(spaceId);
   let pendingPeopleCnt = 0;
 
   if (spaceInfo && data) {

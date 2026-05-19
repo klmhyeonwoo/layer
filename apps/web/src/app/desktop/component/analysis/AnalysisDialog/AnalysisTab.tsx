@@ -21,14 +21,14 @@ type AnalysisTabProps = {
 export default function AnalysisTab({ analysisData }: AnalysisTabProps) {
   const [searchParams] = useSearchParams();
 
-  const spaceId = searchParams.get("spaceId");
-  const retrospectId = searchParams.get("retrospectId");
+  const spaceId = Number(searchParams.get("spaceId"));
+  const retrospectId = Number(searchParams.get("retrospectId"));
 
   const { hasAIAnalyzed } = analysisData;
 
   const { data: analysisRetrospectsData, isPending: isPendingAnalysisData } = useApiGetAnalysis({
-    spaceId: spaceId || "",
-    retrospectId: retrospectId || "",
+    spaceId,
+    retrospectId,
   });
 
   const [selectedView, setSelectedView] = useState<ViewType>("개인");

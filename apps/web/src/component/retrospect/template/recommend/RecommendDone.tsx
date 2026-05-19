@@ -13,7 +13,7 @@ import { useGetSimpleTemplateInfo } from "@/hooks/api/template/useGetSimpleTempl
 import { DefaultLayout } from "@/layout/DefaultLayout";
 
 export function RecommendDone() {
-  const { templateId, spaceId } = useLocation().state as { templateId: string; spaceId: string };
+  const { templateId, spaceId } = useLocation().state as { templateId: number; spaceId: number };
 
   const navigate = useNavigate();
   const { data: templateData, isLoading } = useGetSimpleTemplateInfo(templateId);
@@ -31,7 +31,7 @@ export function RecommendDone() {
           css={css`
             cursor: pointer;
           `}
-          onClick={() => navigate(PATHS.spaceDetail(spaceId))}
+          onClick={() => navigate(PATHS.spaceDetail(`${spaceId}`))}
         />
       }
     >
@@ -62,7 +62,7 @@ export function RecommendDone() {
             gap: 0.8rem;
           `}
         >
-          <ButtonProvider.Gray onClick={() => navigate(PATHS.template(spaceId), { state: { readOnly: false } })}>템플릿 변경</ButtonProvider.Gray>
+          <ButtonProvider.Gray onClick={() => navigate(PATHS.template(`${spaceId}`), { state: { readOnly: false } })}>템플릿 변경</ButtonProvider.Gray>
           <ButtonProvider.Primary
             onClick={() =>
               navigate(PATHS.retrospectCreate(), {

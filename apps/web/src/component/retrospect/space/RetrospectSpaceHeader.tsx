@@ -4,7 +4,7 @@ import { Typography } from "@/component/common/typography";
 import SpaceManageToggleMenu from "@/component/space/edit/SpaceManageToggleMenu";
 import { useApiOptionsGetSpaceInfo } from "@/hooks/api/space/useApiOptionsGetSpaceInfo";
 import { useFunnelModal } from "@/hooks/useFunnelModal";
-import { useRequiredParams } from "@/hooks/useRequiredParams";
+import { useRequiredNumberParams } from "@/hooks/useRequiredParams";
 import { retrospectInitialState } from "@/store/retrospect/retrospectInitial";
 import { currentSpaceState } from "@/store/space/spaceAtom";
 import { DESIGN_TOKEN_COLOR } from "@/style/designTokens";
@@ -20,7 +20,7 @@ export default function RetrospectSpaceHeader() {
   const { openFunnelModal } = useFunnelModal();
 
   const currentSpace = useAtomValue(currentSpaceState);
-  const { spaceId } = useRequiredParams<{ spaceId: string }>();
+  const { spaceId } = useRequiredNumberParams<{ spaceId: number }>();
   const [_, setSearchParams] = useSearchParams();
 
   const setRetrospectValue = useSetAtom(retrospectInitialState);
@@ -36,7 +36,7 @@ export default function RetrospectSpaceHeader() {
     if (spaceInfo?.formId) {
       setRetrospectValue((prev) => ({
         ...prev,
-        templateId: String(spaceInfo.formId),
+        templateId: spaceInfo.formId,
       }));
 
       openFunnelModal({

@@ -21,7 +21,7 @@ export default function ActionItemsWrapper() {
 
   // * 실행목표 리스트 요청
   const { data: myActionItems, isPending: isMyActionItemsPending } = useGetActionItemList({
-    memberId: memberId as string,
+    memberId: Number(memberId),
     options: {
       enabled: !!memberId,
       select: (data) => data.actionItems,

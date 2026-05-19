@@ -16,7 +16,7 @@ export default function SpaceManageToggleMenu({
   iconSize = 1.8,
   iconColor = "gray900",
 }: {
-  spaceId: string;
+  spaceId: number;
   isLeader: boolean;
   iconSize?: number | string;
   iconColor?: keyof typeof DESIGN_TOKEN_COLOR;
@@ -24,7 +24,7 @@ export default function SpaceManageToggleMenu({
   const { isShowMenu, showMenu, hideMenu } = useToggleMenu();
   const { open: openDesktopModal } = useDesktopBasicModal();
   const { open: openAlertModal } = useModal();
-  const { onSubmitDeleteSpace, initializeSearchQuery } = useModifySpace({ id: spaceId.toString() });
+  const { onSubmitDeleteSpace, initializeSearchQuery } = useModifySpace({ id: spaceId });
   const [_, setSearchParams] = useSearchParams();
   const { mutate: leaveSpace } = useApiLeaveSpace();
 
@@ -43,7 +43,7 @@ export default function SpaceManageToggleMenu({
   const handleEditSpace = () => {
     setSearchParams((prev) => ({
       ...Object.fromEntries(prev.entries()),
-      [MODIFY_SPACE_ID_QUERY_KEY]: spaceId,
+      [MODIFY_SPACE_ID_QUERY_KEY]: `${spaceId}`,
       [MODIFY_SPACE_METHOD_QUERY_KEY]: "edit",
     }));
     openDesktopModal({

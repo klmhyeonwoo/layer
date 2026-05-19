@@ -25,7 +25,7 @@ export const usePatchRetrospect = () => {
       toast.success("회고 정보가 수정되었어요!");
       await queryClient.invalidateQueries({
         // TODO: queryKey 타입 재정의 필요
-        queryKey: ["getRetrospects", variable.spaceId.toString()],
+        queryKey: ["getRetrospects", variable.spaceId],
       });
     },
     onError: () => {

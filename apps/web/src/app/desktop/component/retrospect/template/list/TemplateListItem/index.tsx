@@ -112,7 +112,7 @@ export function TemplateListItem({ id, title, tag, imageUrl }: DesktopTemplateLi
               // 기존 스페이스가 존재할 때, (회고 템플릿 별도 생성)
               setRetrospectValue((prev) => ({
                 ...prev,
-                tempTemplateId: String(id),
+                tempTemplateId: id,
                 saveTemplateId: true,
               }));
               openFunnelModal({

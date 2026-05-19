@@ -21,8 +21,8 @@ import { TemplateList } from "../list";
 function RecommendDone() {
   const setRetrospectValue = useSetAtom(retrospectInitialState);
   const { tempTemplateId, spaceId } = useAtomValue(retrospectInitialState);
-  const { data } = useApiGetSpace(spaceId);
-  const { data: templateData, isLoading } = useGetSimpleTemplateInfo(tempTemplateId);
+  const { data } = useApiGetSpace(spaceId ?? 0);
+  const { data: templateData, isLoading } = useGetSimpleTemplateInfo(tempTemplateId ?? 0);
   const { openFunnelModal } = useFunnelModal();
   const { openActionModal } = useActionModal();
   const branchLayout = useAtomValue(branchLayoutAtom);

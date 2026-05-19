@@ -22,7 +22,7 @@ interface RetrospectSectionProps {
   isPending: boolean;
   retrospects: Retrospect[];
   emptyMessage: string;
-  spaceId?: string | null;
+  spaceId?: number | null;
   needRetrospectAddButton?: boolean;
   enableScroll?: boolean;
 }
@@ -54,14 +54,14 @@ export default function RetrospectSection({
 
   const setRetrospectValue = useSetAtom(retrospectInitialState);
 
-  const { data: spaceInfo } = useQuery(useApiOptionsGetSpaceInfo(spaceId || undefined));
+  const { data: spaceInfo } = useQuery(useApiOptionsGetSpaceInfo(spaceId ?? undefined));
 
   // *회고 추가 함수
   const handleRetrospectCreate = () => {
     if (spaceInfo?.formId) {
       setRetrospectValue((prev) => ({
         ...prev,
-        templateId: String(spaceInfo.formId),
+        templateId: spaceInfo.formId,
       }));
 
       open({

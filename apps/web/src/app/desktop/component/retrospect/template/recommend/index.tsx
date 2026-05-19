@@ -50,7 +50,7 @@ export function TemplateRecommend() {
 
       setRetrospectValue((prev) => ({
         ...prev,
-        tempTemplateId: String(data.formId),
+        tempTemplateId: data.formId,
       }));
 
       track("TEMPLATE_RECOMMEND", {
@@ -64,7 +64,7 @@ export function TemplateRecommend() {
       openFunnelModal({
         title: "",
         step: "recommendTemplate",
-        contents: <RecommendSearch newTempTemplateId={String(data.formId)} />,
+        contents: <RecommendSearch newTempTemplateId={data.formId} />,
       });
     } catch (error) {
       console.log(error);

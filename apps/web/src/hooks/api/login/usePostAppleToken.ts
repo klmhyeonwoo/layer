@@ -11,6 +11,7 @@ import { useToast } from "@/hooks/useToast";
 import { useTestNavigate } from "@/lib/test-natigate";
 import { authAtom } from "@/store/auth/authAtom";
 import { AuthResponse } from "@/types/loginType";
+import { setRecentSocialLoginType } from "@/utils/login/recentSocialLogin";
 
 //FIXME -공통 에러 처리하기 (usePostSignIn)
 type ErrorType = {
@@ -50,6 +51,7 @@ export const usePostAppleLogin = () => {
     mutationFn: postAppleLogin,
     onSuccess: (data: AuthResponse) => {
       if (data) {
+        setRecentSocialLoginType("apple");
         Cookies.set(COOKIE_KEYS.memberId, data.memberId.toString(), AUTH_COOKIE_OPTIONS);
         Cookies.set(COOKIE_KEYS.accessToken, data.accessToken, ACCESS_TOKEN_COOKIE_OPTIONS);
         Cookies.set(COOKIE_KEYS.refreshToken, data.refreshToken, AUTH_COOKIE_OPTIONS);

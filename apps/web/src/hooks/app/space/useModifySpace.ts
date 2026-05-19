@@ -12,7 +12,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 interface ModifySpaceProps {
-  id: string;
+  id: number;
 }
 
 export const MODIFY_SPACE_ID_QUERY_KEY = "modifyTargetId";

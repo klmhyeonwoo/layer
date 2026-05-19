@@ -22,7 +22,7 @@ import { useApiLeaveSpace } from "@/hooks/api/space/useApiLeaveSpace";
 import { useApiOptionsGetSpaceInfo } from "@/hooks/api/space/useApiOptionsGetSpaceInfo";
 import { useBottomSheet } from "@/hooks/useBottomSheet";
 import { useModal } from "@/hooks/useModal";
-import { useRequiredParams } from "@/hooks/useRequiredParams";
+import { useRequiredNumberParams } from "@/hooks/useRequiredParams";
 import { DefaultLayout } from "@/layout/DefaultLayout";
 import { useTestNavigate } from "@/lib/test-natigate";
 import { DESIGN_TOKEN_COLOR } from "@/style/designTokens";
@@ -36,7 +36,7 @@ export function SpaceViewPage() {
   const navigate = useNavigate();
   const appNavigate = useTestNavigate();
   const memberId = Cookies.get(COOKIE_KEYS.memberId);
-  const { spaceId } = useRequiredParams<{ spaceId: string }>();
+  const { spaceId } = useRequiredNumberParams<{ spaceId: number }>();
   const { openBottomSheet, closeBottomSheet } = useBottomSheet();
   const { open } = useModal();
   const SHEET_ID = "createSpaceSheet";
@@ -64,7 +64,7 @@ export function SpaceViewPage() {
   }, [restrospectArr]);
 
   const isLoading = isLoadingRestrospects || isLoadingSpaceInfo || isLoadingTeamActionList;
-  const isLeader = memberId === String(spaceInfo?.leader.id);
+  const isLeader = Number(memberId) === spaceInfo?.leader.id;
 
   const handleDeleteRetrospect = (retrospectId: number) => {
     setProceedingRetrospects((prev) => prev.filter((item) => item.retrospectId !== retrospectId));
@@ -152,7 +152,7 @@ export function SpaceViewPage() {
         <ActionItemListView
           restrospectArr={restrospectArr ? restrospectArr : []}
           isPossibleMake={doneRetrospects.length === 0}
-          spaceId={spaceInfo?.id as string}
+          spaceId={spaceInfo?.id}
           teamActionList={teamActionList?.teamActionItemList || []}
           leaderId={spaceInfo?.leader.id}
         />

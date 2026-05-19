@@ -70,7 +70,7 @@ export function RetrospectCreate() {
 
           setRetrospectValue((prev) => ({
             ...prev,
-            tempTemplateId: "",
+            tempTemplateId: null,
             saveTemplateId: false,
           }));
 

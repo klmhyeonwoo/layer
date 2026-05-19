@@ -7,14 +7,14 @@ import { useToast } from "@/hooks/useToast";
 export const useApiDeleteRetrospect = () => {
   const { toast } = useToast();
 
-  const retrospectDelete = async (spaceId: string | undefined, retrospectId: string | undefined) => {
+  const retrospectDelete = async (spaceId: number | undefined, retrospectId: number | undefined) => {
     const response = await api.delete(`/space/${spaceId}/retrospect/${retrospectId}`);
     return response;
   };
 
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: ({ spaceId, retrospectId }: { spaceId: string | undefined; retrospectId: string | undefined }) =>
+    mutationFn: ({ spaceId, retrospectId }: { spaceId: number | undefined; retrospectId: number | undefined }) =>
       retrospectDelete(spaceId, retrospectId),
     onMutate: async (variables) => {
       await queryClient.cancelQueries({ queryKey: ["getRetrospects", variables.spaceId] });
@@ -22,7 +22,7 @@ export const useApiDeleteRetrospect = () => {
       queryClient.setQueryData(["getRetrospects", variables.spaceId], (old: RetrospectResponse) => {
         return {
           ...old,
-          retrospects: old?.retrospects?.filter((item) => item.retrospectId !== Number(variables.retrospectId)),
+          retrospects: old?.retrospects?.filter((item) => item.retrospectId !== variables.retrospectId),
         };
       });
       return { prevList };

@@ -25,7 +25,7 @@ import { PATHS } from "@layer/shared";
 type ActionItemListViewProps = {
   isPossibleMake: boolean;
   teamActionList: ActionItemType[];
-  spaceId: string | undefined;
+  spaceId: number | undefined;
   leaderId: number | undefined;
   restrospectArr: Retrospect[] | [];
 };
@@ -50,7 +50,7 @@ export function ActionItemListView({ isPossibleMake, teamActionList, spaceId, le
   const memberId = Cookies.get(COOKIE_KEYS.memberId);
   const [retrospect, setRetrospect] = useState("");
   const [retrospectId, setRetrospectId] = useState<number | undefined>(-1);
-  const isLeader = memberId === String(leaderId);
+  const isLeader = Number(memberId) === leaderId;
 
   const { value: actionItemValue, handleInputChange } = useInput();
   const { mutate } = useCreateActionItem();

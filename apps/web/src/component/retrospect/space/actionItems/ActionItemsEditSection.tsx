@@ -23,7 +23,7 @@ type ActionItem = {
 };
 
 type ActionItemsEditSectionProps = {
-  spaceId: string;
+  spaceId: number;
   retrospectId: number;
   todoList: ActionItem[];
   onClose: () => void;

@@ -9,7 +9,7 @@ import { DESIGN_TOKEN_COLOR } from "@/style/designTokens";
 import { PATHS } from "@layer/shared";
 
 type RightCompProps = {
-  spaceId: string;
+  spaceId: number;
   onDeleteClick: () => void;
   isTooltipVisible: boolean;
   onClickPlus: () => void;
@@ -34,7 +34,7 @@ export function SpaceAppBarRightComp({ spaceId, onDeleteClick, isTooltipVisible,
   const navigate = useNavigate();
 
   const handleModifyFun = () => {
-    navigate(PATHS.spaceEdit(spaceId) as string);
+    navigate(PATHS.spaceEdit(`${spaceId}`) as string);
     setIsBoxVisible((prev) => !prev);
   };
 

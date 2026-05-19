@@ -4,7 +4,7 @@ import { api } from "@/api";
 import { useToast } from "@/hooks/useToast";
 import { queryClient } from "@/lib/tanstack-query/queryClient";
 
-type closeRetrospectProps = { spaceId: string; retrospectId: number };
+type closeRetrospectProps = { spaceId: number; retrospectId: number };
 
 export const useApiCloseRetrospect = () => {
   const { toast } = useToast();
@@ -18,7 +18,7 @@ export const useApiCloseRetrospect = () => {
     onSuccess: async (_, variable) => {
       toast.success("회고 마감이 완료되었어요");
       await queryClient.invalidateQueries({
-        queryKey: ["getRetrospects", variable.spaceId.toString()],
+        queryKey: ["getRetrospects", variable.spaceId],
       });
     },
     onError: () => {

@@ -24,8 +24,8 @@ const SpaceOverview = forwardRef<HTMLDivElement, SpaceOverviewProps>(
       <div
         ref={ref}
         onClick={() => {
-          postSpacesClick(Number(id));
-          navigate(PATHS.spaceDetail(id));
+          postSpacesClick(id);
+          navigate(PATHS.spaceDetail(`${id}`));
         }}
         key={id}
         css={css`
