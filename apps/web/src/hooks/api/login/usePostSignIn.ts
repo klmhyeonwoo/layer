@@ -11,6 +11,7 @@ import { useToast } from "@/hooks/useToast";
 import { useTestNavigate } from "@/lib/test-natigate";
 import { authAtom } from "@/store/auth/authAtom";
 import { LoginKindType, AuthResponse } from "@/types/loginType";
+import { setRecentSocialLoginType } from "@/utils/login/recentSocialLogin";
 
 type ErrorType = {
   status: number;
@@ -41,8 +42,9 @@ export const usePostSignIn = () => {
 
   return useMutation<AuthResponse, ErrorType, LoginKindType>({
     mutationFn: signInWithToken,
-    onSuccess: (data: AuthResponse) => {
+    onSuccess: (data: AuthResponse, variables: LoginKindType) => {
       if (data) {
+        setRecentSocialLoginType(variables.socialType);
         Cookies.set(COOKIE_KEYS.memberId, data.memberId.toString(), AUTH_COOKIE_OPTIONS);
         Cookies.set(COOKIE_KEYS.accessToken, data.accessToken, ACCESS_TOKEN_COOKIE_OPTIONS);
         Cookies.set(COOKIE_KEYS.refreshToken, data.refreshToken, AUTH_COOKIE_OPTIONS);

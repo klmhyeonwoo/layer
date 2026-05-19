@@ -12,6 +12,7 @@ import { useToast } from "@/hooks/useToast";
 import { useMixpanel } from "@/lib/provider/mix-pannel-provider";
 import { authAtom } from "@/store/auth/authAtom";
 import { AuthResponse, SocialLoginKind } from "@/types/loginType";
+import { setRecentSocialLoginType } from "@/utils/login/recentSocialLogin";
 
 type PostSignUp = {
   accessToken: string;
@@ -44,8 +45,11 @@ export const usePostSignUp = () => {
 
   return useMutation<AuthResponse, unknown, PostSignUp>({
     mutationFn: signUpWithToken,
-    onSuccess: (data: AuthResponse) => {
+    onSuccess: (data: AuthResponse, variables: PostSignUp) => {
       if (data) {
+        if (variables.socialType) {
+          setRecentSocialLoginType(variables.socialType);
+        }
         Cookies.set(COOKIE_KEYS.memberId, data.memberId.toString(), AUTH_COOKIE_OPTIONS);
         Cookies.set(COOKIE_KEYS.accessToken, data.accessToken, ACCESS_TOKEN_COOKIE_OPTIONS);
         Cookies.set(COOKIE_KEYS.refreshToken, data.refreshToken, AUTH_COOKIE_OPTIONS);
