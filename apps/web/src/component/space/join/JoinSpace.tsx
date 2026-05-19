@@ -19,7 +19,7 @@ import { getDeviceType } from "@/utils/deviceUtils";
 
 export function JoinSpace() {
   const { id } = useParams() as { id: string };
-  const spaceId = decryptId(id);
+  const spaceId = Number(decryptId(id));
   const { data, isLoading } = useApiGetSpace(spaceId, true);
   const { mutate, isPending } = useApiJoinSpace();
   const { toast } = useToast();
@@ -61,20 +61,20 @@ export function JoinSpace() {
       <ButtonProvider isProgress={isPending}>
         <ButtonProvider.Primary
           onClick={() =>
-            mutate(Number(spaceId), {
+            mutate(spaceId, {
               onSuccess: () => {
                 toast.success(`스페이스에 초대되었어요!`);
-                navigate(PATHS.spaceDetail(spaceId));
+                navigate(PATHS.spaceDetail(`${spaceId}`));
               },
               onError: (error) => {
                 if (error.status === 400) {
                   toast.success("이미 참여한 스페이스로 이동했어요!");
-                  navigate(PATHS.spaceDetail(spaceId));
+                  navigate(PATHS.spaceDetail(`${spaceId}`));
                 }
                 if (error.status === 403) {
                   // 로그인 또는 회원가입 후, 해당 쿠키 값을 판별하여 스페이스 가입을 진행합니다.
                   // FIXME: Cookie 모음 저장 필요
-                  Cookies.set(COOKIE_VALUE_SAVE_SPACE_ID_PHASE, spaceId);
+                  Cookies.set(COOKIE_VALUE_SAVE_SPACE_ID_PHASE, `${spaceId}`);
                   open({
                     title: "스페이스 참여를 위해 로그인이 필요해요",
                     contents: "지금 팀원들과 함께 회고를 진행해보세요",

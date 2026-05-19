@@ -26,7 +26,7 @@ function CustomTemplateListDetailItem({ templateId }: { templateId: number }) {
   const handleSelectTemplate = () => {
     setRetrospectValue((prev) => ({
       ...prev,
-      templateId: String(templateId),
+      templateId,
       saveTemplateId: true,
     }));
 

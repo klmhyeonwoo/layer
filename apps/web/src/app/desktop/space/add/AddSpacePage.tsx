@@ -303,8 +303,8 @@ function SelectRetrospectTemplateBranchFunnel() {
     setFlow("RECOMMEND", 0);
   };
 
-  const handleNextPhase = ({ id, to }: { id: string; to: "result" | "detail" }) => {
-    setSelectedRecommendTemplateId(Number(id));
+  const handleNextPhase = ({ id, to }: { id: number; to: "result" | "detail" }) => {
+    setSelectedRecommendTemplateId(id);
     if (to === "detail") {
       nextPhase();
     }
@@ -325,7 +325,7 @@ function SelectRetrospectTemplateBranchFunnel() {
           background-color: #fff;
           cursor: pointer;
         `}
-        onClick={() => handleNextPhase({ id: id?.toString(), to: "detail" })}
+        onClick={() => handleNextPhase({ id, to: "detail" })}
       >
         <div
           css={css`
@@ -379,7 +379,7 @@ function SelectRetrospectTemplateBranchFunnel() {
           onClick={(event) => {
             event.stopPropagation();
             templateChoiceClickMutation(resolveFormTag(tag));
-            handleNextPhase({ id: id?.toString(), to: "result" });
+            handleNextPhase({ id, to: "result" });
           }}
         >
           <Typography variant={"body12Bold"} color={"gray800"}>
@@ -706,7 +706,7 @@ function SelectRetrospectTemplateFunnel() {
 function ConfirmRetrospectTemplateFunnel() {
   const { selectedRecommendTemplateId, setFlow, goBackToTemplateSelect, setDetailFrom } = useContext(PhaseContext);
   if (!selectedRecommendTemplateId) return;
-  const { data: templateData } = useGetSimpleTemplateInfo(selectedRecommendTemplateId?.toString());
+  const { data: templateData } = useGetSimpleTemplateInfo(selectedRecommendTemplateId);
   return (
     <Fragment>
       <Header title={`해당 템플릿으로\n회고를 진행할까요?`} contents="템플릿을 기반으로 질문을 커스텀 할 수 있어요" />
@@ -1324,13 +1324,13 @@ function CompleteCreateSpace() {
   const { toast } = useToast();
   const { data: userData } = useApiGetUser();
   const { close: closeModalDesktop } = useDesktopBasicModal();
-  const { data: spaceData, isLoading } = useApiGetSpace(spaceId!.toString());
+  const { data: spaceData, isLoading } = useApiGetSpace(spaceId!);
   const { resetAll: resetRetrospectInfo } = useRetrospectCreateReset();
   const { resetAll: resetSpaceInfo } = useSpaceCreateReset();
   const isCreatedIndividualSpace = spaceData?.category === ProjectType.Individual;
   const isCreatedTeamSpace = spaceData?.category === ProjectType.Team;
   const [animate, setAnimate] = useState(isCreatedIndividualSpace);
-  const encryptedId = encryptId(spaceId!.toString());
+  const encryptedId = encryptId(spaceId!);
   const navigate = useNavigate();
   const branchLayout = useAtomValue(branchLayoutAtom);
 

@@ -22,7 +22,8 @@ import { encryptId } from "@/utils/space/cryptoKey";
 export type EditType = "LEADER" | "KICK";
 
 export function MembersList() {
-  const { spaceId } = useParams() as { spaceId: string };
+  const { spaceId: rawSpaceId } = useParams() as { spaceId: string };
+  const spaceId = Number(rawSpaceId);
   const { data: spaceInfo, isLoading: spaceInfoLoading } = useApiGetSpace(spaceId);
   const { data, isLoading } = useApiGetMemers(spaceId);
   const { open, close } = useModal();
@@ -125,7 +126,7 @@ export function MembersList() {
 
     const leaderIndex = data.findIndex((member) => member.isLeader);
 
-    return data[leaderIndex].id?.toString() === userData.memberId?.toString() && data[leaderIndex].isLeader;
+    return data[leaderIndex].id === userData.memberId && data[leaderIndex].isLeader;
   }, [data, userData.memberId]);
 
   if (isLoading || spaceInfoLoading) return <LoadingModal />;

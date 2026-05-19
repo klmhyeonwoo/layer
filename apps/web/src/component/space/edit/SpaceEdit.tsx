@@ -18,9 +18,10 @@ import { PATHS } from "@layer/shared";
 
 export function SpaceEdit() {
   const { id } = useParams() as { id: string };
+  const spaceId = Number(id);
 
   const navigate = useNavigate();
-  const { data, isLoading } = useApiGetSpace(id);
+  const { data, isLoading } = useApiGetSpace(spaceId);
   const { mutate, isPending } = useApiEditSpace();
   const [imgFile, setImgFile] = useState<File | null>(null);
   const { value: name, handleInputChange: handleChangeName, setValue: setName } = useInput();
@@ -45,14 +46,14 @@ export function SpaceEdit() {
         });
 
         mutate({
-          spaceId: id,
+          spaceId,
           name,
           introduction,
           imgUrl: data.imageUrl,
         });
       } else {
         mutate({
-          spaceId: id,
+          spaceId,
           name,
           introduction,
           imgUrl: data?.bannerUrl || "",

@@ -15,7 +15,7 @@ import { trackEvent } from "@/lib/google-analytics";
 import { GA_EVENTS } from "@/lib/google-analytics/events";
 
 type ActionItemAddSectionProps = {
-  spaceId: string;
+  spaceId: number;
   retrospectId: number;
   onClose: () => void;
 };
@@ -81,7 +81,7 @@ export default function ActionItemAddSection({ spaceId, retrospectId, onClose }:
         },
         {
           onSuccess: async (response) => {
-            const previousData: { spaceId: string; spaceName: string; teamActionItemList: ExtendedActionItemType[] } | undefined =
+            const previousData: { spaceId: number; spaceName: string; teamActionItemList: ExtendedActionItemType[] } | undefined =
               await queryClient.getQueryData(["getTeamActionItemList", spaceId]);
 
             if (previousData) {

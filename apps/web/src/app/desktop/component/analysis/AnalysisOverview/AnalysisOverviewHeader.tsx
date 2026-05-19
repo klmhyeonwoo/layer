@@ -48,7 +48,7 @@ export default function AnalysisOverviewHeader() {
     if (spaceInfo?.formId) {
       setRetrospectValue((prev) => ({
         ...prev,
-        templateId: String(spaceInfo.formId),
+        templateId: spaceInfo.formId,
       }));
 
       open({
@@ -196,7 +196,7 @@ export default function AnalysisOverviewHeader() {
         </article>
 
         {/* ---------- 회고 인원수 필터 ---------- */}
-        <MemberManagement spaceId={spaceId as string} />
+        {spaceId && <MemberManagement spaceId={spaceId} />}
       </section>
 
       {/* ---------- 실행목표 ---------- */}

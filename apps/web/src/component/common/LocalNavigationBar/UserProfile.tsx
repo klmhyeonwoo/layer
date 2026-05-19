@@ -144,7 +144,7 @@ export default function UserProfile() {
       contents: "정말 로그아웃 하시겠어요?",
       onConfirm: () => {
         if (memberId) {
-          signOut({ memberId: memberId });
+          signOut({ memberId: Number(memberId) });
         }
       },
       options: {

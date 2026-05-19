@@ -1,15 +1,15 @@
 import { atom } from "jotai";
 
 interface RetrospectInitialType {
-  spaceId: string;
-  templateId: string;
-  tempTemplateId: string;
+  spaceId: number | null;
+  templateId: number | null;
+  tempTemplateId: number | null;
   saveTemplateId: boolean;
 }
 
 export const retrospectInitialState = atom<RetrospectInitialType>({
-  spaceId: "",
-  templateId: "",
-  tempTemplateId: "",
+  spaceId: null,
+  templateId: null,
+  tempTemplateId: null,
   saveTemplateId: false,
 });

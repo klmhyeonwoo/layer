@@ -8,7 +8,7 @@ export type RetrospectResponse = {
   retrospects: Retrospect[];
 };
 
-const spaceRetrospectFetch = async (spaceId: string | undefined) => {
+const spaceRetrospectFetch = async (spaceId: number | undefined) => {
   const response = await api.get<RetrospectResponse>(`/space/${spaceId}/retrospect`);
   return response.data;
 };
@@ -18,7 +18,7 @@ const getAllRetrospectsFetch = async () => {
   return response.data;
 };
 
-export const useApiOptionsGetRetrospects = (spaceId?: string): UseQueryOptions<RetrospectResponse, Error, RetrospectResponse["retrospects"]> => ({
+export const useApiOptionsGetRetrospects = (spaceId?: number): UseQueryOptions<RetrospectResponse, Error, RetrospectResponse["retrospects"]> => ({
   queryKey: ["getRetrospects", spaceId],
   queryFn: () => spaceRetrospectFetch(spaceId),
   select(data) {

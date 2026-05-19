@@ -3,10 +3,10 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { api } from "@/api";
 import { useToast } from "@/hooks/useToast";
 
-export const useChangeLeader = (spaceId: string) => {
+export const useChangeLeader = (spaceId: number) => {
   const queryClient = useQueryClient();
   const { toast } = useToast();
-  const changeLeader = async ({ spaceId, memberId }: { spaceId: string; memberId: string }) => {
+  const changeLeader = async ({ spaceId, memberId }: { spaceId: number; memberId: number }) => {
     const res = await api.patch(`/api/space/change-leader`, {
       spaceId,
       memberId,
@@ -15,7 +15,7 @@ export const useChangeLeader = (spaceId: string) => {
   };
 
   return useMutation({
-    mutationFn: (changeValue: { spaceId: string; memberId: string }) => changeLeader(changeValue),
+    mutationFn: (changeValue: { spaceId: number; memberId: number }) => changeLeader(changeValue),
     onSuccess: async () => {
       await queryClient.invalidateQueries({
         queryKey: ["getMembers", spaceId],

@@ -7,14 +7,14 @@ type RecentActionItemList = {
   teamActionItemList: ActionItemType[];
 };
 
-const getRecentTeamActionItemList = async (spaceId: string | undefined) => {
+const getRecentTeamActionItemList = async (spaceId: number | undefined) => {
   const response = await api.get<RecentActionItemList>(`/api/action-item/space/${spaceId}/recent`);
   return response.data;
 };
 
 export const useAPiOptionsRecentTeamActionList = (
-  spaceId?: string,
-): UseQueryOptions<RecentActionItemList, Error, RecentActionItemList, [string, string]> => ({
+  spaceId?: number,
+): UseQueryOptions<RecentActionItemList, Error, RecentActionItemList, [string, number]> => ({
   queryKey: ["getTeamActionItemList", spaceId!],
   queryFn: () => getRecentTeamActionItemList(spaceId),
   select(data) {

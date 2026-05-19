@@ -19,7 +19,7 @@ import { formatOnlyDate } from "@/utils/date";
 export function GoalViewPage() {
   const { tabs, curTab, selectTab } = useTabs(["실행중", "지난"] as const);
   const memberId = Cookies.get(COOKIE_KEYS.memberId);
-  const { data, isLoading } = useGetActionItemList({ memberId: memberId as string });
+  const { data, isLoading } = useGetActionItemList({ memberId: Number(memberId) });
   const filteredItems = data?.actionItems?.filter(
     (item) => (curTab === tabs[0] && item.status === status[0]) || (curTab === tabs[1] && item.status === status[1]),
   );

@@ -18,10 +18,12 @@ export default function AnalysisPage() {
 
   const { isCollapsed, handleCollapse } = useNavigation();
 
-  const spaceId = searchParams.get("spaceId");
-  const retrospectId = searchParams.get("retrospectId");
+  const rawSpaceId = searchParams.get("spaceId");
+  const rawRetrospectId = searchParams.get("retrospectId");
+  const spaceId = rawSpaceId ? Number(rawSpaceId) : null;
+  const retrospectId = rawRetrospectId ? Number(rawRetrospectId) : null;
 
-  const { data: spaceInfo } = useQuery(useApiOptionsGetSpaceInfo(spaceId || undefined));
+  const { data: spaceInfo } = useQuery(useApiOptionsGetSpaceInfo(spaceId ?? undefined));
 
   const handleToggleOverview = () => {
     setIsOverviewVisible(!isOverviewVisible);
@@ -36,7 +38,7 @@ export default function AnalysisPage() {
   }, []);
 
   useEffect(() => {
-    if (spaceId && spaceInfo && (!currentSpace || String(currentSpace.id) !== spaceId)) {
+    if (spaceId && spaceInfo && (!currentSpace || currentSpace.id !== spaceId)) {
       setCurrentSpace(spaceInfo);
     }
   }, [spaceId, spaceInfo, currentSpace, setCurrentSpace]);

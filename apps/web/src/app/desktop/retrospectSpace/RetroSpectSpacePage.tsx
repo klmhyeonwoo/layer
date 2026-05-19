@@ -5,7 +5,7 @@ import RetrospectSpaceHeader from "@/component/retrospect/space/RetrospectSpaceH
 import { useApiPostRetrospectImpression } from "@/hooks/api/backoffice/useApiPostRetrospectImpression";
 import { useApiOptionsGetRetrospects } from "@/hooks/api/retrospect/useApiOptionsGetRetrospects";
 import { useApiGetSpace } from "@/hooks/api/space/useApiGetSpace";
-import { useRequiredParams } from "@/hooks/useRequiredParams";
+import { useRequiredNumberParams } from "@/hooks/useRequiredParams";
 import { retrospectInitialState } from "@/store/retrospect/retrospectInitial";
 import { currentSpaceState } from "@/store/space/spaceAtom";
 import { css } from "@emotion/react";
@@ -14,7 +14,7 @@ import { useAtom, useSetAtom } from "jotai";
 import { useEffect } from "react";
 
 export default function RetroSpectSpacePage() {
-  const { spaceId } = useRequiredParams<{ spaceId: string }>();
+  const { spaceId } = useRequiredNumberParams<{ spaceId: number }>();
   const setRetrospectValue = useSetAtom(retrospectInitialState);
   const [currentSpace, setCurrentSpace] = useAtom(currentSpaceState);
 
@@ -42,7 +42,7 @@ export default function RetroSpectSpacePage() {
   useEffect(() => {
     if (isSuccess && spaceData) {
       setCurrentSpace((prev) => ({
-        id: spaceData.id.toString(),
+        id: spaceData.id,
         category: spaceData.category,
         fieldList: prev?.fieldList ?? [],
         name: spaceData.name,

@@ -12,7 +12,7 @@ import { useApiPostTemplateClickListView } from "@/hooks/api/backoffice/useApiPo
 
 type Props = {
   teamName: string | undefined;
-  spaceId: string;
+  spaceId: number;
   closeBottomSheet: () => void;
 };
 
@@ -83,7 +83,7 @@ export function CreateRetrospectiveSheet({ teamName, spaceId, closeBottomSheet }
         <button
           onClick={() => {
             templateListClickMutation();
-            navigate(PATHS.template(spaceId), {
+            navigate(PATHS.template(`${spaceId}`), {
               state: { readOnly: false },
             });
             closeBottomSheet();

@@ -20,7 +20,8 @@ import { TemplateChoice } from "@/app/desktop/component/retrospect/choice";
 import { useApiOptionsGetSpaceInfo } from "@/hooks/api/space/useApiOptionsGetSpaceInfo";
 
 export default function InProgressRetrospects() {
-  const { spaceId } = useParams();
+  const { spaceId: rawSpaceId } = useParams();
+  const spaceId = rawSpaceId ? Number(rawSpaceId) : undefined;
 
   // * 스페이스 회고 목록 조회
   const { data: retrospects, isPending: isPendingRetrospects } = useQuery(useApiOptionsGetRetrospects(spaceId));
@@ -41,7 +42,7 @@ export default function InProgressRetrospects() {
     if (spaceInfo?.formId) {
       setRetrospectValue((prev) => ({
         ...prev,
-        templateId: String(spaceInfo.formId),
+        templateId: spaceInfo.formId,
       }));
 
       open({

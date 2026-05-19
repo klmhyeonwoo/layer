@@ -35,7 +35,7 @@ function TemplateListDetailItem({ templateId }: { templateId: number }) {
     } else {
       setRetrospectValue((prev) => ({
         ...prev,
-        tempTemplateId: String(templateId),
+        tempTemplateId: templateId,
         saveTemplateId: true,
       }));
 

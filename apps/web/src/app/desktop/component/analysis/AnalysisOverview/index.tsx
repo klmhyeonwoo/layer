@@ -7,12 +7,12 @@ import RetrospectSection from "./RetrospectSection";
 import AnalysisOverviewHeader from "./AnalysisOverviewHeader";
 
 type AnalysisOverviewProps = {
-  spaceId: string | null;
+  spaceId: number | null;
 };
 
 export default function AnalysisOverview({ spaceId }: AnalysisOverviewProps) {
   // * 스페이스 회고 목록 조회
-  const { data: retrospects, isPending: isRetrospectsPending } = useQuery(useApiOptionsGetRetrospects(spaceId || undefined));
+  const { data: retrospects, isPending: isRetrospectsPending } = useQuery(useApiOptionsGetRetrospects(spaceId ?? undefined));
 
   // * 진행 중인 회고 필터링
   const proceedingRetrospects = useMemo(() => retrospects?.filter((retrospect) => retrospect.retrospectStatus === "PROCEEDING") || [], [retrospects]);

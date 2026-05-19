@@ -20,7 +20,7 @@ export function TemplateListConform() {
   const [retrospectValue, setRetrospectValue] = useAtom(retrospectInitialState);
   const setRetroCreateData = useSetAtom(retrospectCreateAtom);
 
-  const { data: templateData, isLoading } = useGetSimpleTemplateInfo(retrospectValue.tempTemplateId);
+  const { data: templateData, isLoading } = useGetSimpleTemplateInfo(retrospectValue.tempTemplateId ?? 0);
   const { openFunnelModal } = useFunnelModal();
   const { openActionModal } = useActionModal();
   const branchLayout = useAtomValue(branchLayoutAtom);

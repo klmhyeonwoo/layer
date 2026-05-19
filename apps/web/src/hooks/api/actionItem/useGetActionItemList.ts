@@ -7,7 +7,7 @@ export const useGetActionItemList = <TData = PersonalActionItemListType>({
   memberId,
   options,
 }: {
-  memberId: string;
+  memberId: number;
   options?: Omit<UseQueryOptions<PersonalActionItemListType, Error, TData>, "queryKey" | "queryFn">;
 }) => {
   const getActionItemList = () => {

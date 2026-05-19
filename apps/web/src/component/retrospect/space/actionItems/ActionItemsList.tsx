@@ -15,7 +15,7 @@ type ActionItemsListProps = {
 
 export default function ActionItemsList({ currentTab }: ActionItemsListProps) {
   const params = useParams();
-  const spaceId = params.spaceId as string;
+  const spaceId = Number(params.spaceId);
 
   // * 팀 실행목표 리스트 조회
   const { data } = useQuery(useApiOptionsGetTeamActionItemList(spaceId));

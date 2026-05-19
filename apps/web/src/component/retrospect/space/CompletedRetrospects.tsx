@@ -11,7 +11,8 @@ import RetrospectCard from "@/app/desktop/component/home/RetrospectCard";
 import { LoadingSpinner } from "@/component/space/view/LoadingSpinner";
 
 export default function CompletedRetrospects() {
-  const { spaceId } = useParams();
+  const { spaceId: rawSpaceId } = useParams();
+  const spaceId = rawSpaceId ? Number(rawSpaceId) : undefined;
 
   // * 스페이스 회고 목록 조회
   const { data: retrospects, isPending: isPendingRetrospects } = useQuery(useApiOptionsGetRetrospects(spaceId));

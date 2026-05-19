@@ -17,8 +17,8 @@ import { useFunnelModal } from "@/hooks/useFunnelModal";
 import RecommendDone from "@/app/desktop/component/retrospect/template/recommend/Done";
 
 type CardCarouselProp = {
-  spaceId?: string;
-  templateId?: string;
+  spaceId?: number;
+  templateId?: number;
   templateArr: {
     title: string;
     templateName: string;

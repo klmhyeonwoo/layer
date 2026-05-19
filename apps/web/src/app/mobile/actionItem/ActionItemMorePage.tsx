@@ -19,7 +19,7 @@ import { DESIGN_TOKEN_COLOR, DESIGN_TOKEN_TEXT } from "@/style/designTokens.ts";
 
 export function ActionItemMorePage() {
   const location = useLocation();
-  const { spaceId, leaderId } = location.state as { spaceId: string; leaderId: number };
+  const { spaceId, leaderId } = location.state as { spaceId: number; leaderId: number };
   const memberId = Cookies.get(COOKIE_KEYS.memberId);
   const { openBottomSheet } = useBottomSheet();
   const { data, isLoading, refetch } = useGetSpaceActionItemList({ spaceId: spaceId });
@@ -30,7 +30,7 @@ export function ActionItemMorePage() {
     actionItemList: item.actionItemList,
   }));
   const SHEET_ID = "info";
-  const isLeader = memberId === String(leaderId);
+  const isLeader = Number(memberId) === leaderId;
   return (
     <Fragment>
       {isLoading && <LoadingModal />}

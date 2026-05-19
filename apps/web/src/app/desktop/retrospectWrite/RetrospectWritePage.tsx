@@ -8,7 +8,7 @@ function RetroSpectWritePage() {
   const [searchParams] = useSearchParams();
   const [isOverviewVisible, setIsOverviewVisible] = useState(true);
 
-  const spaceId = searchParams.get("spaceId");
+  const spaceId = Number(searchParams.get("spaceId"));
   const retrospectId = searchParams.get("retrospectId");
 
   const handleToggleOverview = () => {
