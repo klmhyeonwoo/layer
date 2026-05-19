@@ -125,7 +125,7 @@ export function MembersList() {
 
     const leaderIndex = data.findIndex((member) => member.isLeader);
 
-    return data[leaderIndex].id === userData.memberId?.toString() && data[leaderIndex].isLeader;
+    return data[leaderIndex].id?.toString() === userData.memberId?.toString() && data[leaderIndex].isLeader;
   }, [data, userData.memberId]);
 
   if (isLoading || spaceInfoLoading) return <LoadingModal />;
