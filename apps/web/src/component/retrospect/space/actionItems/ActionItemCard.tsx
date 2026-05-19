@@ -12,7 +12,7 @@ import { trackEvent } from "@/lib/google-analytics";
 import { GA_EVENTS } from "@/lib/google-analytics/events";
 
 type ActionItemCardProps = {
-  spaceId: string;
+  spaceId: number;
   retrospectId: number;
   title: string;
   todoList: {

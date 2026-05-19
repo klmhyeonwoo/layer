@@ -57,7 +57,7 @@ export default function TemplateCardManageToggleMenu({
   const handleCloseRetrospect = async () => {
     try {
       setProgress(true);
-      await mutateCloseRetrospect({ spaceId: String(spaceId), retrospectId: retrospectId });
+      await mutateCloseRetrospect({ spaceId, retrospectId });
     } catch (e) {
     } finally {
       setProgress(false);
@@ -71,7 +71,7 @@ export default function TemplateCardManageToggleMenu({
   const handleRemoveRetrospect = async () => {
     try {
       setProgress(true);
-      await mutateDeleteRetrospect({ spaceId: String(spaceId), retrospectId: String(retrospectId) });
+      await mutateDeleteRetrospect({ spaceId, retrospectId });
     } catch (e) {
     } finally {
       setProgress(false);

@@ -21,7 +21,7 @@ import { PATHS } from "@layer/shared";
 
 export function CreateDonePage() {
   const navigate = useNavigate();
-  const { spaceId } = useLocation().state as { spaceId: string };
+  const { spaceId } = useLocation().state as { spaceId: number };
   const { data: spaceData, isLoading } = useApiGetSpace(spaceId);
   const [animate, setAnimate] = useState(spaceData?.category === ProjectType.Individual);
   const { data: userData } = useApiGetUser();

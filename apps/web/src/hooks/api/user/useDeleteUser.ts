@@ -13,7 +13,7 @@ export const useDeleteUser = () => {
   const navigate = useTestNavigate();
   const setAuth = useSetAtom(authAtom);
 
-  const apiDeleteUser = async ({ memberId, booleans, description }: { memberId: string; booleans: boolean[]; description: string }) => {
+  const apiDeleteUser = async ({ memberId, booleans, description }: { memberId: number; booleans: boolean[]; description: string }) => {
     const response = await api.post(
       `/api/auth/withdraw`,
       {
@@ -30,7 +30,7 @@ export const useDeleteUser = () => {
   };
 
   return useMutation({
-    mutationFn: ({ memberId, booleans, description }: { memberId: string; booleans: boolean[]; description: string }) =>
+    mutationFn: ({ memberId, booleans, description }: { memberId: number; booleans: boolean[]; description: string }) =>
       apiDeleteUser({ memberId, booleans, description }),
     onSuccess: () => {
       clearAuthCookies();

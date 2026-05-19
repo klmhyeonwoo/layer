@@ -6,8 +6,8 @@ const VECTOR_KEY = import.meta.env.VITE_VECTOR_KEY as string;
 const key = CryptoJS.enc.Utf8.parse(CRYPTO_KEY);
 const iv = CryptoJS.enc.Utf8.parse(VECTOR_KEY);
 
-const encryptId = (id: string) => {
-  const encrypted = CryptoJS.AES.encrypt(id.toString(), key, {
+const encryptId = (id: number | string) => {
+  const encrypted = CryptoJS.AES.encrypt(`${id}`, key, {
     iv: iv,
     mode: CryptoJS.mode.CBC,
     padding: CryptoJS.pad.Pkcs7,

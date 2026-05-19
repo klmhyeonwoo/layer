@@ -5,8 +5,8 @@ import { ACHIVEMENT_PERCENT } from "@/component/write/template/write/write.const
 import { calculateScaledAnswer } from "@/utils/answer/calculateScaledAnswer.ts";
 
 type getAnalysisAnswer = {
-  spaceId: string | null;
-  retrospectId: string | null;
+  spaceId: number | null;
+  retrospectId: number | null;
 };
 
 export interface IndividualsAnswersType {

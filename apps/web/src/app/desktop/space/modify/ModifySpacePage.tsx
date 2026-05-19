@@ -13,7 +13,7 @@ import { useSearchParams } from "react-router-dom";
 export default function ModifySpacePage() {
   const [searchParams] = useSearchParams();
   const [isChangedImage, setIsChangedImage] = useState(false);
-  const spaceId = searchParams.get(MODIFY_SPACE_ID_QUERY_KEY) as string;
+  const spaceId = Number(searchParams.get(MODIFY_SPACE_ID_QUERY_KEY));
   const {
     data,
     isLoading,

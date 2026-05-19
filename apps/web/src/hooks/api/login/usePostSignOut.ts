@@ -11,9 +11,9 @@ export const usePostSignOut = () => {
   const navigate = useTestNavigate();
   const [, setAuth] = useAtom(authAtom);
 
-  const signOutFun = async ({ memberId }: { memberId: string }) => {
+  const signOutFun = async ({ memberId }: { memberId: number }) => {
     const response = await api.post("/api/auth/sign-out", {
-      memberId: memberId,
+      memberId,
     });
     return response;
   };

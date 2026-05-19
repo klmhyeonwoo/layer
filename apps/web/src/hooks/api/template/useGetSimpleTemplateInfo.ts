@@ -9,7 +9,7 @@ type InfoReponse = {
   imageUrl: string;
 };
 
-export const useGetSimpleTemplateInfo = (templateId: string) => {
+export const useGetSimpleTemplateInfo = (templateId: number) => {
   const getSimpleTemplateInfo = () => {
     const res = api.get<InfoReponse>(`/api/template/${templateId}/simple-info`).then((res) => res.data);
     return res;

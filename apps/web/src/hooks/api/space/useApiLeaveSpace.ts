@@ -10,13 +10,13 @@ export const useApiLeaveSpace = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
-  const apiSpaceLeave = async (spaceId: string | undefined) => {
-    const response = await api.post(`/api/space/leave`, { spaceId: Number(spaceId) });
+  const apiSpaceLeave = async (spaceId: number | undefined) => {
+    const response = await api.post(`/api/space/leave`, { spaceId });
     return response;
   };
 
   return useMutation({
-    mutationFn: (spaceId: string) => apiSpaceLeave(spaceId),
+    mutationFn: (spaceId: number) => apiSpaceLeave(spaceId),
     onSuccess: () => {
       navigate(PATHS.home());
       queryClient.invalidateQueries({ queryKey: ["spaces"] });

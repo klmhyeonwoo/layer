@@ -14,24 +14,29 @@ import { useModal } from "@/hooks/useModal";
 import { DefaultLayout } from "@/layout/DefaultLayout";
 
 export function MembersEditList() {
-  const { spaceId } = useParams() as { spaceId: string };
+  const { spaceId: rawSpaceId } = useParams() as { spaceId: string };
+  const spaceId = Number(rawSpaceId);
   const { editType } = useLocation().state as { editType: EditType };
   const { data, isLoading } = useApiGetMemers(spaceId);
   const { mutate: kickMember } = useApiKickMember(spaceId);
   const { mutate: changeLeader } = useChangeLeader(spaceId);
   const { open } = useModal();
-  const [selectedOption, setSelectedOption] = useState("");
-  const [leaderIndex, setLeaderIndex] = useState("");
+  const [selectedOption, setSelectedOption] = useState<number | null>(null);
+  const [leaderId, setLeaderId] = useState<number | null>(null);
 
   useEffect(() => {
     if (data) {
       const leaderIndex = data.findIndex((member) => member.isLeader);
-      setLeaderIndex(data[leaderIndex].id);
-      setSelectedOption(data[leaderIndex].id);
+      const leader = data[leaderIndex];
+
+      if (leader) {
+        setLeaderId(leader.id);
+        setSelectedOption(leader.id);
+      }
     }
   }, [data]);
 
-  const onClickEdit = (memberId: string) => {
+  const onClickEdit = (memberId: number) => {
     open({
       title: "팀원을 삭제하시겠어요?",
       contents: "삭제하시면 다시 되돌릴 수 없어요",
@@ -42,11 +47,13 @@ export function MembersEditList() {
     });
   };
 
-  const handleRadioChange = (value: string) => {
+  const handleRadioChange = (value: number) => {
     setSelectedOption(value);
   };
 
   const onChangeLeader = () => {
+    if (selectedOption == null) return;
+
     open({
       title: "대표자를 변경하시겠어요?",
       contents: "대표자를 변경하면\n팀 스페이스 관리 권한이 변경돼요",
@@ -78,7 +85,7 @@ export function MembersEditList() {
       ))}
       {editType === "LEADER" && (
         <ButtonProvider>
-          <ButtonProvider.Primary onClick={onChangeLeader} disabled={!leaderIndex || leaderIndex === selectedOption}>
+          <ButtonProvider.Primary onClick={onChangeLeader} disabled={leaderId == null || leaderId === selectedOption}>
             변경
           </ButtonProvider.Primary>
         </ButtonProvider>

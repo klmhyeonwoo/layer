@@ -32,7 +32,7 @@ export function RetrospectBox({
   isLeader,
   refetchRestrospectData,
 }: {
-  spaceId: string;
+  spaceId: number;
   retrospect: Retrospect;
   onDelete: (retrospectId: number) => void;
   refetchRestrospectData?: () => void;
@@ -57,7 +57,7 @@ export function RetrospectBox({
     const { analysisStatus, retrospectStatus, writeStatus } = retrospect;
 
     const navigateToAnalysis = (defaultTab?: "분석" | "") =>
-      navigate(PATHS.retrospectAnalysis(spaceId, retrospectId), { state: { title, ...(defaultTab && { defaultTab }) } });
+      navigate(PATHS.retrospectAnalysis(`${spaceId}`, retrospectId), { state: { title, ...(defaultTab && { defaultTab }) } });
 
     if (analysisStatus === "DONE") {
       navigateToAnalysis("분석");
@@ -110,7 +110,7 @@ export function RetrospectBox({
       },
       onConfirm: () => {
         retrospectDelete(
-          { spaceId: spaceId, retrospectId: String(retrospectId) },
+          { spaceId, retrospectId },
           {
             onSuccess: () => {
               setIsDeleted(true);
@@ -281,7 +281,7 @@ export function RetrospectBox({
       {isEditModalOpen && (
         <RetrospectEditModal
           spaceId={spaceId}
-          retrospectId={retrospectId.toString()}
+          retrospectId={retrospectId}
           defaultValue={{ title, introduction, deadline }}
           isAnalyzed={retrospectStatus === "DONE"}
           close={() => setIsEditModalOpen(false)}

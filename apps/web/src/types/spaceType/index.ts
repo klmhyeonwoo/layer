@@ -1,5 +1,5 @@
 export type Space = {
-  id: string;
+  id: number;
   category: "INDIVIDUAL" | "TEAM";
   fieldList: string[];
   name: string;

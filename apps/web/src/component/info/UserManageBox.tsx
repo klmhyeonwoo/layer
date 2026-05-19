@@ -41,7 +41,7 @@ export function UserManageBox() {
         onConfirm: () => {
           if (memberId) {
             deleteUser({
-              memberId: memberId,
+              memberId: Number(memberId),
               booleans: state.booleans!,
               description: state.description!,
             });
@@ -107,7 +107,7 @@ export function UserManageBox() {
                   type: "confirm",
                 },
                 onConfirm: () => {
-                  if (memberId) signOut({ memberId: memberId });
+                  if (memberId) signOut({ memberId: Number(memberId) });
                 },
               });
             }}

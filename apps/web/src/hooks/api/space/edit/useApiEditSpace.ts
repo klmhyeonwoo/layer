@@ -11,7 +11,7 @@ export const useApiEditSpace = () => {
   const { isMobile } = getDeviceType();
   const { toast } = useToast();
 
-  const editSpace = async (formData: { spaceId: string; imgUrl: string; name: string; introduction: string }) => {
+  const editSpace = async (formData: { spaceId: number; imgUrl: string; name: string; introduction: string }) => {
     const { imgUrl, name, introduction, spaceId } = formData;
     await api.put<{ spaceId: number }>(`/api/space`, {
       id: spaceId,
@@ -23,9 +23,9 @@ export const useApiEditSpace = () => {
   };
 
   return useMutation({
-    mutationFn: (formData: { spaceId: string; imgUrl: string; name: string; introduction: string }) => editSpace(formData),
+    mutationFn: (formData: { spaceId: number; imgUrl: string; name: string; introduction: string }) => editSpace(formData),
     onSuccess: (spaceId) => {
-      if (isMobile) navigate(PATHS.spaceDetail(spaceId));
+      if (isMobile) navigate(PATHS.spaceDetail(`${spaceId}`));
       else toast.success("스페이스 수정이 완료되었습니다.");
     },
     onError: (error) => {

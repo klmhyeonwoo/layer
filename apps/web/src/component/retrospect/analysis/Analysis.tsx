@@ -15,8 +15,8 @@ import { DESIGN_TOKEN_COLOR } from "@/style/designTokens";
 import { getDeviceType } from "@/utils/deviceUtils";
 
 type AnalysisContainerProps = {
-  spaceId: string;
-  retrospectId: string;
+  spaceId: number;
+  retrospectId: number;
   hasAIAnalyzed: boolean | undefined;
 };
 

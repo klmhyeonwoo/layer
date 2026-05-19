@@ -17,7 +17,7 @@ export type ExtendedActionItemType = {
 };
 
 export type TeamActionItemType = {
-  spaceId: string;
+  spaceId: number;
   spaceName: string;
   teamActionItemList: ExtendedActionItemType[];
 };

@@ -8,7 +8,7 @@ import { defaultUserImgUrl } from "@/component/space/space.const";
 import { DESIGN_TOKEN_COLOR } from "@/style/designTokens";
 
 type MembersItemProps = {
-  id?: string;
+  id?: number;
   avatar?: string | null;
   name: string;
   isLeader?: boolean;
@@ -17,7 +17,7 @@ type MembersItemProps = {
   onClick?: () => void;
   onClickEdit?: () => void;
   handleRadioChange?: () => void;
-  selectedOption?: string;
+  selectedOption?: number | null;
   isChecked?: boolean;
 };
 

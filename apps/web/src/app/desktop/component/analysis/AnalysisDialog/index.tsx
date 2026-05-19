@@ -14,15 +14,15 @@ export const PERSONAL_ANALYSIS_MENU_TABS = ["회고", "분석"] as const;
 export type AnalysisTab = (typeof TEAM_ANALYSIS_MENU_TABS)[number] | (typeof PERSONAL_ANALYSIS_MENU_TABS)[number];
 
 type AnalysisDialogProps = {
-  spaceId: string | null;
-  retrospectId: string | null;
+  spaceId: number | null;
+  retrospectId: number | null;
   isOverviewVisible: boolean;
   onToggleOverview: () => void;
 };
 
 export default function AnalysisDialog({ spaceId, retrospectId, isOverviewVisible, onToggleOverview }: AnalysisDialogProps) {
   const { data: analysisData, isPending: isPendingAnalysisData } = useGetAnalysisAnswer({ spaceId: spaceId, retrospectId: retrospectId });
-  const { data: spaceInfo } = useQuery(useApiOptionsGetSpaceInfo(spaceId as string));
+  const { data: spaceInfo } = useQuery(useApiOptionsGetSpaceInfo(spaceId ?? undefined));
 
   const isPersonal = Boolean(analysisData?.individuals.length === 1 && spaceInfo?.category === "INDIVIDUAL");
 

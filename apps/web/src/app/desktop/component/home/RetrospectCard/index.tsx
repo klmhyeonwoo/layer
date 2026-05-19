@@ -17,7 +17,7 @@ import { useApiPostRetrospectClick } from "@/hooks/api/backoffice/useApiPostRetr
 
 interface RetrospectCardProps {
   retrospect: Retrospect;
-  spaceId?: string | null;
+  spaceId?: number | null;
 }
 
 export default function RetrospectCard({ retrospect, spaceId }: RetrospectCardProps) {
@@ -57,7 +57,7 @@ export default function RetrospectCard({ retrospect, spaceId }: RetrospectCardPr
         openFunnelModal({
           title: "",
           step: "retrospectWrite",
-          contents: <Prepare spaceId={Number(targetSpaceId)} retrospectId={retrospectId} title={title} introduction={introduction} />,
+          contents: <Prepare spaceId={targetSpaceId} retrospectId={retrospectId} title={title} introduction={introduction} />,
         });
       } else if (writeStatus === "DONE") {
         navigate(PATHS.retrospectAnalysis(String(targetSpaceId), retrospectId, title));

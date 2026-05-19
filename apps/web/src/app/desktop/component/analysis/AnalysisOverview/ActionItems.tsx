@@ -95,7 +95,7 @@ function Tab() {
 function List() {
   const { currentTab } = useActionItemsContext();
   const [searchParams] = useSearchParams();
-  const spaceId = searchParams.get("spaceId") as string;
+  const spaceId = Number(searchParams.get("spaceId"));
 
   const { data } = useQuery(useApiOptionsGetTeamActionItemList(spaceId));
 

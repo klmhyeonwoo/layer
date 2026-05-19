@@ -11,8 +11,8 @@ import { chooseParticle } from "@/utils/retrospect/chooseParticle";
 import { createTemplateArr } from "@/utils/retrospect/createTemplateArr";
 
 export function RecommendSearch() {
-  const { templateId, spaceId } = useLocation().state as { templateId: string; spaceId: string };
-  const TemplateArr = createTemplateArr(templateId as unknown as TemplateKey);
+  const { templateId, spaceId } = useLocation().state as { templateId: number; spaceId: number };
+  const TemplateArr = createTemplateArr(templateId as TemplateKey);
   const { data, isLoading } = useApiGetSpace(spaceId);
 
   if (isLoading) return <LoadingModal />;

@@ -13,8 +13,8 @@ import { DefaultLayout } from "@/layout/DefaultLayout";
 import { Retrospect } from "@/types/retrospect";
 
 type RetrospectEditProps = {
-  spaceId: string;
-  retrospectId: string;
+  spaceId: number;
+  retrospectId: number;
   defaultValue: Pick<Retrospect, "title" | "introduction" | "deadline">;
   isAnalyzed?: boolean;
   close: () => void;
@@ -30,8 +30,8 @@ export function RetrospectEditModal({ spaceId, retrospectId, defaultValue, isAna
 
   const handleModifyRetrospect = async () => {
     patchRetrospect({
-      spaceId: +spaceId,
-      retrospectId: +retrospectId,
+      spaceId,
+      retrospectId,
       data: { title, introduction, deadline: deadline },
     });
   };
