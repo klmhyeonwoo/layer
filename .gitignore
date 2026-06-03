@@ -148,9 +148,10 @@ dist
 
 *.xcconfig
 
-# Claude Code configuration
-CLAUDE.md
-.claude
+# Claude Code local configuration
+.claude/*
+!.claude/docs/
+!.claude/docs/**
 .omc
 
 # visualizer
