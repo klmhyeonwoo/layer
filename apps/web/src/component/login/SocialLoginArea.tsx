@@ -89,7 +89,7 @@ export function SocialLoginArea({
     return (
       <Tooltip>
         <Tooltip.Trigger>{button}</Tooltip.Trigger>
-        <Tooltip.Content message="최근 로그인한 방법이에요!" placement="top-start" offsetY={15} hideOnClick={true} autoHide={false} />
+        <Tooltip.Content message="최근 로그인" placement="top-end" offsetY={0} arrowOffsetX={5} hideOnClick={true} autoHide={false} />
       </Tooltip>
     );
   };
