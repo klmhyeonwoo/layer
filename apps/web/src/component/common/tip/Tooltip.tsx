@@ -7,7 +7,7 @@ import { usePopper } from "react-popper";
 import { Portal } from "@/component/common/Portal";
 import { Typography } from "@/component/common/typography";
 import { ANIMATION } from "@/style/common/animation";
-import { DESIGN_SYSTEM_COLOR } from "@/style/variable";
+import { DESIGN_TOKEN_COLOR } from "@/style/designTokens";
 
 type TooltipContextState = {
   referenceEl: HTMLDivElement | null;
@@ -60,6 +60,7 @@ type Content = {
   modifiers?: Partial<OffsetModifier>[];
   offsetX?: number;
   offsetY?: number;
+  arrowOffsetX?: number;
   hideOnClick?: boolean;
   autoHide?: boolean;
 };
@@ -79,6 +80,7 @@ function Content({
   placement,
   offsetX = 0,
   offsetY = 30,
+  arrowOffsetX = 2,
   modifiers = [],
   hideOnClick = true,
   autoHide = true,
@@ -117,28 +119,27 @@ function Content({
 
   const getArrowPosition = (placement: ContentProps["placement"]) => {
     const offsetY = -0.4;
-    const offsetX = 2;
+
     switch (placement) {
       case "top-start":
         return css`
           bottom: ${offsetY}rem;
-          left: ${offsetX}rem;
+          left: ${arrowOffsetX}rem;
         `;
       case "top-end":
         return css`
           bottom: ${offsetY}rem;
-          right: ${offsetX}rem;
+          right: ${arrowOffsetX}rem;
         `;
-
       case "bottom-start":
         return css`
           top: ${offsetY}rem;
-          left: ${offsetX}rem;
+          left: ${arrowOffsetX}rem;
         `;
       case "bottom-end":
         return css`
           top: ${offsetY}rem;
-          right: ${offsetX}rem;
+          right: ${arrowOffsetX}rem;
         `;
     }
   };
@@ -153,9 +154,9 @@ function Content({
             css={css`
               position: relative;
               z-index: 100001;
-              background-color: ${DESIGN_SYSTEM_COLOR.blue600};
+              background: ${DESIGN_TOKEN_COLOR.gray900};
               padding: 1rem 1.4rem;
-              border-radius: 1.2rem;
+              border-radius: 0.8rem;
               width: max-content;
               ${animate &&
               css`
@@ -168,7 +169,7 @@ function Content({
                 visibility 0.2s ease;
             `}
           >
-            <Typography variant="CAPTION" color="white">
+            <Typography variant="body12SemiBold" color="white">
               {message}
             </Typography>
             <div
@@ -179,7 +180,7 @@ function Content({
                   width: 1.2rem;
                   height: 1.2rem;
                   border-radius: 0.2rem;
-                  background: ${DESIGN_SYSTEM_COLOR.blue600};
+                  background: ${DESIGN_TOKEN_COLOR.gray900};
                   visibility: visible;
                   content: "";
                   transform: rotate(45deg);
