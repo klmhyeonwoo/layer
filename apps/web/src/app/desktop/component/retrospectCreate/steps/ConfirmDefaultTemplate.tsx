@@ -117,38 +117,34 @@ export function ConfirmDefaultTemplate() {
             {!retroCreateData.hasChangedOriginal ? (
               <Typography variant={"S1"}>{displayTitle}</Typography>
             ) : (
-              <input
-                type="text"
-                value={customTemplateTitle}
-                onChange={(e) => {
-                  handleTitleChange(e.target.value);
-                }}
-                css={css`
-                  font-size: 2rem;
-                  font-weight: bold;
-                  width: 100%;
-                  margin-right: 1rem;
-                `}
-                onBlur={() => {
-                  if (displayTitle !== retroCreateData.formName) {
-                    toast.success("이름 수정이 완료되었어요!");
-                  }
-                }}
-              />
+              <Tooltip>
+                <Tooltip.Trigger>
+                  <input
+                    type="text"
+                    value={customTemplateTitle}
+                    onChange={(e) => {
+                      handleTitleChange(e.target.value);
+                    }}
+                    css={css`
+                      font-size: 2rem;
+                      font-weight: bold;
+                      width: 100%;
+                      margin-right: 1rem;
+                    `}
+                    onBlur={() => {
+                      if (displayTitle !== retroCreateData.formName) {
+                        toast.success("이름 수정이 완료되었어요!");
+                      }
+                    }}
+                  />
+                </Tooltip.Trigger>
+                <Tooltip.Content message="커스텀된 템플릿의 이름을 수정할 수 있어요!" placement="top-start" offsetX={-15} offsetY={10} hideOnClick />
+              </Tooltip>
             )}
 
             <Tag styles="margin-top: 0.8rem">{displayTag}</Tag>
           </div>
-          {retroCreateData.hasChangedOriginal ? (
-            <Tooltip>
-              <Tooltip.Trigger>
-                <QuestionEditButton />
-              </Tooltip.Trigger>
-              <Tooltip.Content message="커스텀된 템플릿의 이름을 수정할 수 있어요!" placement="top-end" offsetX={-15} offsetY={10} hideOnClick />
-            </Tooltip>
-          ) : (
-            <QuestionEditButton />
-          )}
+          <QuestionEditButton />
         </div>
         <Spacing size={3} />
 
