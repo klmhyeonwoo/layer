@@ -12,10 +12,7 @@ import AddSpacePage from "@/app/desktop/space/add/AddSpacePage";
 import useDesktopBasicModal from "@/hooks/useDesktopBasicModal";
 import { useRetrospectCreateReset } from "@/hooks/store/useRetrospectCreateReset";
 import { useSpaceCreateReset } from "@/hooks/store/useSpaceCreateReset";
-import { ANIMATION } from "@/style/common/animation";
-import { Typography } from "@/component/common/typography";
-import { DESIGN_TOKEN_COLOR } from "@/style/designTokens";
-import { Portal } from "@/component/common/Portal";
+import { Tooltip } from "@/component/common/tip/Tooltip";
 import { useApiPostSpacesImpression } from "@/hooks/api/backoffice/useApiPostSpacesImpression";
 import { trackEvent } from "@/lib/google-analytics";
 import { GA_EVENTS } from "@/lib/google-analytics/events";
@@ -23,6 +20,13 @@ import { GA_EVENTS } from "@/lib/google-analytics/events";
 interface SpacesListProps {
   currentTab: "전체" | "개인" | "팀";
 }
+
+// 온보딩 툴팁과 "스페이스 추가" 버튼 사이 세로 간격
+// LNB가 접히면 버튼이 작아져 더 위로 붙인다.
+const TOOLTIP_OFFSET_Y = {
+  collapsed: -6,
+  expanded: 14,
+} as const;
 
 export default function SpacesList({ currentTab }: SpacesListProps) {
   const { isCollapsed } = useNavigation();
@@ -34,6 +38,8 @@ export default function SpacesList({ currentTab }: SpacesListProps) {
   const { data: spaceData, hasNextPage, isPending, isFetchingNextPage, fetchNextPage } = useApiGetSpaceList(currentCategory);
 
   const spaces = spaceData?.pages.flatMap((page) => page.data) ?? [];
+
+  const isEmptySpace = spaces.length === 0;
 
   const { open: openDesktopModal } = useDesktopBasicModal();
   const { resetAll: resetRetrospectInfo } = useRetrospectCreateReset();
@@ -109,52 +115,25 @@ export default function SpacesList({ currentTab }: SpacesListProps) {
 
       <section
         css={css`
-          position: relative;
           width: 100%;
         `}
       >
-        <SpaceAddButton onClick={handleOpenSpaceAdd} />
-
-        {spaces.length === 0 && (
-          <Portal id="tooltip-root">
-            <div
-              css={css`
-                position: fixed;
-                top: 31rem;
-                left: 2rem;
-                transform: ${isCollapsed ? "translateX(-50%)" : "none"};
-                background-color: ${DESIGN_TOKEN_COLOR.gray900};
-                padding: 1rem 1.4rem;
-                border-radius: 0.8rem;
-                animation: ${ANIMATION.BOUNCE} 2s ease-in-out infinite;
-                white-space: nowrap;
-                z-index: 1000;
-              `}
-            >
-              <Typography variant="body12Medium" color="gray00">
-                스페이스를 생성해야 회고를 진행할 수 있어요!
-              </Typography>
-              <div
-                css={css`
-                  ::before {
-                    position: absolute;
-                    top: -0.4rem;
-                    left: 2rem;
-                    width: 1.2rem;
-                    height: 1.2rem;
-                    border-radius: 0.2rem;
-                    background: ${DESIGN_TOKEN_COLOR.gray900};
-                    visibility: visible;
-                    content: "";
-                    transform: rotate(45deg);
-                    transition:
-                      opacity 0.2s ease,
-                      visibility 0.2s ease;
-                  }
-                `}
-              />
-            </div>
-          </Portal>
+        {isEmptySpace ? (
+          <Tooltip>
+            <Tooltip.Trigger>
+              <SpaceAddButton onClick={handleOpenSpaceAdd} />
+            </Tooltip.Trigger>
+            <Tooltip.Content
+              message="스페이스를 생성해야 회고를 진행할 수 있어요!"
+              placement="bottom-start"
+              offsetY={isCollapsed ? TOOLTIP_OFFSET_Y.collapsed : TOOLTIP_OFFSET_Y.expanded}
+              arrowOffsetX={2}
+              autoHide={false}
+              hideOnClick={false}
+            />
+          </Tooltip>
+        ) : (
+          <SpaceAddButton onClick={handleOpenSpaceAdd} />
         )}
       </section>
 
