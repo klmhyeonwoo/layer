@@ -114,7 +114,7 @@ export default function TemplateCardManageToggleMenu({
                   autoClose: false,
                 },
                 onConfirm: handleCloseRetrospect,
-                onClose: close,
+                onClose: closeConfirmModal,
               })
             }
           >
@@ -155,7 +155,7 @@ export default function TemplateCardManageToggleMenu({
                   autoClose: false,
                 },
                 onConfirm: handleRemoveRetrospect,
-                onClose: close,
+                onClose: closeConfirmModal,
               })
             }
           >
