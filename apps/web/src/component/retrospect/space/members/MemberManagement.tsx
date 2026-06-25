@@ -45,8 +45,8 @@ export default function MemberManagement({ spaceId }: { spaceId: number }) {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const editDropdownRef = useRef<HTMLDivElement>(null);
 
-  const { mutate: changeLeader, isPending: isPendingChangeLeader } = useChangeLeader(spaceId);
-  const { mutate: kickMember, isPending: isPendingKickMember } = useApiKickMember(spaceId);
+  const { mutate: changeLeader } = useChangeLeader(spaceId);
+  const { mutate: kickMember } = useApiKickMember(spaceId);
 
   const handleClick = (e: React.MouseEvent) => {
     e.stopPropagation();
