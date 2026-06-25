@@ -14,10 +14,11 @@ import { useChangeLeader } from "@/hooks/api/space/members/useApiChangeLeader";
 import { useApiKickMember } from "@/hooks/api/space/members/useApiKickMembers";
 import { useApiGetMemers } from "@/hooks/api/space/members/useApiGetMembers";
 import { useApiOptionsGetSpaceInfo } from "@/hooks/api/space/useApiOptionsGetSpaceInfo";
-import { useQueries } from "@tanstack/react-query";
+import { useQueries, useQueryClient } from "@tanstack/react-query";
 import { InviteMemberModal } from "@/component/common/Modal/Member/InviteMemberModal";
 
 export default function MemberManagement({ spaceId }: { spaceId: number }) {
+  const queryClient = useQueryClient();
   const [{ data: spaceInfo }] = useQueries({
     queries: [useApiOptionsGetSpaceInfo(spaceId)],
   });
@@ -94,6 +95,10 @@ export default function MemberManagement({ spaceId }: { spaceId: number }) {
       },
       {
         onSuccess: () => {
+          // 스페이스 정보를 리패치
+          queryClient.invalidateQueries({ queryKey: ["spaces"] });
+          // 멤버 정보를 리패치 (혹여나 탈퇴하는 경우를 고려)
+          queryClient.invalidateQueries({ queryKey: ["getMembers", spaceId] });
           setCurrentLeaderId(selectedLeaderId);
           setIsConfirmModalOpen(false);
           setCurrentView("main");
@@ -124,31 +129,37 @@ export default function MemberManagement({ spaceId }: { spaceId: number }) {
     );
   };
 
-  useEffect(() => {
-    const leaderId = members.find((m) => m.isLeader)?.id;
-    if (leaderId) {
-      setCurrentLeaderId(leaderId);
-    }
-  }, [members]);
+  useEffect(
+    function syncCurrentLeaderId() {
+      const leaderId = members.find((m) => m.isLeader)?.id;
+      if (leaderId) {
+        setCurrentLeaderId(leaderId);
+      }
+    },
+    [members],
+  );
 
   // 팀원 관리 드롭다운 외부 클릭 시 뷰 닫기
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        setIsOpen(false);
-        setIsEditOpen(false);
-        setCurrentView("main");
+  useEffect(
+    function closeDropdownOnOutsideClick() {
+      function handleClickOutside(event: MouseEvent) {
+        if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+          setIsOpen(false);
+          setIsEditOpen(false);
+          setCurrentView("main");
+        }
       }
-    };
 
-    if (isOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
-    }
+      if (isOpen) {
+        document.addEventListener("mousedown", handleClickOutside);
+      }
 
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [isOpen]);
+      return () => {
+        document.removeEventListener("mousedown", handleClickOutside);
+      };
+    },
+    [isOpen],
+  );
 
   return (
     <div
