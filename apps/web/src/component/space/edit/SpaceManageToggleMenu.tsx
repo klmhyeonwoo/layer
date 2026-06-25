@@ -76,12 +76,9 @@ export default function SpaceManageToggleMenu({
    */
   const handleLeaveSpace = () => {
     openAlertModal({
-      title: "스페이스를 떠나시겠어요?",
-      contents: "떠난 스페이스는 다시 돌아올 수 없어요",
+      title: "해당 스페이스를 떠나시겠어요?",
+      contents: "내 리스트에서 스페이스가 사라져요",
       onConfirm: () => leaveSpace(spaceId),
-      options: {
-        buttonText: ["취소", "떠나기"],
-      },
     });
   };
 
