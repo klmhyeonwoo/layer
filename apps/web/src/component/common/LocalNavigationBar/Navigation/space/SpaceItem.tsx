@@ -212,26 +212,36 @@ export default function SpaceItem({ space }: SpaceItemProps) {
    * - URL의 spaceId와 현재 선택된 스페이스가 다를 때만 상태를 업데이트
    * - URL에 spaceId가 없으면 동기화하지 않음
    */
-  useEffect(() => {
-    const urlSpaceId = searchParams.get("spaceId") || location.pathname.match(/\/retrospectSpace\/(\d+)/)?.[1];
+  useEffect(
+    function syncCurrentSpaceWithUrl() {
+      const urlSpaceId = searchParams.get("spaceId") || location.pathname.match(/\/retrospectSpace\/(\d+)/)?.[1];
 
-    // * URL에서 spaceId를 찾을 수 없으면 동기화 불필요
-    if (!urlSpaceId) return;
+      // * URL에서 spaceId를 찾을 수 없으면 동기화 불필요
+      if (!urlSpaceId) return;
 
-    // * 현재 SpaceItem이 URL의 spaceId와 일치하는지 확인
-    const isMatchingSpace = String(spaceId) === urlSpaceId;
+      // * 현재 SpaceItem이 URL의 spaceId와 일치하는지 확인
+      const isMatchingSpace = String(spaceId) === urlSpaceId;
 
-    if (!isMatchingSpace) return;
+      if (!isMatchingSpace) return;
 
-    // * 현재 선택된 스페이스가 없거나 URL과 다른 경우에만 동기화
-    const hasNoCurrentSpace = !currentSpace;
-    const isDifferentSpace = currentSpace && String(currentSpace.id) !== urlSpaceId;
-    const needsSync = hasNoCurrentSpace || isDifferentSpace;
+      // * 현재 선택된 스페이스가 없거나 URL과 다른 경우에만 동기화
+      const hasNoCurrentSpace = !currentSpace;
+      const isDifferentSpace = currentSpace && String(currentSpace.id) !== urlSpaceId;
+      const needsSync = hasNoCurrentSpace || isDifferentSpace;
 
-    if (needsSync) {
+      if (needsSync) {
+        setCurrentSpace(space);
+      }
+    },
+    [location.pathname, searchParams, spaceId, space, currentSpace, setCurrentSpace],
+  );
+
+  useEffect(
+    function syncCurrentSpaceByLeaderChange() {
       setCurrentSpace(space);
-    }
-  }, [location.pathname, searchParams, spaceId, space, currentSpace, setCurrentSpace]);
+    },
+    [isLeader],
+  );
 
   return (
     <>

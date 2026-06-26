@@ -104,8 +104,11 @@ function Content({
     }
   }, [context.hideTooltip, hideOnClick]);
 
-  const { styles, attributes } = usePopper(context.referenceEl, context.popperEl, {
+  const { styles, attributes, update } = usePopper(context.referenceEl, context.popperEl, {
     placement,
+    // 포털(body)로 렌더되는 툴팁이 중첩 스크롤 컨테이너 안의 트리거를 따라갈 때
+    // absolute 전략은 스크롤마다 위치가 출렁인다. fixed(뷰포트 기준)로 두면 매끄럽게 따라온다.
+    strategy: "fixed",
     modifiers: [
       {
         name: "offset",
@@ -116,6 +119,20 @@ function Content({
       ...modifiers,
     ],
   });
+
+  // 트리거 크기가 바뀌면(예: 사이드바 접기/펼치기) 툴팁 위치를 다시 계산한다.
+  // ex LNB가 접혔을 때와 펼쳤을 때, 높이가 다른 경우가 발생함.
+  useEffect(() => {
+    const referenceEl = context.referenceEl;
+    if (!referenceEl || !update || typeof ResizeObserver === "undefined") return;
+
+    const resizeObserver = new ResizeObserver(() => {
+      update();
+    });
+    resizeObserver.observe(referenceEl);
+
+    return () => resizeObserver.disconnect();
+  }, [context.referenceEl, update]);
 
   const getArrowPosition = (placement: ContentProps["placement"]) => {
     const offsetY = -0.4;

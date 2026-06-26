@@ -8,16 +8,19 @@ import { MemberManagementHeader } from "./MemberManagementHeader";
 import { AddMemberButton } from "./AddMemberButton";
 import { MemberList } from "./MemberList";
 import { LeaderChangeView, MemberDeleteView } from "./MemberActionView";
-import { LeaderChangeConfirmModal } from "./LeaderChangeConfirmModal";
-import { MemberDeleteConfirmModal } from "./MemberDeleteConfirmModal";
 import { useChangeLeader } from "@/hooks/api/space/members/useApiChangeLeader";
 import { useApiKickMember } from "@/hooks/api/space/members/useApiKickMembers";
 import { useApiGetMemers } from "@/hooks/api/space/members/useApiGetMembers";
 import { useApiOptionsGetSpaceInfo } from "@/hooks/api/space/useApiOptionsGetSpaceInfo";
-import { useQueries } from "@tanstack/react-query";
+import { useQueries, useQueryClient } from "@tanstack/react-query";
 import { InviteMemberModal } from "@/component/common/Modal/Member/InviteMemberModal";
+import { useModal } from "@/hooks/useModal";
+import useClickOutside from "@/hooks/useClickOutside";
 
 export default function MemberManagement({ spaceId }: { spaceId: number }) {
+  const queryClient = useQueryClient();
+  const { open, close, setProgress } = useModal();
+
   const [{ data: spaceInfo }] = useQueries({
     queries: [useApiOptionsGetSpaceInfo(spaceId)],
   });
@@ -40,10 +43,6 @@ export default function MemberManagement({ spaceId }: { spaceId: number }) {
   // main: 팀원 관리 뷰, leaderChange: 대표자 변경 뷰, memberDelete: 팀원 삭제 뷰
   const [currentView, setCurrentView] = useState<"main" | "leaderChange" | "memberDelete">("main");
   const [currentLeaderId, setCurrentLeaderId] = useState<number | null>(null);
-  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
-  const [selectedLeaderId, setSelectedLeaderId] = useState<number | null>(null);
-  const [isDeleteConfirmModalOpen, setIsDeleteConfirmModalOpen] = useState(false);
-  const [selectedDeleteMemberId, setSelectedDeleteMemberId] = useState<number | null>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const editDropdownRef = useRef<HTMLDivElement>(null);
 
@@ -81,74 +80,93 @@ export default function MemberManagement({ spaceId }: { spaceId: number }) {
 
   // 대표자 변경 시 모달 열기
   const handleLeaderChange = (newLeaderId: number) => {
-    setSelectedLeaderId(newLeaderId);
-    setIsConfirmModalOpen(true);
-  };
-
-  // 대표자 변경 시 모달 확인 버튼 클릭 시 대표자 변경
-  const handleConfirmLeaderChange = () => {
-    changeLeader(
-      {
-        spaceId,
-        memberId: selectedLeaderId as number,
-      },
-      {
-        onSuccess: () => {
-          setCurrentLeaderId(selectedLeaderId);
-          setIsConfirmModalOpen(false);
-          setCurrentView("main");
+    // 대표자 변경 시 모달 확인 버튼 클릭 시 대표자 변경
+    function handleConfirmLeaderChange() {
+      setProgress(true);
+      changeLeader(
+        {
+          spaceId,
+          memberId: newLeaderId,
         },
+        {
+          onSuccess: () => {
+            // 스페이스 정보를 리패치
+            queryClient.invalidateQueries({ queryKey: ["spaces"] });
+            // 멤버 정보를 리패치 (혹여나 탈퇴하는 경우를 고려)
+            queryClient.invalidateQueries({ queryKey: ["getMembers", spaceId] });
+            setCurrentView("main");
+            close();
+          },
+          onSettled: () => {
+            setProgress(false);
+          },
+        },
+      );
+    }
+
+    open({
+      title: "대표자를 변경하시겠어요?",
+      contents: "대표자를 변경하면\n팀 스페이스 관리 권한이 변경돼요",
+      onConfirm: () => handleConfirmLeaderChange(),
+      onClose: () => close(),
+      options: {
+        buttonText: ["취소", "변경"],
+        autoClose: false,
       },
-    );
+    });
   };
 
   // 팀원 삭제 시 모달 열기
   const handleMemberDelete = (memberId: number) => {
-    setSelectedDeleteMemberId(memberId);
-    setIsDeleteConfirmModalOpen(true);
-  };
-
-  // 팀원 삭제 시 모달 확인 버튼 클릭 시 팀원 삭제
-  const handleConfirmMemberDelete = () => {
-    kickMember(
-      {
-        spaceId,
-        memberId: selectedDeleteMemberId as number,
-      },
-      {
-        onSuccess: () => {
-          setIsDeleteConfirmModalOpen(false);
-          setCurrentView("main");
+    // 팀원 삭제 시 모달 확인 버튼 클릭 시 팀원 삭제
+    function handleConfirmMemberDelete() {
+      setProgress(true);
+      kickMember(
+        {
+          spaceId,
+          memberId: memberId,
         },
+        {
+          onSuccess: () => {
+            setCurrentView("main");
+            close();
+          },
+          onSettled: () => {
+            setProgress(false);
+          },
+        },
+      );
+    }
+
+    open({
+      title: "팀원을 삭제하시겠어요?",
+      contents: "삭제하시면 다시 되돌릴 수 없어요",
+      onConfirm: () => handleConfirmMemberDelete(),
+      onClose: () => close(),
+      options: {
+        buttonText: ["취소", "삭제"],
+        autoClose: false,
       },
-    );
+    });
   };
 
-  useEffect(() => {
-    const leaderId = members.find((m) => m.isLeader)?.id;
-    if (leaderId) {
-      setCurrentLeaderId(leaderId);
-    }
-  }, [members]);
-
-  // 팀원 관리 드롭다운 외부 클릭 시 뷰 닫기
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        setIsOpen(false);
-        setIsEditOpen(false);
-        setCurrentView("main");
+  useEffect(
+    function syncCurrentLeaderId() {
+      const leaderId = members.find((m) => m.isLeader)?.id;
+      if (leaderId) {
+        setCurrentLeaderId(leaderId);
       }
-    };
+    },
+    [members],
+  );
 
-    if (isOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
-    }
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [isOpen]);
+  // 팀원 관리 드롭다운 > 외부 클릭 시, 해당 드롭다운 ON/OFF 여부
+  useClickOutside(dropdownRef, (event) => {
+    if (dropdownRef.current?.contains(event.target as Node)) return;
+    setIsOpen(false);
+    setIsEditOpen(false);
+    setCurrentView("main");
+  });
 
   return (
     <div
@@ -219,11 +237,6 @@ export default function MemberManagement({ spaceId }: { spaceId: number }) {
             </div>
           )}
         </MemberManagementDropdown>
-      )}
-
-      {isConfirmModalOpen && <LeaderChangeConfirmModal onConfirm={handleConfirmLeaderChange} onCancel={() => setIsConfirmModalOpen(false)} />}
-      {isDeleteConfirmModalOpen && (
-        <MemberDeleteConfirmModal onConfirm={handleConfirmMemberDelete} onCancel={() => setIsDeleteConfirmModalOpen(false)} />
       )}
       {spaceId && <InviteMemberModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} spaceId={spaceId} />}
     </div>
