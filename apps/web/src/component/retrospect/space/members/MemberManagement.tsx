@@ -15,6 +15,7 @@ import { useApiOptionsGetSpaceInfo } from "@/hooks/api/space/useApiOptionsGetSpa
 import { useQueries, useQueryClient } from "@tanstack/react-query";
 import { InviteMemberModal } from "@/component/common/Modal/Member/InviteMemberModal";
 import { useModal } from "@/hooks/useModal";
+import useClickOutside from "@/hooks/useClickOutside";
 
 export default function MemberManagement({ spaceId }: { spaceId: number }) {
   const queryClient = useQueryClient();
@@ -159,27 +160,13 @@ export default function MemberManagement({ spaceId }: { spaceId: number }) {
     [members],
   );
 
-  // 팀원 관리 드롭다운 외부 클릭 시 뷰 닫기
-  useEffect(
-    function closeDropdownOnOutsideClick() {
-      function handleClickOutside(event: MouseEvent) {
-        if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-          setIsOpen(false);
-          setIsEditOpen(false);
-          setCurrentView("main");
-        }
-      }
-
-      if (isOpen) {
-        document.addEventListener("mousedown", handleClickOutside);
-      }
-
-      return () => {
-        document.removeEventListener("mousedown", handleClickOutside);
-      };
-    },
-    [isOpen],
-  );
+  // 팀원 관리 드롭다운 > 외부 클릭 시, 해당 드롭다운 ON/OFF 여부
+  useClickOutside(dropdownRef, (event) => {
+    if (dropdownRef.current?.contains(event.target as Node)) return;
+    setIsOpen(false);
+    setIsEditOpen(false);
+    setCurrentView("main");
+  });
 
   return (
     <div
