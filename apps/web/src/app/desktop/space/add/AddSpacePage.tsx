@@ -704,9 +704,25 @@ function SelectRetrospectTemplateFunnel() {
 
 // 3단계 퍼널: 회고 템플릿 확정
 function ConfirmRetrospectTemplateFunnel() {
-  const { selectedRecommendTemplateId, setFlow, goBackToTemplateSelect, setDetailFrom } = useContext(PhaseContext);
+  const { selectedRecommendTemplateId, setFlow, goBackToTemplateSelect } = useContext(PhaseContext);
   if (!selectedRecommendTemplateId) return;
   const { data: templateData } = useGetSimpleTemplateInfo(selectedRecommendTemplateId);
+  const { openFunnelModal, closeFunnelModal } = useFunnelModal();
+
+  const handleShowTemplateDetailInfo = () => {
+    openFunnelModal({
+      title: templateData.title,
+      step: "listTemplateDetail",
+      contents: <TemplateListDetailItem templateId={templateData.id} readOnly={true} />,
+      templateTag: templateData.templateName,
+      overlayIndex: 100002,
+      onPrevious: closeFunnelModal,
+      options: {
+        quitButton: false,
+      },
+    });
+  };
+
   return (
     <Fragment>
       <Header title={`해당 템플릿으로\n회고를 진행할까요?`} />
@@ -730,8 +746,7 @@ function ConfirmRetrospectTemplateFunnel() {
                 cursor: pointer;
               `}
               onClick={() => {
-                setDetailFrom("confirm");
-                setFlow("INFO", 3);
+                handleShowTemplateDetailInfo();
               }}
             >
               <div

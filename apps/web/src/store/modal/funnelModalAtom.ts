@@ -11,4 +11,8 @@ export const FunnelModalState = atom<FunnelModalType>({
   onConfirm: () => {},
   onPrevious: () => {},
   overlayIndex: 10000,
+  options: {
+    quitButton: true,
+    previousButton: true,
+  },
 });

@@ -144,6 +144,9 @@ type DesktopModalHeaderProps = {
 };
 
 function DesktopFunnelModalHeader({ title, tag, backgroundColor, isRetrospectWrite, onBack, onClose }: DesktopModalHeaderProps) {
+  const { funnelModalState } = useFunnelModal();
+  const { previousButton, quitButton } = funnelModalState.options!;
+
   return (
     <div
       css={css`
@@ -157,7 +160,7 @@ function DesktopFunnelModalHeader({ title, tag, backgroundColor, isRetrospectWri
         background-color: ${backgroundColor};
       `}
     >
-      {onBack && (
+      {onBack && previousButton && (
         <button
           onClick={onBack}
           css={css`
@@ -205,33 +208,34 @@ function DesktopFunnelModalHeader({ title, tag, backgroundColor, isRetrospectWri
           </span>
         )}
       </div>
-
-      <button
-        onClick={onClose}
-        css={css`
-          display: flex;
-          align-items: center;
-          cursor: pointer;
-          transition: background-color 0.2s ease-in-out;
-          border-radius: 0.4rem;
-
-          &:hover {
-            background-color: ${!isRetrospectWrite && DESIGN_TOKEN_COLOR.gray100};
-          }
-        `}
-      >
-        <Icon
-          icon={"ic_quit"}
+      {onClose && quitButton && (
+        <button
+          onClick={onClose}
           css={css`
-            color: ${isRetrospectWrite ? "#fff" : "#212329"};
-            path {
-              fill: #212329;
-              transition: 0.4s all;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out;
+            border-radius: 0.4rem;
+
+            &:hover {
+              background-color: ${!isRetrospectWrite && DESIGN_TOKEN_COLOR.gray100};
             }
           `}
-          size={"2.4rem"}
-        />
-      </button>
+        >
+          <Icon
+            icon={"ic_quit"}
+            css={css`
+              color: ${isRetrospectWrite ? "#fff" : "#212329"};
+              path {
+                fill: #212329;
+                transition: 0.4s all;
+              }
+            `}
+            size={"2.4rem"}
+          />
+        </button>
+      )}
     </div>
   );
 }

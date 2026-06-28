@@ -41,6 +41,10 @@ export type FunnelModalType = {
   onConfirm?: () => void;
   onPrevious?: () => void;
   overlayIndex?: number; // 오버레이 z-index 조절용
+  options?: {
+    quitButton?: boolean;
+    previousButton?: boolean;
+  };
 };
 
 export type ActionModalType = {
