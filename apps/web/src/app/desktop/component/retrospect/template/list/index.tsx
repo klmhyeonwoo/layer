@@ -2,7 +2,11 @@ import { useRequiredParams } from "@/hooks/useRequiredParams";
 import { useTabs } from "@/hooks/useTabs";
 import { useToast } from "@/hooks/useToast";
 import { css } from "@emotion/react";
-import { createContext, useEffect, useRef } from "react";
+import { createContext, useEffect } from "react";
+import { useAtomValue } from "jotai";
+import { currentSpaceState } from "@/store/space/spaceAtom";
+import { branchLayoutAtom } from "@/store/auth/authAtom";
+import { isSpaceLeader } from "@/utils/userUtil";
 import { TemplateListTabButton } from "./TemplateListTab/TemplateListTabButton";
 import { CustomTemplateList } from "@/component/retrospect/template/list";
 import { useGetDefaultTemplateList } from "@/hooks/api/template/useGetDefaultTemplateList";
@@ -16,8 +20,6 @@ import { DESIGN_TOKEN_COLOR } from "@/style/designTokens";
 import { useSearchParams } from "react-router-dom";
 import { trackEvent } from "@/lib/google-analytics";
 import { GA_EVENTS } from "@/lib/google-analytics/events";
-import { useAtomValue } from "jotai";
-import { branchLayoutAtom } from "@/store/auth/authAtom";
 import { Button } from "@/component/common/button";
 import { useFunnelModal } from "@/hooks/useFunnelModal";
 import { TemplateRecommend } from "../recommend";
@@ -112,7 +114,8 @@ function RecommendBanner({ onClickRecommend }: { onClickRecommend: () => void })
 
 export function TemplateList() {
   const { toast } = useToast();
-  const isLeader = useRef(false);
+  const currentSpace = useAtomValue(currentSpaceState);
+  const isLeader = isSpaceLeader(currentSpace?.leader?.id);
   const params = useRequiredParams<{ spaceId?: string }>();
   const [searchParams] = useSearchParams();
   const spaceId = params.spaceId || searchParams.get("spaceId") || "";
@@ -163,7 +166,7 @@ export function TemplateList() {
           margin-top: 2rem;
         `}
       >
-        <TemplateListPageContext.Provider value={{ spaceId, isLeader: isLeader.current }}>
+        <TemplateListPageContext.Provider value={{ spaceId, isLeader }}>
           {branchLayout === "A" ? <InfoBanner /> : <RecommendBanner onClickRecommend={handleClickRecommend} />}
           <ul
             css={css`
