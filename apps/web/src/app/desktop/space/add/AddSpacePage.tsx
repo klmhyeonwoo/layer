@@ -1,8 +1,3 @@
-<<<<<<< Updated upstream
-=======
-import { spaceQueryKeys } from "@/hooks/api/space/queryKeys";
-import { Z_INDEX } from "@/style/zIndex";
->>>>>>> Stashed changes
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
@@ -84,6 +79,7 @@ import { splitTemplateIntroduction } from "@/utils/retrospect/splitTemplateIntro
 import { useGetSimpleTemplateInfo } from "@/hooks/api/template/useGetSimpleTemplateInfo";
 import { useApiPostTemplateChoiceListView } from "@/hooks/api/backoffice/useApiPostTemplateChoiceListView";
 import { resolveFormTag } from "@/utils/template/resolveFormTag";
+import { spaceQueryKeys } from "@/hooks/api/space/queryKeys";
 
 type flowType = "INFO" | "RECOMMEND" | "RECOMMEND_PROGRESS" | "CREATE" | "COMPLETE";
 type templateType = { id: number; title: string; imageUrl: string; templateName: string };
