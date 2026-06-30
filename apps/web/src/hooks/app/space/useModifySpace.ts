@@ -1,3 +1,4 @@
+import { spaceQueryKeys } from "@/hooks/api/space/queryKeys";
 import { api } from "@/api";
 import { useApiEditSpace } from "@/hooks/api/space/edit/useApiEditSpace";
 import { useApiDeleteSpace } from "@/hooks/api/space/useApiDeleteSpace";
@@ -80,12 +81,12 @@ export default function useModifySpace({ id }: ModifySpaceProps) {
         setterCurrentSpace((prev) => ({ ...prev, ...{ name, introduction } }) as Space);
         // 수정이 성공하면 현재 스페이스 정보를 상세 조회하는 쿼리를 리패치
         queryClient.invalidateQueries({
-          queryKey: ["getSpace", id],
+          queryKey: spaceQueryKeys.detail(id),
         });
       }
       // 수정이나 삭제가 성공하면 스페이스 목록과 현재 스페이스 정보를 리패치
       queryClient.invalidateQueries({
-        queryKey: ["spaces"],
+        queryKey: spaceQueryKeys.lists,
       });
     }
   }, [isEditSuccess, isDeleteSuccess]);

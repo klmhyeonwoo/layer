@@ -1,3 +1,8 @@
+<<<<<<< Updated upstream
+=======
+import { spaceQueryKeys } from "@/hooks/api/space/queryKeys";
+import { Z_INDEX } from "@/style/zIndex";
+>>>>>>> Stashed changes
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
@@ -1243,7 +1248,7 @@ function CreateRetrospectDeadlineFunnel() {
             toast.success("스페이스와 회고가 생성되었어요!");
             // 스페이스 생성이 완료되면 스페이스 목록을 리패치
             queryClient.invalidateQueries({
-              queryKey: ["spaces"],
+              queryKey: spaceQueryKeys.lists,
             });
             setFlow("COMPLETE", 0);
           },

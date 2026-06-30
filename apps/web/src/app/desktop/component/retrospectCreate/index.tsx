@@ -1,3 +1,5 @@
+import { retrospectQueryKeys } from "@/hooks/api/retrospect/queryKeys";
+import { spaceQueryKeys } from "@/hooks/api/space/queryKeys";
 import { createContext, useCallback, useEffect } from "react";
 import { ProgressBar } from "@/component/common/ProgressBar";
 import { css } from "@emotion/react";
@@ -63,11 +65,11 @@ export function RetrospectCreate() {
         onSuccess: async () => {
           // 사용자가 템플릿을 변경하거나, 회고를 생성할 때 변경된 정보가 있으면 스페이스 정보를 다시 가져옵니다.
           await queryClient.invalidateQueries({
-            queryKey: ["getSpaceInfo", spaceIdNumber],
+            queryKey: spaceQueryKeys.info(spaceIdNumber),
           });
           // 사용자가 회고를 추가했다면, 회고 리스트 조회를 다시 리패치합니다.
           await queryClient.invalidateQueries({
-            queryKey: ["getRetrospects", spaceIdNumber],
+            queryKey: retrospectQueryKeys.list(spaceIdNumber),
           });
           navigate(PATHS.spaceDetail(String(spaceIdNumber)));
           closeFunnelModal();

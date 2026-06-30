@@ -1,3 +1,8 @@
+<<<<<<< Updated upstream
+=======
+import { actionItemQueryKeys } from "@/hooks/api/actionItem/queryKeys";
+import { Z_INDEX } from "@/style/zIndex";
+>>>>>>> Stashed changes
 import { Button, ButtonProvider } from "@/component/common/button";
 import { TextArea } from "@/component/common/input";
 import { Icon } from "@/component/common/Icon";
@@ -25,7 +30,7 @@ type ActionItemAddSectionProps = {
 export default function ActionItemAddSection({ spaceId, retrospectId, onClose, variant = "team" }: ActionItemAddSectionProps) {
   const queryClient = useQueryClient();
   const isPersonal = variant === "personal";
-  const actionItemQueryKey = isPersonal ? ["getPersonalActionItemListBySpace", spaceId] : ["getTeamActionItemList", spaceId];
+  const actionItemQueryKey = isPersonal ? actionItemQueryKeys.personalBySpace(spaceId) : actionItemQueryKeys.team(spaceId);
 
   const { toast } = useToast();
   const { data: retrospects } = useQuery(useApiOptionsGetRetrospects(spaceId));

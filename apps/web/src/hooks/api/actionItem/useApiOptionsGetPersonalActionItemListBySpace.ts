@@ -1,3 +1,4 @@
+import { actionItemQueryKeys } from "@/hooks/api/actionItem/queryKeys";
 import { queryOptions } from "@tanstack/react-query";
 
 import { api } from "@/api";
@@ -10,7 +11,7 @@ const getPersonalActionItemListBySpace = async (spaceId: number) => {
 
 export const useApiOptionsGetPersonalActionItemListBySpace = (spaceId?: number) =>
   queryOptions({
-    queryKey: ["getPersonalActionItemListBySpace", spaceId] as const,
+    queryKey: actionItemQueryKeys.personalBySpace(spaceId),
     queryFn: () => {
       if (spaceId == null) throw new Error("spaceId is required");
       return getPersonalActionItemListBySpace(spaceId);

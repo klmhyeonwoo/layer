@@ -1,3 +1,4 @@
+import { spaceQueryKeys } from "@/hooks/api/space/queryKeys";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { api } from "@/api";
@@ -16,7 +17,7 @@ export const usePostRecentTemplateId = (spaceId: number) => {
     mutationFn: postRecentTemplateId,
     onSuccess: async () => {
       await queryClient.invalidateQueries({
-        queryKey: ["getSpaceInfo", String(spaceId)], //FIXME - query key 상수화
+        queryKey: spaceQueryKeys.info(spaceId),
       });
     },
   });

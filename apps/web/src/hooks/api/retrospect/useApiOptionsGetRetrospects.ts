@@ -1,3 +1,4 @@
+import { retrospectQueryKeys } from "@/hooks/api/retrospect/queryKeys";
 import { UseQueryOptions, useQuery } from "@tanstack/react-query";
 
 import { api } from "@/api";
@@ -19,7 +20,7 @@ const getAllRetrospectsFetch = async () => {
 };
 
 export const useApiOptionsGetRetrospects = (spaceId?: number): UseQueryOptions<RetrospectResponse, Error, RetrospectResponse["retrospects"]> => ({
-  queryKey: ["getRetrospects", spaceId],
+  queryKey: retrospectQueryKeys.list(spaceId),
   queryFn: () => spaceRetrospectFetch(spaceId),
   select(data) {
     return data.retrospects;
@@ -30,7 +31,7 @@ export const useApiOptionsGetRetrospects = (spaceId?: number): UseQueryOptions<R
 // * 모든 회고 리스트 요청 API 훅
 export const useGetAllRetrospects = (options?: Partial<UseQueryOptions<RetrospectResponse, Error, RetrospectResponse["retrospects"]>>) => {
   return useQuery({
-    queryKey: ["getAllRetrospects"],
+    queryKey: retrospectQueryKeys.all,
     queryFn: getAllRetrospectsFetch,
     select: (data) => data.retrospects,
     ...options,

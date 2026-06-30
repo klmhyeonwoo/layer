@@ -1,3 +1,4 @@
+import { retrospectQueryKeys } from "@/hooks/api/retrospect/queryKeys";
 import { useQuery } from "@tanstack/react-query";
 
 import { api } from "@/api";
@@ -24,7 +25,7 @@ export const useApiRecommendTemplate = (recommendValue: RecommendTemplateType) =
   };
 
   return useQuery({
-    queryKey: ["recommendTemplate", recommendValue],
+    queryKey: retrospectQueryKeys.recommendation(recommendValue),
     queryFn: () => recommendTemplate(recommendValue),
     staleTime: Infinity,
   });

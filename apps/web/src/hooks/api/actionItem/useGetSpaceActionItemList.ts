@@ -1,3 +1,4 @@
+import { actionItemQueryKeys } from "@/hooks/api/actionItem/queryKeys";
 import { useQuery } from "@tanstack/react-query";
 
 import { api } from "@/api";
@@ -25,6 +26,6 @@ export const useGetSpaceActionItemList = ({ spaceId }: { spaceId: number }) => {
 
   return useQuery({
     queryFn: () => getActionItemList(),
-    queryKey: [spaceId],
+    queryKey: actionItemQueryKeys.space(spaceId),
   });
 };

@@ -1,3 +1,4 @@
+import { analysisQueryKeys } from "@/hooks/api/analysis/queryKeys";
 import { useQuery } from "@tanstack/react-query";
 
 import { api } from "@/api";
@@ -50,7 +51,7 @@ export const useApiGetAnalysis = ({ spaceId, retrospectId }: { spaceId: number; 
 
   return useQuery({
     queryFn: () => getAnalysis(),
-    queryKey: [spaceId, retrospectId],
+    queryKey: analysisQueryKeys.result(spaceId, retrospectId),
     retry: 1,
   });
 };

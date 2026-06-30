@@ -1,3 +1,4 @@
+import { actionItemQueryKeys } from "@/hooks/api/actionItem/queryKeys";
 import { useState } from "react";
 import { DragDropContext, Draggable, Droppable, DropResult } from "@hello-pangea/dnd";
 
@@ -37,7 +38,7 @@ const INIT_TEMP_ID = -1;
 export default function ActionItemsEditSection({ spaceId, retrospectId, todoList, onClose, variant = "team" }: ActionItemsEditSectionProps) {
   const queryClient = useQueryClient();
   const isPersonal = variant === "personal";
-  const actionItemQueryKey = isPersonal ? ["getPersonalActionItemListBySpace", spaceId] : ["getTeamActionItemList", spaceId];
+  const actionItemQueryKey = isPersonal ? actionItemQueryKeys.personalBySpace(spaceId) : actionItemQueryKeys.team(spaceId);
   const listField = isPersonal ? "personalActionItemList" : "teamActionItemList";
 
   const { toast } = useToast();

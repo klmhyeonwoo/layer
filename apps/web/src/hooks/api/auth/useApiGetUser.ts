@@ -1,3 +1,4 @@
+import { authQueryKeys } from "@/hooks/api/auth/queryKeys";
 import { useSuspenseQuery } from "@tanstack/react-query";
 
 import { api } from "@/api";
@@ -10,7 +11,7 @@ export const useApiGetUser = () => {
   };
 
   return useSuspenseQuery({
-    queryKey: ["getUser"],
+    queryKey: authQueryKeys.user,
     queryFn: () => getUser(),
   });
 };

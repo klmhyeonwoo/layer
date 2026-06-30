@@ -1,3 +1,4 @@
+import { analysisQueryKeys } from "@/hooks/api/analysis/queryKeys";
 import { useQuery, UseQueryOptions } from "@tanstack/react-query";
 
 import { api } from "@/api";
@@ -22,7 +23,7 @@ export const useApiGetMemberAnalysis = ({ options }: UseApiGetMemberAnalysisProp
 
   return useQuery<AnalysisType>({
     queryFn: () => getAnalysis(),
-    queryKey: ["myAnalysis"],
+    queryKey: analysisQueryKeys.member,
     ...options,
   });
 };
