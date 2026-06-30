@@ -1,3 +1,4 @@
+import { Z_INDEX } from "@/style/zIndex";
 import { Icon } from "@/component/common/Icon";
 import { Typography } from "@/component/common/typography";
 import { DESIGN_TOKEN_COLOR } from "@/style/designTokens";
@@ -68,7 +69,7 @@ export function WriteDialogHeader({
       css={css`
         position: sticky;
         top: 0;
-        z-index: 10;
+        z-index: ${Z_INDEX.localOverlay};
         display: flex;
         justify-content: space-between;
         align-items: center;

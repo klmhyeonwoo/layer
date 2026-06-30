@@ -1,3 +1,4 @@
+import { Z_INDEX } from "@/style/zIndex";
 import { css, Interpolation, Theme } from "@emotion/react";
 
 import { useTabs } from "@/hooks/useTabs";
@@ -20,7 +21,7 @@ export function Tabs<T extends string>({ tabs, curTab, selectTab, TabComp, fullW
           position: sticky;
           top: 0;
           background-color: var(--parent-bg-color);
-          z-index: 10;
+          z-index: ${Z_INDEX.localOverlay};
         `,
       ]}
     >

@@ -1,3 +1,4 @@
+import { Z_INDEX } from "@/style/zIndex";
 import { Typography } from "@/component/common/typography";
 import { css } from "@emotion/react";
 import { Icon } from "@/component/common/Icon";
@@ -22,7 +23,7 @@ export default function ActionItemsTooltip({ isVisible }: ActionItemsTooltipProp
         border-radius: 1.6rem;
         padding: 1.6rem 1.8rem;
         box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
-        z-index: 1002;
+        z-index: ${Z_INDEX.contextual};
 
         /* 말풍선 화살표 */
         &::before {

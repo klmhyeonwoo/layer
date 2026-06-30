@@ -1,3 +1,4 @@
+import { Z_INDEX } from "@/style/zIndex";
 import { css } from "@emotion/react";
 import { Typography } from "@/component/common/typography";
 import { Tag } from "@/component/common/tag";
@@ -36,7 +37,7 @@ export function TemplateListItem({ id, title, tag, imageUrl }: DesktopTemplateLi
       step: "listTemplateDetail",
       contents: <TemplateListDetailItem templateId={id} />,
       templateTag: tag,
-      overlayIndex: 10002,
+      overlayIndex: Z_INDEX.popoverRaised,
     });
   };
 

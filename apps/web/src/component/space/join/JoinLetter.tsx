@@ -1,3 +1,4 @@
+import { Z_INDEX } from "@/style/zIndex";
 import { css } from "@emotion/react";
 import { useEffect, useState } from "react";
 
@@ -43,12 +44,12 @@ export function JoinLetter({ space, description, imgUrl, ...props }: JoinLetterP
         }
 
         #invite-card-top {
-          z-index: 1;
+          z-index: ${Z_INDEX.base};
           top: 0.5rem;
         }
 
         #invite-card-content {
-          z-index: 2;
+          z-index: ${Z_INDEX.raised};
           top: -10%;
           left: 0;
           right: 0;
@@ -56,11 +57,11 @@ export function JoinLetter({ space, description, imgUrl, ...props }: JoinLetterP
         }
 
         #invite-card-bottom {
-          z-index: 3;
+          z-index: ${Z_INDEX.elevated};
         }
 
         #invite-card-stamp {
-          z-index: 4;
+          z-index: ${Z_INDEX.foreground};
         }
 
         @keyframes slideUp {
@@ -137,7 +138,7 @@ export function JoinLetter({ space, description, imgUrl, ...props }: JoinLetterP
           height: 100%;
           position: absolute;
           bottom: 0;
-          z-index: -1;
+          z-index: ${Z_INDEX.behind};
           background: ${DESIGN_TOKEN_COLOR.blue400};
         `}
       ></div>

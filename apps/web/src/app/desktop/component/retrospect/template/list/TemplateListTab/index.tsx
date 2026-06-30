@@ -1,3 +1,4 @@
+import { Z_INDEX } from "@/style/zIndex";
 import { css } from "@emotion/react";
 
 import { useTabs } from "@/hooks/useTabs";
@@ -31,7 +32,7 @@ export function TemplateListTab<T extends string>({ tabs, curTab, selectTab, Tab
           display: inline-flex;
           gap: 0.8rem;
           padding-top: 2rem;
-          z-index: 1001;
+          z-index: ${Z_INDEX.sticky};
           border-bottom: 0.2rem solid ${DESIGN_TOKEN_COLOR.gray200};
         `,
       ]}

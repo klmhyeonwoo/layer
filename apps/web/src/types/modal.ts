@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 
 export type ModalType = {
   isOpen: boolean;
@@ -40,11 +40,11 @@ export type FunnelModalType = {
   onClose?: () => void;
   onConfirm?: () => void;
   onPrevious?: () => void;
-  overlayIndex?: number; // 오버레이 z-index 조절용
   options?: {
     quitButton?: boolean;
     previousButton?: boolean;
   };
+  overlayIndex?: CSSProperties["zIndex"]; // 오버레이 z-index 조절용
 };
 
 export type ActionModalType = {

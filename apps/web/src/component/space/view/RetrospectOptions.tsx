@@ -1,3 +1,4 @@
+import { Z_INDEX } from "@/style/zIndex";
 import { css } from "@emotion/react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -50,7 +51,7 @@ export function RetrospectOptions({
               right: 0;
               background-color: white;
               border-radius: 1.2rem;
-              z-index: 10;
+              z-index: ${Z_INDEX.localOverlay};
               width: 16.5rem;
               min-height: 9.2rem;
               height: fit-content;

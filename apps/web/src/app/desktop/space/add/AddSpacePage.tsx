@@ -1,3 +1,4 @@
+import { Z_INDEX } from "@/style/zIndex";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
@@ -576,7 +577,7 @@ function SelectRetrospectTemplateFunnel() {
         title: "템플릿 리스트",
         step: "listTemplate",
         contents: <TemplateList />,
-        overlayIndex: 10002,
+        overlayIndex: Z_INDEX.popoverRaised,
       });
     } else if (recommendTemplateType === "recommendation") {
       nextPhase();
@@ -1052,7 +1053,7 @@ function RecommendRetrospectTemplateConfirmFunnel() {
       step: "listTemplateDetail",
       contents: <TemplateListDetailItem templateId={id} />,
       templateTag: templateName,
-      overlayIndex: 100002,
+      overlayIndex: Z_INDEX.modalRaised,
       onPrevious: closeFunnelModal,
     });
   };

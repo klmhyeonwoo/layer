@@ -1,3 +1,4 @@
+import { Z_INDEX } from "@/style/zIndex";
 import { css } from "@emotion/react";
 import { Portal } from "@/component/common/Portal";
 import { ANIMATION } from "@/style/common/animation";
@@ -155,7 +156,7 @@ function DesktopFunnelModalHeader({ title, tag, backgroundColor, isRetrospectWri
         justify-content: space-between;
         position: sticky;
         top: 0;
-        z-index: 1001;
+        z-index: ${Z_INDEX.sticky};
         padding-top: 2.4rem;
         background-color: ${backgroundColor};
       `}

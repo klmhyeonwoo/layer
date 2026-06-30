@@ -1,3 +1,4 @@
+import { Z_INDEX } from "@/style/zIndex";
 import { css } from "@emotion/react";
 import Lottie from "lottie-react";
 import { useEffect } from "react";
@@ -37,7 +38,7 @@ export function LoadingModal({ purpose = "데이터를 가져오고 있어요" }
           display: flex;
           justify-content: center;
           align-items: center;
-          z-index: 999999;
+          z-index: ${Z_INDEX.dimmed};
           animation: ${ANIMATION.FADE_IN} 0.6s ease-in-out;
         `}
       >

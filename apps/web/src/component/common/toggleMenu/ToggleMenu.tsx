@@ -1,3 +1,4 @@
+import { Z_INDEX } from "@/style/zIndex";
 import { AnimatePresence, motion } from "framer-motion";
 import { Portal } from "../Portal";
 import { css } from "@emotion/react";
@@ -139,7 +140,7 @@ export function ToggleMenu({ children }: { children: ToggleMenuChild | ToggleMen
             border: none;
             border-radius: 1rem;
             box-shadow: 0 0.2rem 1rem rgba(0, 0, 0, 0.1);
-            z-index: 9999;
+            z-index: ${Z_INDEX.notification};
             width: 16.5rem;
             min-height: auto;
             overflow: hidden;

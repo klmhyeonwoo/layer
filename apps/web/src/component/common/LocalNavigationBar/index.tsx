@@ -1,3 +1,4 @@
+import { Z_INDEX } from "@/style/zIndex";
 import { css } from "@emotion/react";
 
 import Footer from "./Footer";
@@ -21,7 +22,7 @@ export default function LocalNavigationBar() {
         background-color: ${DESIGN_TOKEN_COLOR.gray00};
         display: flex;
         flex-direction: column;
-        z-index: 1000;
+        z-index: ${Z_INDEX.navigation};
         border-radius: 1.2rem;
         transition: width 0.3s ease-in-out;
         will-change: width;

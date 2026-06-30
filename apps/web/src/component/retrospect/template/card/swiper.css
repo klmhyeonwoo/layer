@@ -23,7 +23,6 @@
   transform: scale(1.2) !important;
   margin-right: 64px !important;
   margin-left: 48px;
-  z-index: 123123123;
   transition-delay: 1s !important;
 }
 

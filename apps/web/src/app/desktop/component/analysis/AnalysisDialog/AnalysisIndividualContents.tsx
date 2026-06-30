@@ -1,3 +1,4 @@
+import { Z_INDEX } from "@/style/zIndex";
 import { Icon, IconType } from "@/component/common/Icon/Icon";
 import { Typography } from "@/component/common/typography";
 import { SATISTFACTION_COLOR } from "@/component/write/template/template.const";
@@ -187,7 +188,7 @@ export default function AnalysisIndividualContents({ individualAnalysis }: Analy
                     display: flex;
                     align-items: center;
                     gap: 0.8rem;
-                    z-index: 10;
+                    z-index: ${Z_INDEX.localOverlay};
 
                     /* ---------- 말풍선 꼬리 ---------- */
                     &::after {

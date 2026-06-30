@@ -1,3 +1,4 @@
+import { Z_INDEX } from "@/style/zIndex";
 import React from "react";
 import { Typography } from "@/component/common/typography";
 import { DESIGN_TOKEN_COLOR } from "@/style/designTokens";
@@ -98,7 +99,7 @@ const EditDropdown = React.forwardRef<HTMLDivElement, EditDropdownProps>(({ onEd
         background-color: ${DESIGN_TOKEN_COLOR.white};
         border-radius: 0.8rem;
         box-shadow: 0 0.4rem 1.6rem rgba(0, 0, 0, 0.1);
-        z-index: 1001;
+        z-index: ${Z_INDEX.sticky};
         min-width: 12rem;
         border: 1px solid ${DESIGN_TOKEN_COLOR.gray200};
       `}

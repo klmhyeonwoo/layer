@@ -1,3 +1,4 @@
+import { Z_INDEX } from "@/style/zIndex";
 import { FunnelModalType } from "@/types/modal";
 import { atom } from "jotai";
 
@@ -10,9 +11,9 @@ export const FunnelModalState = atom<FunnelModalType>({
   onClose: () => {},
   onConfirm: () => {},
   onPrevious: () => {},
-  overlayIndex: 10000,
   options: {
     quitButton: true,
     previousButton: true,
   },
+  overlayIndex: Z_INDEX.overlay,
 });

@@ -1,3 +1,4 @@
+import { Z_INDEX } from "@/style/zIndex";
 import { Icon } from "@/component/common/Icon";
 import useDesktopBasicModal from "@/hooks/useDesktopBasicModal";
 import { DESIGN_TOKEN_COLOR } from "@/style/designTokens";
@@ -46,7 +47,7 @@ function QuestionEditButton({ onClose, ...props }: QuestionEditButtonProps) {
         color: ${DESIGN_TOKEN_COLOR.gray700};
         font-weight: 600;
         cursor: pointer;
-        z-index: 10;
+        z-index: ${Z_INDEX.localOverlay};
         background-color: white;
 
         &:hover {

@@ -1,3 +1,4 @@
+import { Z_INDEX } from "@/style/zIndex";
 import { css } from "@emotion/react";
 import { useState } from "react";
 
@@ -77,7 +78,7 @@ export function AnalysisContainer({ spaceId, retrospectId, hasAIAnalyzed }: Anal
               height: 3.4rem;
               background-color: transparent;
               border-radius: 0.6rem;
-              z-index: 1;
+              z-index: ${Z_INDEX.base};
               position: relative;
             `}
           >
@@ -92,7 +93,7 @@ export function AnalysisContainer({ spaceId, retrospectId, hasAIAnalyzed }: Anal
               height: 3.4rem;
               background-color: transparent;
               border-radius: 0.6rem;
-              z-index: 1;
+              z-index: ${Z_INDEX.base};
               position: relative;
             `}
           >

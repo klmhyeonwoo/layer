@@ -1,3 +1,4 @@
+import { Z_INDEX } from "@/style/zIndex";
 import { css } from "@emotion/react";
 import { useRegisterSW } from "virtual:pwa-register/react";
 
@@ -16,7 +17,7 @@ export function PWAUpdatePrompt() {
         bottom: 2.4rem;
         left: 50%;
         transform: translateX(-50%);
-        z-index: 9999;
+        z-index: ${Z_INDEX.notification};
         display: flex;
         align-items: center;
         gap: 1.2rem;

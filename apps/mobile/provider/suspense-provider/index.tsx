@@ -16,7 +16,7 @@ import { router } from "expo-router";
 import { createContext } from "@/lib/create-context";
 
 const [Provider, useSuspense] = createContext<{ backgroundColor: string }>(
-  "SUSPENCE_PROVIDER"
+  "SUSPENCE_PROVIDER",
 );
 
 const DEFAULT_MESSAGE = "데이터를 가져오고 있어요";
@@ -83,7 +83,7 @@ const SuspenseProvider = ({ children }: PropsWithChildren) => {
 const createAnimation = (
   value: Animated.Value,
   toValue: number,
-  duration: number
+  duration: number,
 ): Animated.CompositeAnimation => {
   return Animated.timing(value, {
     toValue,

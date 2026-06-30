@@ -1,3 +1,4 @@
+import { Z_INDEX } from "@/style/zIndex";
 import { css } from "@emotion/react";
 
 import { IconButton } from "@/component/common/button";
@@ -92,7 +93,7 @@ export function InviteMemberModal({ isOpen, onClose, spaceId }: InviteMemberModa
           display: flex;
           justify-content: center;
           align-items: center;
-          z-index: 99999;
+          z-index: ${Z_INDEX.modal};
         `}
         onClick={handleBackgroundClick}
       >

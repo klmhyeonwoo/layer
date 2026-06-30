@@ -1,3 +1,4 @@
+import { Z_INDEX } from "@/style/zIndex";
 import { css } from "@emotion/react";
 import { useRef } from "react";
 
@@ -30,7 +31,7 @@ export function Modal() {
           display: flex;
           justify-content: center;
           align-items: center;
-          z-index: 999999;
+          z-index: ${Z_INDEX.dimmed};
         `}
         ref={containerRef}
         onClick={(e) => {

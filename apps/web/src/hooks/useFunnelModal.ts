@@ -8,7 +8,6 @@ export const useFunnelModal = () => {
 
   const openFunnelModal = useCallback(
     ({ title, step, contents, templateTag, onConfirm, onClose, onPrevious, overlayIndex = 10000, options }: Omit<FunnelModalType, "isOpen">) => {
-      console.log(options);
       setState({
         isOpen: true,
         title,

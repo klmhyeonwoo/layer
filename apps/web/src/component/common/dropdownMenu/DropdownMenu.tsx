@@ -1,3 +1,4 @@
+import { Z_INDEX } from "@/style/zIndex";
 import { css } from "@emotion/react";
 import { Placement } from "@popperjs/core";
 import { OffsetModifier } from "@popperjs/core/lib/modifiers/offset";
@@ -102,7 +103,7 @@ function Content({ children }: { children: React.ReactNode }) {
           flex-direction: column;
           position: absolute;
           bottom: 0;
-          z-index: 10001;
+          z-index: ${Z_INDEX.popover};
           background-color: ${DESIGN_TOKEN_COLOR.gray00};
           border-radius: 0.8rem;
           box-shadow: ${DESIGN_TOKEN_COLOR.shadow.shadow300};

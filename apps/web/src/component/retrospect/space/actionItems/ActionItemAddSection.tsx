@@ -1,3 +1,4 @@
+import { Z_INDEX } from "@/style/zIndex";
 import { Button, ButtonProvider } from "@/component/common/button";
 import { TextArea } from "@/component/common/input";
 import { Icon } from "@/component/common/Icon";
@@ -189,7 +190,7 @@ export default function ActionItemAddSection({ spaceId, retrospectId, onClose, v
                 background-color: white;
                 border-radius: 0.8rem;
                 box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-                z-index: 10;
+                z-index: ${Z_INDEX.localOverlay};
                 overflow: hidden;
                 padding: 0.6rem 0;
 
