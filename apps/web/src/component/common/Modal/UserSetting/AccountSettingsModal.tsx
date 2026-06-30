@@ -14,26 +14,29 @@ import { DESIGN_TOKEN_COLOR } from "@/style/designTokens";
 import { ANIMATION } from "@/style/common/animation";
 import { Input, InputLabelContainer, Label } from "@/component/common/input";
 import { useInput } from "@/hooks/useInput";
-import { DeleteAccountConfirmModal } from "./DeleteAccountConfirmModal";
 import { api } from "@/api";
 import { usePatchUpdateProfile } from "@/hooks/api/user/usePatchUpdateProfile";
 import { useDeleteUser } from "@/hooks/api/user/useDeleteUser";
 
 import { useAtom } from "jotai";
 import { authAtom } from "@/store/auth/authAtom";
+import { useModal } from "@/hooks/useModal";
 
 type AccountSettingsModalProps = {
   isOpen: boolean;
   onClose: () => void;
 };
 
+type AccountSettingModalType = "settings" | "deleteAccount";
+
 export function AccountSettingsModal({ isOpen, onClose }: AccountSettingsModalProps) {
   if (!isOpen) return null;
 
-  const [modalView, setModalView] = useState<"settings" | "deleteAccount">("settings");
+  const [modalView, setModalView] = useState<AccountSettingModalType>("settings");
   const [{ name, imageUrl }] = useAtom(authAtom);
 
-  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const { open, close, setProgress } = useModal();
+
   const nameInput = useInput(name);
   const [selectedImage, setSelectedImage] = useState<string | null>(imageUrl);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -99,14 +102,31 @@ export function AccountSettingsModal({ isOpen, onClose }: AccountSettingsModalPr
     if (memberId) {
       // deleteReasons를 boolean 배열로 변환
       const booleans = [deleteReasons.notUseful, deleteReasons.uncomfortable, deleteReasons.other];
-
-      deleteUser({
-        memberId: Number(memberId),
-        booleans: booleans,
-        description: feedbackInput.value,
+      open({
+        title: "계정탈퇴",
+        contents: "계정 탈퇴시 모든 회고 정보가 날아가요.\n정말 계정 탈퇴를 진행하시겠어요?",
+        onConfirm: () => {
+          setProgress(true);
+          deleteUser(
+            {
+              memberId: Number(memberId),
+              booleans: booleans,
+              description: feedbackInput.value,
+            },
+            {
+              onSuccess: () => {
+                close();
+                onClose();
+              },
+              onSettled: () => setProgress(false),
+            },
+          );
+        },
+        onClose: () => close(),
+        options: {
+          autoClose: false,
+        },
       });
-      setShowConfirmModal(false);
-      onClose();
     }
   };
 
@@ -419,14 +439,17 @@ export function AccountSettingsModal({ isOpen, onClose }: AccountSettingsModalPr
                 onClick={() => {
                   if (modalView === "deleteAccount") {
                     if (hasSelectedReason) {
-                      setShowConfirmModal(true);
+                      handleDeleteAccount();
                     }
                   } else {
                     handleSubmit();
                   }
                 }}
               >
-                <Typography variant="subtitle16SemiBold" color={modalView === "deleteAccount" ? (hasSelectedReason ? "white" : "gray400") : hasChanges ? "white" : "gray400"}>
+                <Typography
+                  variant="subtitle16SemiBold"
+                  color={modalView === "deleteAccount" ? (hasSelectedReason ? "white" : "gray400") : hasChanges ? "white" : "gray400"}
+                >
                   {modalView === "deleteAccount" ? "계정 탈퇴" : "완료"}
                 </Typography>
               </Button>
@@ -434,9 +457,6 @@ export function AccountSettingsModal({ isOpen, onClose }: AccountSettingsModalPr
           </footer>
         </div>
       </div>
-
-      {/* 계정 탈퇴 확인 모달 */}
-      <DeleteAccountConfirmModal isOpen={showConfirmModal} onClose={() => setShowConfirmModal(false)} onConfirm={handleDeleteAccount} />
     </Portal>
   );
 }
