@@ -1,3 +1,4 @@
+import { templateQueryKeys } from "@/hooks/api/template/queryKeys";
 import { InfiniteData, useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { api } from "@/api";
@@ -16,9 +17,9 @@ export const useDeleteCustomTemplate = (spaceId: number) => {
   return useMutation({
     mutationFn: deleteCustomTemplate,
     onMutate: async (newTemplate) => {
-      await queryClient.cancelQueries({ queryKey: ["getCustomTemplateList", spaceId] });
-      const prevList = queryClient.getQueryData(["getCustomTemplateList", spaceId]);
-      queryClient.setQueryData(["getCustomTemplateList", spaceId], (old: InfiniteData<CustomTemplateListRes["customTemplateList"]>) => {
+      await queryClient.cancelQueries({ queryKey: templateQueryKeys.customList(spaceId) });
+      const prevList = queryClient.getQueryData(templateQueryKeys.customList(spaceId));
+      queryClient.setQueryData(templateQueryKeys.customList(spaceId), (old: InfiniteData<CustomTemplateListRes["customTemplateList"]>) => {
         return {
           ...old,
           pages: old.pages.map((page) => ({
@@ -31,14 +32,14 @@ export const useDeleteCustomTemplate = (spaceId: number) => {
     },
     onError: (error, _, context) => {
       console.error("mutate error with", error);
-      queryClient.setQueryData(["getCustomTemplateList", spaceId], context?.prevList);
+      queryClient.setQueryData(templateQueryKeys.customList(spaceId), context?.prevList);
     },
     onSettled: async () => {
-      await queryClient.invalidateQueries({ queryKey: ["getCustomTemplateList", spaceId] });
+      await queryClient.invalidateQueries({ queryKey: templateQueryKeys.customList(spaceId) });
     },
     onSuccess: async () => {
       await queryClient.invalidateQueries({
-        queryKey: ["getCustomTemplateList", spaceId], //FIXME - query key 상수화
+        queryKey: templateQueryKeys.customList(spaceId),
       });
     },
   });

@@ -1,3 +1,4 @@
+import { retrospectQueryKeys } from "@/hooks/api/retrospect/queryKeys";
 import { DesktopDateTimeInput } from "@/app/desktop/component/retrospectCreate/DesktopDateTimeInput";
 import { ButtonProvider } from "@/component/common/button";
 import { Icon } from "@/component/common/Icon";
@@ -225,7 +226,7 @@ export function ModifyRetrospect(props: {
       if (location.pathname === "/") {
         // 홈 화면에서 만약 수정을 할 경우에 모든 회고 목록을 invalidate 상태로 변경해줘요.
         await queryClient.invalidateQueries({
-          queryKey: ["getAllRetrospects"],
+          queryKey: retrospectQueryKeys.all,
         });
       }
     }

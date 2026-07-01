@@ -9,6 +9,10 @@ import { createContext } from "@/lib/create-context";
 
 const BRIDGE_PROVIER = "BRIDGE_PROVIER";
 
+const bridgeQueryKeys = {
+  safeAreaHeight: ["app", "height"] as const,
+};
+
 type AppBridgeState = {
   getSafeAreaHeight: () => Promise<number>;
   checkWebview: () => Promise<boolean>;
@@ -35,7 +39,7 @@ const [Provider, useBridge] = createContext<WebViewBridgeContext>(BRIDGE_PROVIER
 const BridgeProvider = ({ children }: PropsWithChildren) => {
   const bridgeRef = useRef(bridge).current;
   const { data: { safeAreaHeight, isWebViewBridgeAvailable } = {} } = useQuery({
-    queryKey: ["app", "height"],
+    queryKey: bridgeQueryKeys.safeAreaHeight,
     queryFn: async () => {
       const safeAreaHeight = await bridge.getSafeAreaHeight();
 

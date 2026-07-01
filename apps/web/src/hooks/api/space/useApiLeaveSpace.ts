@@ -1,3 +1,4 @@
+import { spaceQueryKeys } from "@/hooks/api/space/queryKeys";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 
@@ -19,7 +20,7 @@ export const useApiLeaveSpace = () => {
     mutationFn: (spaceId: number) => apiSpaceLeave(spaceId),
     onSuccess: () => {
       navigate(PATHS.home());
-      queryClient.invalidateQueries({ queryKey: ["spaces"] });
+      queryClient.invalidateQueries({ queryKey: spaceQueryKeys.lists });
       toast.success("스페이스를 성공적으로 떠났습니다.");
     },
     onError: (error) => {

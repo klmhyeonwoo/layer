@@ -1,3 +1,4 @@
+import { retrospectQueryKeys } from "@/hooks/api/retrospect/queryKeys";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { api } from "@/api";
@@ -17,9 +18,9 @@ export const useApiDeleteRetrospect = () => {
     mutationFn: ({ spaceId, retrospectId }: { spaceId: number | undefined; retrospectId: number | undefined }) =>
       retrospectDelete(spaceId, retrospectId),
     onMutate: async (variables) => {
-      await queryClient.cancelQueries({ queryKey: ["getRetrospects", variables.spaceId] });
-      const prevList = queryClient.getQueryData(["getRetrospects", variables.spaceId]);
-      queryClient.setQueryData(["getRetrospects", variables.spaceId], (old: RetrospectResponse) => {
+      await queryClient.cancelQueries({ queryKey: retrospectQueryKeys.list(variables.spaceId) });
+      const prevList = queryClient.getQueryData(retrospectQueryKeys.list(variables.spaceId));
+      queryClient.setQueryData(retrospectQueryKeys.list(variables.spaceId), (old: RetrospectResponse) => {
         return {
           ...old,
           retrospects: old?.retrospects?.filter((item) => item.retrospectId !== variables.retrospectId),
@@ -30,10 +31,10 @@ export const useApiDeleteRetrospect = () => {
     onError: (error, variables, context) => {
       toast.error("회고 삭제 중 오류가 발생했어요, 다시 시도해주세요");
       console.error("mutate error with", error);
-      queryClient.setQueryData(["getRetrospects", variables.spaceId], context?.prevList);
+      queryClient.setQueryData(retrospectQueryKeys.list(variables.spaceId), context?.prevList);
     },
     onSettled: async (_, __, variables) => {
-      await queryClient.invalidateQueries({ queryKey: ["getRetrospects", variables.spaceId] });
+      await queryClient.invalidateQueries({ queryKey: retrospectQueryKeys.list(variables.spaceId) });
     },
     onSuccess: () => {
       toast.success("회고 삭제가 완료되었어요");

@@ -1,3 +1,4 @@
+import { spaceQueryKeys } from "@/hooks/api/space/queryKeys";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { api } from "@/api";
@@ -18,7 +19,7 @@ export const useChangeLeader = (spaceId: number) => {
     mutationFn: (changeValue: { spaceId: number; memberId: number }) => changeLeader(changeValue),
     onSuccess: async () => {
       await queryClient.invalidateQueries({
-        queryKey: ["getMembers", spaceId],
+        queryKey: spaceQueryKeys.members(spaceId),
       });
       toast.success("대표자가 변경되었습니다.");
     },

@@ -1,3 +1,4 @@
+import { writeQueryKeys } from "@/hooks/api/write/queryKeys";
 import { useQuery } from "@tanstack/react-query";
 
 import { api } from "@/api";
@@ -25,7 +26,7 @@ export const useGetQuestions = ({ spaceId, retrospectId }: { spaceId: number; re
   };
 
   return useQuery({
-    queryKey: ["questions", spaceId, retrospectId],
+    queryKey: writeQueryKeys.questions(spaceId, retrospectId),
     queryFn: () => getQuestions(),
   });
 };

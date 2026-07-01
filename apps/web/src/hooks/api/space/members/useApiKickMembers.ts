@@ -1,3 +1,4 @@
+import { spaceQueryKeys } from "@/hooks/api/space/queryKeys";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { api } from "@/api";
@@ -16,10 +17,10 @@ export const useApiKickMember = (spaceId: number) => {
     mutationFn: (deleteValue: { spaceId: number; memberId: number }) => apiKickMember(deleteValue),
     onSuccess: async () => {
       await queryClient.invalidateQueries({
-        queryKey: ["getMembers", spaceId],
+        queryKey: spaceQueryKeys.members(spaceId),
       });
       await queryClient.invalidateQueries({
-        queryKey: ["getSpaceInfo", spaceId],
+        queryKey: spaceQueryKeys.info(spaceId),
       });
       toast.success("해당 팀원을 추방시켰습니다.");
     },

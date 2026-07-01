@@ -53,7 +53,7 @@ import { LoadingModal } from "@/component/common/Modal/LoadingModal";
 import { encryptId } from "@/utils/space/cryptoKey";
 import useDesktopBasicModal from "@/hooks/useDesktopBasicModal";
 import { useAtom, useAtomValue } from "jotai";
-import { CREATE_RETROSPECT_INIT_ATOM, DEFAULT_QUESTIONS } from "@/store/retrospect/retrospectCreate";
+import { CREATE_RETROSPECT_INIT_ATOM, DEFAULT_QUESTIONS, retrospectCreateAtom } from "@/store/retrospect/retrospectCreate";
 import { CREATE_SPACE_INIT_ATOM } from "@/store/space/spaceAtom";
 import { useRetrospectCreateReset } from "@/hooks/store/useRetrospectCreateReset";
 import { useSpaceCreateReset } from "@/hooks/store/useSpaceCreateReset";
@@ -80,6 +80,7 @@ import { splitTemplateIntroduction } from "@/utils/retrospect/splitTemplateIntro
 import { useGetSimpleTemplateInfo } from "@/hooks/api/template/useGetSimpleTemplateInfo";
 import { useApiPostTemplateChoiceListView } from "@/hooks/api/backoffice/useApiPostTemplateChoiceListView";
 import { resolveFormTag } from "@/utils/template/resolveFormTag";
+import { spaceQueryKeys } from "@/hooks/api/space/queryKeys";
 
 type flowType = "INFO" | "RECOMMEND" | "RECOMMEND_PROGRESS" | "CREATE" | "COMPLETE";
 type templateType = { id: number; title: string; imageUrl: string; templateName: string };
@@ -1215,6 +1216,7 @@ function CreateRetrospectQuestionFunnel() {
 function CreateRetrospectDeadlineFunnel() {
   const { questions, selectedRecommendTemplate, setSpaceId, deadLine, setDeadLine, title, description, selectedCategory, setFlow } =
     useContext(PhaseContext);
+  const { isNewForm, hasChangedOriginal } = useAtomValue(retrospectCreateAtom);
   const { selectedValue, isChecked, onChange } = useRadioButton();
   const { toast } = useToast();
   const { mutateAsync: postSpace } = useApiPostSpace();
@@ -1247,8 +1249,8 @@ function CreateRetrospectDeadlineFunnel() {
         introduction: "",
         questions: [...DEFAULT_QUESTIONS, ...questions],
         deadline: deadLine,
-        isNewForm: false,
-        hasChangedOriginal: false,
+        isNewForm,
+        hasChangedOriginal,
         curFormId: selectedRecommendTemplate!.id,
       } as RetrospectCreateReq;
       const res = await postRetrospect(
@@ -1258,7 +1260,7 @@ function CreateRetrospectDeadlineFunnel() {
             toast.success("스페이스와 회고가 생성되었어요!");
             // 스페이스 생성이 완료되면 스페이스 목록을 리패치
             queryClient.invalidateQueries({
-              queryKey: ["spaces"],
+              queryKey: spaceQueryKeys.lists,
             });
             setFlow("COMPLETE", 0);
           },

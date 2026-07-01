@@ -1,3 +1,4 @@
+import { retrospectQueryKeys } from "@/hooks/api/retrospect/queryKeys";
 import { useMutation } from "@tanstack/react-query";
 
 import { api } from "@/api";
@@ -18,7 +19,7 @@ export const useApiCloseRetrospect = () => {
     onSuccess: async (_, variable) => {
       toast.success("회고 마감이 완료되었어요");
       await queryClient.invalidateQueries({
-        queryKey: ["getRetrospects", variable.spaceId],
+        queryKey: retrospectQueryKeys.list(variable.spaceId),
       });
     },
     onError: () => {

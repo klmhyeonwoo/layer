@@ -1,3 +1,4 @@
+import { spaceQueryKeys } from "@/hooks/api/space/queryKeys";
 import { useQuery } from "@tanstack/react-query";
 
 import { api } from "@/api";
@@ -16,7 +17,7 @@ export const useApiGetMemers = (spaceId: number) => {
   };
 
   return useQuery({
-    queryKey: ["getMembers", spaceId],
+    queryKey: spaceQueryKeys.members(spaceId),
     queryFn: () => getMembers(spaceId),
   });
 };
