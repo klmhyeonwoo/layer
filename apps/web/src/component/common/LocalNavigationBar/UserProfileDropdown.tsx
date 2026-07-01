@@ -1,3 +1,4 @@
+import { Z_INDEX } from "@/style/zIndex";
 import { css } from "@emotion/react";
 import { forwardRef } from "react";
 
@@ -28,7 +29,7 @@ export const UserProfileDropdown = forwardRef<HTMLDivElement, UserProfileDropdow
           border-radius: 0.8rem;
           box-shadow: 0 0.4rem 1.2rem rgba(0, 0, 0, 0.1);
           margin-bottom: 0.8rem;
-          z-index: 1000;
+          z-index: ${Z_INDEX.navigation};
           overflow: hidden;
           animation: slideUp 0.2s ease-out;
           min-width: 16.5rem;

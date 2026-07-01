@@ -1,3 +1,4 @@
+import { Z_INDEX } from "@/style/zIndex";
 import { css } from "@emotion/react";
 import { useContext, useRef } from "react";
 
@@ -31,7 +32,7 @@ export function EntireListModal({ onClose, answers }: EntireListProps) {
         display: flex;
         justify-content: center;
         padding: 1.1rem 2rem;
-        z-index: 99999;
+        z-index: ${Z_INDEX.modal};
       `}
       ref={containerRef}
       onClick={(e) => {

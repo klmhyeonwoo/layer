@@ -1,3 +1,4 @@
+import { Z_INDEX } from "@/style/zIndex";
 import { Fragment, useCallback, useEffect, useRef } from "react";
 import ReactCanvasConfetti from "react-canvas-confetti";
 import { type IProps } from "react-canvas-confetti";
@@ -10,7 +11,7 @@ const canvasStyles = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  zIndex: 9999,
+  zIndex: Z_INDEX.notification,
 } as React.CSSProperties;
 
 type ConfettiProps = {

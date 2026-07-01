@@ -1,3 +1,4 @@
+import { Z_INDEX } from "@/style/zIndex";
 import { css } from "@emotion/react";
 import { useContext } from "react";
 
@@ -45,7 +46,7 @@ export function ConfirmDefaultTemplate({ goEdit }: ConfirmDefaultTemplateProps) 
               gap: 1.2rem;
               position: relative;
               background-color: transparent;
-              z-index: 10;
+              z-index: ${Z_INDEX.localOverlay};
             `}
           >
             <Typography variant={"S1"}>{title}</Typography>
@@ -59,7 +60,7 @@ export function ConfirmDefaultTemplate({ goEdit }: ConfirmDefaultTemplateProps) 
               right: 0;
               bottom: 0;
               margin: -1.2rem;
-              z-index: 9;
+              z-index: ${Z_INDEX.localUnderlay};
               background: linear-gradient(to bottom, #fff 95%, transparent 100%);
             `}
           />

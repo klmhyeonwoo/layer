@@ -1,3 +1,4 @@
+import { Z_INDEX } from "@/style/zIndex";
 import { css, Interpolation, Theme } from "@emotion/react";
 import { ReactElement, useEffect, useState } from "react";
 
@@ -39,7 +40,7 @@ export function BottomSheet({ id, title, contents, handler = false, quitButton =
           transform: translate3d(-50%, -50%, 0);
           background-color: ${isVisible ? `rgba(24, 24, 24, 60%)` : `transparent`};
           transition: 0.4s all;
-          z-index: 10001;
+          z-index: ${Z_INDEX.popover};
 
           ${!isVisible &&
           css`
@@ -64,7 +65,7 @@ export function BottomSheet({ id, title, contents, handler = false, quitButton =
             border-top-right-radius: 1.6rem;
             box-shadow: 0 4rem 4rem rgba(0, 0, 0, 0.25);
             transition: transform 200ms ease-out;
-            z-index: 100000000;
+            z-index: ${Z_INDEX.bottomSheet};
             padding: 2rem;
             box-sizing: border-box;
             background-color: #fff;

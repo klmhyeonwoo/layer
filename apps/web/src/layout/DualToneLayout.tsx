@@ -1,3 +1,4 @@
+import { Z_INDEX } from "@/style/zIndex";
 import { css } from "@emotion/react";
 import { ReactNode, useEffect, useRef, useState } from "react";
 
@@ -39,7 +40,7 @@ export function DualToneLayout({
           top: 0;
           width: 100%;
           max-width: 48rem;
-          z-index: 999;
+          z-index: ${Z_INDEX.sheetContent};
         `}
       >
         <AppBar title={title} theme={topTheme} height={height} LeftComp={LeftComp} RightComp={RightComp} />

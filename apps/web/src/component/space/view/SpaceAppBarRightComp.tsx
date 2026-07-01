@@ -1,3 +1,4 @@
+import { Z_INDEX } from "@/style/zIndex";
 import { css, keyframes } from "@emotion/react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
@@ -125,7 +126,7 @@ export function SpaceAppBarRightComp({ spaceId, onDeleteClick, isTooltipVisible,
                 border: 1px solid #ccc;
                 border-radius: 1rem;
                 box-shadow: 0 0.2rem 1rem rgba(0, 0, 0, 0.1);
-                z-index: 99;
+                z-index: ${Z_INDEX.appBar};
                 width: 16.5rem;
                 height: auto;
                 padding: 0.3rem 2rem;

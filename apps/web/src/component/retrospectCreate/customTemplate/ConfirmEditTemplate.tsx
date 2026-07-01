@@ -1,3 +1,4 @@
+import { Z_INDEX } from "@/style/zIndex";
 import { css } from "@emotion/react";
 import { useAtom } from "jotai";
 import { useContext, useMemo, useRef } from "react";
@@ -75,7 +76,7 @@ export function ConfirmEditTemplate({ goNext, goPrev }: QuestionsListProps) {
               gap: 1.2rem;
               position: relative;
               background-color: transparent;
-              z-index: 10;
+              z-index: ${Z_INDEX.localOverlay};
             `}
           >
             <div
@@ -126,7 +127,7 @@ export function ConfirmEditTemplate({ goNext, goPrev }: QuestionsListProps) {
               right: 0;
               bottom: 0;
               margin: -1.2rem;
-              z-index: 9;
+              z-index: ${Z_INDEX.localUnderlay};
               background: linear-gradient(to bottom, #fff 95%, transparent 100%);
             `}
           />

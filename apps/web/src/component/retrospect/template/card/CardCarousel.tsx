@@ -1,4 +1,5 @@
 import { Swiper, SwiperSlide } from "swiper/react";
+import { css } from "@emotion/react";
 
 import "swiper/css";
 import "swiper/css/pagination";
@@ -15,6 +16,7 @@ import { PATHS } from "@layer/shared";
 import { getDeviceType } from "@/utils/deviceUtils";
 import { useFunnelModal } from "@/hooks/useFunnelModal";
 import RecommendDone from "@/app/desktop/component/retrospect/template/recommend/Done";
+import { Z_INDEX } from "@/style/zIndex";
 
 type CardCarouselProp = {
   spaceId?: number;
@@ -75,6 +77,11 @@ export function CardCarousel({ templateId, spaceId, templateArr }: CardCarouselP
         swiper.autoplay.start();
       }}
       className="card-carousel"
+      css={css`
+        & .animate {
+          z-index: ${Z_INDEX.activeSlide};
+        }
+      `}
     >
       {templateArr.map((template, index) => (
         <SwiperSlide key={index} className={getSlideClassName(index)}>

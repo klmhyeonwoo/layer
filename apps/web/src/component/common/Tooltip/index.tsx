@@ -1,3 +1,4 @@
+import { Z_INDEX } from "@/style/zIndex";
 import { DESIGN_TOKEN_COLOR } from "@/style/designTokens";
 import {
   createContext,
@@ -242,7 +243,7 @@ const TooltipContent = ({ children, className = "", sideOffset = 16, tag, arrow 
     const trigger = triggerRef.current;
     const style: CSSProperties = {
       position: "absolute",
-      zIndex: 9999,
+      zIndex: Z_INDEX.notification,
       backgroundColor: theme === "blue" ? DESIGN_TOKEN_COLOR.blue600 : DESIGN_TOKEN_COLOR.gray900,
       color: "#FFFFFF",
       padding: "1rem 1.4rem",

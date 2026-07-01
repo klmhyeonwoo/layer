@@ -1,3 +1,4 @@
+import { Z_INDEX } from "@/style/zIndex";
 import { COOKIE_KEYS, LOCAL_STORAGE_KEYS } from "@/config/storage-keys";
 import Cookies from "js-cookie";
 
@@ -199,7 +200,7 @@ export default function ActionItemsWrapper() {
               border: 1px solid ${DESIGN_TOKEN_COLOR.gray300};
               top: 50%;
               transform: translateY(-50%);
-              z-index: 10;
+              z-index: ${Z_INDEX.localOverlay};
 
               &::after {
                 font-size: 1.4rem;

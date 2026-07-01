@@ -1,3 +1,4 @@
+import { Z_INDEX } from "@/style/zIndex";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
@@ -577,7 +578,7 @@ function SelectRetrospectTemplateFunnel() {
         title: "템플릿 리스트",
         step: "listTemplate",
         contents: <TemplateList />,
-        overlayIndex: 10002,
+        overlayIndex: Z_INDEX.popoverRaised,
       });
     } else if (recommendTemplateType === "recommendation") {
       nextPhase();
@@ -705,9 +706,25 @@ function SelectRetrospectTemplateFunnel() {
 
 // 3단계 퍼널: 회고 템플릿 확정
 function ConfirmRetrospectTemplateFunnel() {
-  const { selectedRecommendTemplateId, setFlow, goBackToTemplateSelect, setDetailFrom } = useContext(PhaseContext);
+  const { selectedRecommendTemplateId, setFlow, goBackToTemplateSelect } = useContext(PhaseContext);
   if (!selectedRecommendTemplateId) return;
   const { data: templateData } = useGetSimpleTemplateInfo(selectedRecommendTemplateId);
+  const { openFunnelModal, closeFunnelModal } = useFunnelModal();
+
+  const handleShowTemplateDetailInfo = () => {
+    openFunnelModal({
+      title: templateData.title,
+      step: "listTemplateDetail",
+      contents: <TemplateListDetailItem templateId={templateData.id} readOnly={true} />,
+      templateTag: templateData.templateName,
+      overlayIndex: 100002,
+      onPrevious: closeFunnelModal,
+      options: {
+        quitButton: false,
+      },
+    });
+  };
+
   return (
     <Fragment>
       <Header title={`해당 템플릿으로\n회고를 진행할까요?`} />
@@ -731,8 +748,7 @@ function ConfirmRetrospectTemplateFunnel() {
                 cursor: pointer;
               `}
               onClick={() => {
-                setDetailFrom("confirm");
-                setFlow("INFO", 3);
+                handleShowTemplateDetailInfo();
               }}
             >
               <div
@@ -1038,7 +1054,7 @@ function RecommendRetrospectTemplateConfirmFunnel() {
       step: "listTemplateDetail",
       contents: <TemplateListDetailItem templateId={id} />,
       templateTag: templateName,
-      overlayIndex: 100002,
+      overlayIndex: Z_INDEX.modalRaised,
       onPrevious: closeFunnelModal,
     });
   };

@@ -1,3 +1,4 @@
+import { Z_INDEX } from "@/style/zIndex";
 import { css } from "@emotion/react";
 import { useState } from "react";
 
@@ -55,7 +56,7 @@ export function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
           display: flex;
           justify-content: center;
           align-items: center;
-          z-index: 99999;
+          z-index: ${Z_INDEX.modal};
         `}
         onClick={handleBackgroundClick}
       >

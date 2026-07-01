@@ -1,3 +1,4 @@
+import { Z_INDEX } from "@/style/zIndex";
 import { css } from "@emotion/react";
 
 import { Portal } from "@/component/common/Portal";
@@ -49,7 +50,7 @@ export default function DesktopModal() {
           display: flex;
           justify-content: center;
           align-items: center;
-          z-index: 10001;
+          z-index: ${Z_INDEX.popover};
           background-color: rgba(0, 0, 0, 0.5);
         `}
       >

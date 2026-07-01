@@ -1,3 +1,4 @@
+import { Z_INDEX } from "@/style/zIndex";
 import { css } from "@emotion/react";
 import { forwardRef, useEffect, useMemo, useRef } from "react";
 import type { CalendarProps } from "react-calendar";
@@ -69,7 +70,7 @@ const DesktopDateTimePicker = forwardRef<HTMLDivElement, DesktopDateTimePickerPr
         box-shadow:
           0 4px 12px 0 rgba(6, 8, 12, 0.12),
           0 4px 8px 0 rgba(6, 8, 12, 0.08);
-        z-index: 10;
+        z-index: ${Z_INDEX.localOverlay};
         gap: ${isDesktop ? "1.6rem" : "2.8rem"};
       `}
       ref={ref}
