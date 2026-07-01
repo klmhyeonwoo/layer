@@ -1,3 +1,4 @@
+import { actionItemQueryKeys } from "@/hooks/api/actionItem/queryKeys";
 import { css } from "@emotion/react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import Cookies from "js-cookie";
@@ -106,7 +107,7 @@ export function ActionItemListView({ isPossibleMake, teamActionList, spaceId, le
 
           if (spaceId) {
             await queryClient.invalidateQueries({
-              queryKey: ["getTeamActionItemList", spaceId.toString()],
+              queryKey: actionItemQueryKeys.team(spaceId),
             });
           }
         },

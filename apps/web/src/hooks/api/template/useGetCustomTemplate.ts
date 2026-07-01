@@ -1,3 +1,4 @@
+import { templateQueryKeys } from "@/hooks/api/template/queryKeys";
 import { useSuspenseQuery } from "@tanstack/react-query";
 
 import { api } from "@/api";
@@ -10,7 +11,7 @@ export const useGetCustomTemplate = (formId: number) => {
   };
 
   return useSuspenseQuery({
-    queryKey: ["customTemplate", formId],
+    queryKey: templateQueryKeys.custom(formId),
     queryFn: getCustomTemplate,
   });
 };

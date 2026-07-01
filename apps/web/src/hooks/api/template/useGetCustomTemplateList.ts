@@ -1,3 +1,4 @@
+import { templateQueryKeys } from "@/hooks/api/template/queryKeys";
 import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
 
 import { api } from "@/api";
@@ -15,7 +16,7 @@ export const useGetCustomTemplateList = (spaceId: number) => {
   };
 
   return useSuspenseInfiniteQuery<CustomTemplateListRes["customTemplateList"]>({
-    queryKey: ["getCustomTemplateList", spaceId],
+    queryKey: templateQueryKeys.customList(spaceId),
     queryFn: ({ pageParam }) => getCustomTemplateList(pageParam as number).then((res) => res.customTemplateList),
     initialPageParam: 0,
     getNextPageParam: (lastPage) => (lastPage.last ? undefined : lastPage.pageable.pageNumber + 1),

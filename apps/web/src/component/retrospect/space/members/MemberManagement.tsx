@@ -1,3 +1,4 @@
+import { spaceQueryKeys } from "@/hooks/api/space/queryKeys";
 import React, { useState, useRef, useEffect } from "react";
 import { css } from "@emotion/react";
 import Cookies from "js-cookie";
@@ -91,9 +92,9 @@ export default function MemberManagement({ spaceId }: { spaceId: number }) {
         {
           onSuccess: () => {
             // 스페이스 정보를 리패치
-            queryClient.invalidateQueries({ queryKey: ["spaces"] });
+            queryClient.invalidateQueries({ queryKey: spaceQueryKeys.lists });
             // 멤버 정보를 리패치 (혹여나 탈퇴하는 경우를 고려)
-            queryClient.invalidateQueries({ queryKey: ["getMembers", spaceId] });
+            queryClient.invalidateQueries({ queryKey: spaceQueryKeys.members(spaceId) });
             setCurrentView("main");
             close();
           },

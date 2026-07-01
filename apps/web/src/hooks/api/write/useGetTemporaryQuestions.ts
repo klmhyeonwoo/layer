@@ -1,3 +1,4 @@
+import { writeQueryKeys } from "@/hooks/api/write/queryKeys";
 import { useQuery } from "@tanstack/react-query";
 
 import { api } from "@/api";
@@ -20,7 +21,7 @@ export const useGetTemporaryQuestions = ({ spaceId, retrospectId }: { spaceId: n
   };
 
   return useQuery({
-    queryKey: ["temporaryQuestion", spaceId, retrospectId],
+    queryKey: writeQueryKeys.temporaryQuestions(spaceId, retrospectId),
     queryFn: () => getTemporaryQuestions(),
     refetchOnWindowFocus: false,
     retry: 1,

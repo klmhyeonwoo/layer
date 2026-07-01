@@ -1,3 +1,4 @@
+import { retrospectQueryKeys } from "@/hooks/api/retrospect/queryKeys";
 import { useMutation } from "@tanstack/react-query";
 import { useResetAtom } from "jotai/utils";
 import { useNavigate } from "react-router-dom";
@@ -37,7 +38,7 @@ export const usePostRetrospectCreate = (spaceId?: number) => {
 
       resetRetroCreateData();
       queryClient.invalidateQueries({
-        queryKey: ["getRetrospects", String(spaceId)],
+        queryKey: retrospectQueryKeys.list(spaceId),
       });
 
       if (isMobile) {

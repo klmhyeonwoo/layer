@@ -1,3 +1,4 @@
+import { templateQueryKeys } from "@/hooks/api/template/queryKeys";
 import { useSuspenseQuery } from "@tanstack/react-query";
 
 import { api } from "@/api";
@@ -33,7 +34,7 @@ export const useGetTemplateInfo = ({ templateId }: { templateId: number }) => {
 
   return useSuspenseQuery({
     queryFn: () => getTemplateInfo(),
-    queryKey: ["templateInfo", templateId],
+    queryKey: templateQueryKeys.detail(templateId),
     refetchOnWindowFocus: false,
   });
 };
