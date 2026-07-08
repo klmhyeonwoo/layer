@@ -1,3 +1,4 @@
+import { spaceQueryKeys } from "@/hooks/api/space/queryKeys";
 import { useInfiniteQuery, UseInfiniteQueryOptions } from "@tanstack/react-query";
 
 import { api } from "@/api";
@@ -37,7 +38,7 @@ export const useApiGetSpaceList = (category: string, options?: UseApiGetSpaceLis
   const { pageSize = DEFAULT_PAGE_SIZE, ...queryOptions } = options || {};
 
   return useInfiniteQuery<SpaceFetchResponse>({
-    queryKey: ["spaces", category],
+    queryKey: spaceQueryKeys.list(category),
     queryFn: ({ pageParam = 0 }) => {
       return spaceFetch(pageParam as number, category, pageSize);
     },

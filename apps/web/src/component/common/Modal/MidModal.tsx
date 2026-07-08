@@ -1,3 +1,4 @@
+import { Z_INDEX } from "@/style/zIndex";
 import { css } from "@emotion/react";
 import { useRef } from "react";
 
@@ -41,7 +42,7 @@ export function MidModal({ title, content, leftText = "취소", rightText = "삭
         justify-content: center;
         text-align: center;
         box-sizing: border-box;
-        z-index: 99999;
+        z-index: ${Z_INDEX.modal};
       `}
       ref={containerRef}
       onClick={handleBackgroundClick}

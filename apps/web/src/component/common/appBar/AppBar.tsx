@@ -1,3 +1,4 @@
+import { Z_INDEX } from "@/style/zIndex";
 import { css, Interpolation, Theme } from "@emotion/react";
 import { useAtom } from "jotai";
 import { forwardRef, useEffect } from "react";
@@ -59,7 +60,7 @@ export const AppBar = forwardRef<HTMLDivElement, AppBarProps>(function (
             left: 50%;
             transform: translateX(-50%);
             box-sizing: border-box;
-            z-index: 99;
+            z-index: ${Z_INDEX.appBar};
           `,
           style,
         ]}

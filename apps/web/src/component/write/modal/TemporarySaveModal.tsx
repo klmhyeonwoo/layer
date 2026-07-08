@@ -1,3 +1,4 @@
+import { Z_INDEX } from "@/style/zIndex";
 import { css } from "@emotion/react";
 import { useRef } from "react";
 
@@ -41,7 +42,7 @@ export function TemporarySaveModal({
         justify-content: center;
         text-align: center;
         box-sizing: border-box;
-        z-index: 10001;
+        z-index: ${Z_INDEX.popover};
       `}
       ref={containerRef}
       onClick={(e) => {

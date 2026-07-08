@@ -1,3 +1,4 @@
+import { Z_INDEX } from "@/style/zIndex";
 import "swiper/css";
 import "swiper/css/navigation";
 import { Icon } from "@/component/common/Icon";
@@ -215,7 +216,7 @@ export default function DesktopLoginPage() {
                 border: 0.11rem solid ${DESIGN_TOKEN_COLOR.gray300};
                 top: 55%;
                 transform: translateY(-50%);
-                z-index: 10;
+                z-index: ${Z_INDEX.localOverlay};
                 transition: all 0.4s;
 
                 &::after {

@@ -1,3 +1,4 @@
+import { actionItemQueryKeys } from "@/hooks/api/actionItem/queryKeys";
 import { queryOptions } from "@tanstack/react-query";
 
 import { api } from "@/api";
@@ -23,7 +24,7 @@ const getRecentPersonalActionItemList = async (spaceId: number) => {
 
 export const useApiOptionsGetRecentPersonalActionList = (spaceId?: number) =>
   queryOptions({
-    queryKey: ["getRecentPersonalActionItemList", spaceId] as const,
+    queryKey: actionItemQueryKeys.recentPersonal(spaceId),
     queryFn: () => {
       if (spaceId == null) throw new Error("spaceId is required");
       return getRecentPersonalActionItemList(spaceId);

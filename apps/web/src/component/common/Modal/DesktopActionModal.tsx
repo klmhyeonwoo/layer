@@ -1,3 +1,4 @@
+import { Z_INDEX } from "@/style/zIndex";
 import { css } from "@emotion/react";
 import { Portal } from "@/component/common/Portal";
 import { ANIMATION } from "@/style/common/animation";
@@ -25,7 +26,7 @@ export default function DesktopActionModal() {
           display: flex;
           justify-content: center;
           align-items: center;
-          z-index: 10000;
+          z-index: ${Z_INDEX.overlay};
           background-color: rgba(0, 0, 0, 0.5);
         `}
       >

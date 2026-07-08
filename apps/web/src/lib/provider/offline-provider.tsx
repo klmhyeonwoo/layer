@@ -1,3 +1,4 @@
+import { Z_INDEX } from "@/style/zIndex";
 import { css } from "@emotion/react";
 import { useEffect, useState } from "react";
 
@@ -27,7 +28,7 @@ export function OfflineBanner() {
       css={css`
         position: fixed;
         inset: 0;
-        z-index: 99999;
+        z-index: ${Z_INDEX.modal};
         background: #ffffff;
         display: flex;
         flex-direction: column;

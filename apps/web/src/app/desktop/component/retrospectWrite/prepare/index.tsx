@@ -1,3 +1,4 @@
+import { Z_INDEX } from "@/style/zIndex";
 import { useMixpanel } from "@/lib/provider/mix-pannel-provider";
 import { Header } from "@/component/common/header";
 import { css } from "@emotion/react";
@@ -58,7 +59,7 @@ export function Prepare({ spaceId, retrospectId, title, introduction }: PrepareP
               width: 100%;
               height: 40%;
               top: -10%;
-              z-index: 10000;
+              z-index: ${Z_INDEX.overlay};
               transform: scale(1, -1);
             `}
           />
@@ -70,7 +71,7 @@ export function Prepare({ spaceId, retrospectId, title, introduction }: PrepareP
               width: 100%;
               height: 60%;
               bottom: 0;
-              z-index: 10000;
+              z-index: ${Z_INDEX.overlay};
             `}
           />
           <Swiper

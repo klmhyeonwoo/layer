@@ -1,3 +1,4 @@
+import { actionItemQueryKeys } from "@/hooks/api/actionItem/queryKeys";
 import { UseQueryOptions } from "@tanstack/react-query";
 
 import { api } from "@/api";
@@ -14,8 +15,8 @@ const getRecentTeamActionItemList = async (spaceId: number | undefined) => {
 
 export const useAPiOptionsRecentTeamActionList = (
   spaceId?: number,
-): UseQueryOptions<RecentActionItemList, Error, RecentActionItemList, [string, number]> => ({
-  queryKey: ["getTeamActionItemList", spaceId!],
+): UseQueryOptions<RecentActionItemList, Error, RecentActionItemList, ReturnType<typeof actionItemQueryKeys.recentTeam>> => ({
+  queryKey: actionItemQueryKeys.recentTeam(spaceId),
   queryFn: () => getRecentTeamActionItemList(spaceId),
   select(data) {
     return data;

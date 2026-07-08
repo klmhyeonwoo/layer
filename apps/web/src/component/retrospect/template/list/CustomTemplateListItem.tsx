@@ -18,7 +18,8 @@ import { useModal } from "@/hooks/useModal";
 import { useFunnelModal } from "@/hooks/useFunnelModal";
 import CustomTemplateListDetailItem from "@/app/desktop/component/retrospect/template/list/CustomTemplateListDetailItem";
 import { getDeviceType } from "@/utils/deviceUtils";
-import { TemplateListPageContext } from "@/app/mobile/retrospect/template/list/TemplateListPage";
+import { TemplateListPageContext as DesktopTemplateListPageContext } from "@/app/desktop/component/retrospect/template/list";
+import { TemplateListPageContext as MobileTemplateListPageContext } from "@/app/mobile/retrospect/template/list/TemplateListPage";
 
 type CustomTemplateListItem = {
   id: number;
@@ -35,13 +36,16 @@ export function CustomTemplateListItem({ id, title, tag, date }: CustomTemplateL
   const MENU_DELETE = "delete";
   const SHEET_ID = `modifyTemplateSheet_${id}`;
 
-  const { spaceId, readOnly, isLeader } = useContext(TemplateListPageContext);
+  const { isDesktop } = getDeviceType();
+  const desktopContext = useContext(DesktopTemplateListPageContext);
+  const mobileContext = useContext(MobileTemplateListPageContext);
+  const { spaceId, isLeader } = isDesktop ? desktopContext : mobileContext;
+  const readOnly = isDesktop ? true : mobileContext.readOnly;
   const { open } = useModal();
   const { openBottomSheet, closeBottomSheet } = useBottomSheet();
   const { value: templateTitle, handleInputChange: handleChangeTitle } = useInput(title);
   const { mutate: patchTemplateTitle } = usePatchTemplateTitle(+spaceId);
   const { mutate: deleteCustomTemplate } = useDeleteCustomTemplate(+spaceId);
-  const { isDesktop } = getDeviceType();
 
   const handleSubmitTitle = () => {
     patchTemplateTitle({ formId: id, formTitle: templateTitle });

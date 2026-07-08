@@ -1,3 +1,4 @@
+import { actionItemQueryKeys } from "@/hooks/api/actionItem/queryKeys";
 import { useQuery, UseQueryOptions } from "@tanstack/react-query";
 
 import { api } from "@/api";
@@ -21,7 +22,7 @@ export const useGetPersonalActionItemList = <TData = PersonalActionItemListType>
 
   return useQuery<PersonalActionItemListType, Error, TData>({
     queryFn: () => getPersonalActionItemList(),
-    queryKey: ["personalActionItemList"],
+    queryKey: actionItemQueryKeys.personal,
     ...options,
   });
 };

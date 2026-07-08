@@ -1,3 +1,4 @@
+import { Z_INDEX } from "@/style/zIndex";
 import { css, keyframes } from "@emotion/react";
 import Lottie from "lottie-react";
 import { useEffect, useState } from "react";
@@ -112,20 +113,20 @@ export function RetrospectWriteComplete() {
 
               div:nth-of-type(1) {
                 background-color: #243753;
-                z-index: 3;
+                z-index: ${Z_INDEX.elevated};
                 position: relative;
               }
 
               div:nth-of-type(2) {
                 background-color: #c4d7fd;
-                z-index: 2;
+                z-index: ${Z_INDEX.raised};
                 transform: rotate(-8deg);
                 animation: ${CARD_ANIMATION.FIRST_CARD} 0.6s ease-in-out;
               }
 
               div:nth-of-type(3) {
                 background-color: #a7c4fc;
-                z-index: 1;
+                z-index: ${Z_INDEX.base};
                 transform: rotate(-16deg);
                 animation: ${CARD_ANIMATION.SECOND_CARD} 0.8s ease-in-out;
               }
@@ -144,7 +145,7 @@ export function RetrospectWriteComplete() {
                   right: -5%;
                   width: 20%;
                   height: auto;
-                  z-index: 4;
+                  z-index: ${Z_INDEX.foreground};
                 `}
               />
               <div
@@ -198,7 +199,7 @@ export function RetrospectWriteComplete() {
                 transform: translate(-50%, -50%);
                 width: 90%;
                 height: 80%;
-                z-index: -1;
+                z-index: ${Z_INDEX.behind};
               `}
             />
           )}

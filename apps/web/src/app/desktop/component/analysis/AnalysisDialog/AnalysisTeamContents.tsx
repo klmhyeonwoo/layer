@@ -1,3 +1,4 @@
+import { Z_INDEX } from "@/style/zIndex";
 import { Icon } from "@/component/common/Icon/Icon";
 import { Typography } from "@/component/common/typography";
 
@@ -202,7 +203,7 @@ export default function AnalysisTeamContents({ teamAnalyze }: AnalysisTeamConten
                     display: flex;
                     align-items: center;
                     gap: 0.8rem;
-                    z-index: 10;
+                    z-index: ${Z_INDEX.localOverlay};
 
                     /* ---------- 말풍선 꼬리 ---------- */
                     &::after {

@@ -1,3 +1,4 @@
+import { Z_INDEX } from "@/style/zIndex";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
@@ -52,7 +53,7 @@ import { LoadingModal } from "@/component/common/Modal/LoadingModal";
 import { encryptId } from "@/utils/space/cryptoKey";
 import useDesktopBasicModal from "@/hooks/useDesktopBasicModal";
 import { useAtom, useAtomValue } from "jotai";
-import { CREATE_RETROSPECT_INIT_ATOM, DEFAULT_QUESTIONS } from "@/store/retrospect/retrospectCreate";
+import { CREATE_RETROSPECT_INIT_ATOM, DEFAULT_QUESTIONS, retrospectCreateAtom } from "@/store/retrospect/retrospectCreate";
 import { CREATE_SPACE_INIT_ATOM } from "@/store/space/spaceAtom";
 import { useRetrospectCreateReset } from "@/hooks/store/useRetrospectCreateReset";
 import { useSpaceCreateReset } from "@/hooks/store/useSpaceCreateReset";
@@ -79,6 +80,7 @@ import { splitTemplateIntroduction } from "@/utils/retrospect/splitTemplateIntro
 import { useGetSimpleTemplateInfo } from "@/hooks/api/template/useGetSimpleTemplateInfo";
 import { useApiPostTemplateChoiceListView } from "@/hooks/api/backoffice/useApiPostTemplateChoiceListView";
 import { resolveFormTag } from "@/utils/template/resolveFormTag";
+import { spaceQueryKeys } from "@/hooks/api/space/queryKeys";
 
 type flowType = "INFO" | "RECOMMEND" | "RECOMMEND_PROGRESS" | "CREATE" | "COMPLETE";
 type templateType = { id: number; title: string; imageUrl: string; templateName: string };
@@ -576,7 +578,7 @@ function SelectRetrospectTemplateFunnel() {
         title: "템플릿 리스트",
         step: "listTemplate",
         contents: <TemplateList />,
-        overlayIndex: 10002,
+        overlayIndex: Z_INDEX.popoverRaised,
       });
     } else if (recommendTemplateType === "recommendation") {
       nextPhase();
@@ -704,9 +706,25 @@ function SelectRetrospectTemplateFunnel() {
 
 // 3단계 퍼널: 회고 템플릿 확정
 function ConfirmRetrospectTemplateFunnel() {
-  const { selectedRecommendTemplateId, setFlow, goBackToTemplateSelect, setDetailFrom } = useContext(PhaseContext);
+  const { selectedRecommendTemplateId, setFlow, goBackToTemplateSelect } = useContext(PhaseContext);
   if (!selectedRecommendTemplateId) return;
   const { data: templateData } = useGetSimpleTemplateInfo(selectedRecommendTemplateId);
+  const { openFunnelModal, closeFunnelModal } = useFunnelModal();
+
+  const handleShowTemplateDetailInfo = () => {
+    openFunnelModal({
+      title: templateData.title,
+      step: "listTemplateDetail",
+      contents: <TemplateListDetailItem templateId={templateData.id} readOnly={true} />,
+      templateTag: templateData.templateName,
+      overlayIndex: 100002,
+      onPrevious: closeFunnelModal,
+      options: {
+        quitButton: false,
+      },
+    });
+  };
+
   return (
     <Fragment>
       <Header title={`해당 템플릿으로\n회고를 진행할까요?`} />
@@ -730,8 +748,7 @@ function ConfirmRetrospectTemplateFunnel() {
                 cursor: pointer;
               `}
               onClick={() => {
-                setDetailFrom("confirm");
-                setFlow("INFO", 3);
+                handleShowTemplateDetailInfo();
               }}
             >
               <div
@@ -1037,7 +1054,7 @@ function RecommendRetrospectTemplateConfirmFunnel() {
       step: "listTemplateDetail",
       contents: <TemplateListDetailItem templateId={id} />,
       templateTag: templateName,
-      overlayIndex: 100002,
+      overlayIndex: Z_INDEX.modalRaised,
       onPrevious: closeFunnelModal,
     });
   };
@@ -1199,6 +1216,7 @@ function CreateRetrospectQuestionFunnel() {
 function CreateRetrospectDeadlineFunnel() {
   const { questions, selectedRecommendTemplate, setSpaceId, deadLine, setDeadLine, title, description, selectedCategory, setFlow } =
     useContext(PhaseContext);
+  const { isNewForm, hasChangedOriginal } = useAtomValue(retrospectCreateAtom);
   const { selectedValue, isChecked, onChange } = useRadioButton();
   const { toast } = useToast();
   const { mutateAsync: postSpace } = useApiPostSpace();
@@ -1231,8 +1249,8 @@ function CreateRetrospectDeadlineFunnel() {
         introduction: "",
         questions: [...DEFAULT_QUESTIONS, ...questions],
         deadline: deadLine,
-        isNewForm: false,
-        hasChangedOriginal: false,
+        isNewForm,
+        hasChangedOriginal,
         curFormId: selectedRecommendTemplate!.id,
       } as RetrospectCreateReq;
       const res = await postRetrospect(
@@ -1242,7 +1260,7 @@ function CreateRetrospectDeadlineFunnel() {
             toast.success("스페이스와 회고가 생성되었어요!");
             // 스페이스 생성이 완료되면 스페이스 목록을 리패치
             queryClient.invalidateQueries({
-              queryKey: ["spaces"],
+              queryKey: spaceQueryKeys.lists,
             });
             setFlow("COMPLETE", 0);
           },

@@ -1,3 +1,4 @@
+import { spaceQueryKeys } from "@/hooks/api/space/queryKeys";
 import { useQuery } from "@tanstack/react-query";
 
 import { api } from "@/api";
@@ -28,7 +29,7 @@ export const useApiGetSpace = (spaceId: number, isPublic: boolean = false, optio
   };
 
   return useQuery({
-    queryKey: ["getSpace", spaceId],
+    queryKey: spaceQueryKeys.detail(spaceId),
     queryFn: () => getSpace(spaceId, isPublic),
     enabled: options?.enabled ?? true,
   });

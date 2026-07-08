@@ -1,3 +1,4 @@
+import { Z_INDEX } from "@/style/zIndex";
 import { css } from "@emotion/react";
 import { forwardRef, PropsWithChildren } from "react";
 
@@ -7,7 +8,7 @@ export const BottomSheetContent = forwardRef<HTMLDivElement, PropsWithChildren>(
       ref={ref}
       css={css`
         -webkit-overflow-scrolling: touch;
-        z-index: 999;
+        z-index: ${Z_INDEX.sheetContent};
         background-color: inherit;
         position: relative;
         height: 100%;

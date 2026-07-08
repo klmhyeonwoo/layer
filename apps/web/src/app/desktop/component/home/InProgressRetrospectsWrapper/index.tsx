@@ -1,3 +1,4 @@
+import { Z_INDEX } from "@/style/zIndex";
 import { css } from "@emotion/react";
 import { Typography } from "@/component/common/typography";
 
@@ -51,7 +52,7 @@ export default function InProgressRetrospectsWrapper() {
             width: 8rem;
             height: 100%;
             background: linear-gradient(to left, ${DESIGN_TOKEN_COLOR.gray100}, rgba(255, 255, 255, 0));
-            z-index: 2;
+            z-index: ${Z_INDEX.raised};
             pointer-events: none;
             opacity: 1;
             transition: opacity 0.3s ease;
@@ -66,7 +67,7 @@ export default function InProgressRetrospectsWrapper() {
             width: 8rem;
             height: 100%;
             background: linear-gradient(to right, ${DESIGN_TOKEN_COLOR.gray100}, rgba(255, 255, 255, 0));
-            z-index: 2;
+            z-index: ${Z_INDEX.raised};
             pointer-events: none;
             opacity: 0;
             transition: opacity 0.3s ease;
@@ -101,7 +102,7 @@ export default function InProgressRetrospectsWrapper() {
             border: 1px solid ${DESIGN_TOKEN_COLOR.gray200};
             top: 65%;
             transform: translateY(-50%);
-            z-index: 10;
+            z-index: ${Z_INDEX.localOverlay};
 
             &::after {
               font-size: 1.6rem;

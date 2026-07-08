@@ -1,3 +1,4 @@
+import { Z_INDEX } from "@/style/zIndex";
 import { css, Interpolation, Theme } from "@emotion/react";
 import { Children, cloneElement, isValidElement, PropsWithChildren } from "react";
 
@@ -58,7 +59,7 @@ export const ButtonProvider = ({
           padding: ${isDesktop ? "0.8rem 0 1.6rem" : "4rem 0 2rem"};
           background-color: ${isDesktop && funnelModalState.step === "listTemplateDetail" ? "#fff" : "transparent"};
           margin-top: auto;
-          z-index: 10000;
+          z-index: ${Z_INDEX.overlay};
         `,
         onlyContainerStyle,
       ]}
@@ -72,7 +73,7 @@ export const ButtonProvider = ({
             right: 0;
             bottom: 0;
             margin: ${isDesktop ? "" : "0 -2rem"};
-            z-index: -1;
+            z-index: ${Z_INDEX.behind};
             background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, var(--parent-bg-color) 57.38%);
           `}
         />

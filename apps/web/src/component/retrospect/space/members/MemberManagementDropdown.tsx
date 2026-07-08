@@ -1,3 +1,4 @@
+import { Z_INDEX } from "@/style/zIndex";
 import React from "react";
 import { DESIGN_TOKEN_COLOR } from "@/style/designTokens";
 import { css } from "@emotion/react";
@@ -17,7 +18,7 @@ export function MemberManagementDropdown({ children }: MemberManagementDropdownP
         background-color: ${DESIGN_TOKEN_COLOR.white};
         border-radius: 1.2rem;
         box-shadow: 0 0.4rem 1.6rem rgba(0, 0, 0, 0.1);
-        z-index: 1000;
+        z-index: ${Z_INDEX.navigation};
         min-width: 20rem;
         width: 28.8rem;
         max-height: 52rem;

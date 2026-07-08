@@ -14,7 +14,12 @@ import { retrospectInitialState } from "@/store/retrospect/retrospectInitial";
 import { TemplateListConform } from "../TemplateListConform";
 import { useSearchParams } from "react-router-dom";
 
-function TemplateListDetailItem({ templateId }: { templateId: number }) {
+interface TemplateListDetailItemProps {
+  templateId: number;
+  readOnly?: boolean;
+}
+
+function TemplateListDetailItem({ templateId, readOnly = false }: TemplateListDetailItemProps) {
   const { tabs, curTab, selectTab } = useTabs(["기본", "질문구성"] as const);
   const { data } = useGetTemplateInfo({ templateId: templateId });
   const { heading, description } = splitTemplateIntroduction(data.introduction);
@@ -23,6 +28,7 @@ function TemplateListDetailItem({ templateId }: { templateId: number }) {
   const [searchParams, setSearchParams] = useSearchParams();
   const type = searchParams.get("template_type");
   const templateMode = searchParams.get("template_mode");
+  const isReadOnlyMode = templateMode === "readonly" || readOnly;
 
   /**
    * @description 회고 템플릿 선택하기 버튼 클릭 핸들러
@@ -65,7 +71,7 @@ function TemplateListDetailItem({ templateId }: { templateId: number }) {
       <TemplateQuestion templateId={templateId} templateDetailQuestionList={data.templateDetailQuestionList} />
 
       {/* 읽기 전용(readOnly = true)일 경우에는 버튼 컨테이너를 노출시키지 않아요 */}
-      {templateMode !== "readonly" && (
+      {!isReadOnlyMode && (
         <ButtonProvider sort={"horizontal"}>
           <ButtonProvider.Primary onClick={handleSelectTemplate}>선택하기</ButtonProvider.Primary>
         </ButtonProvider>

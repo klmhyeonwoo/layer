@@ -1,3 +1,4 @@
+import { Z_INDEX } from "@/style/zIndex";
 import { css } from "@emotion/react";
 
 import { Portal } from "@/component/common/Portal";
@@ -19,7 +20,7 @@ export function Toast() {
           top: 10px;
           left: 50%;
           transform: translate(-50%, 0);
-          z-index: 1000000;
+          z-index: ${Z_INDEX.toast};
         `}
       >
         {toastDataState.map((toast) => (

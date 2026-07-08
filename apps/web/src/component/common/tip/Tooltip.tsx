@@ -1,3 +1,4 @@
+import { Z_INDEX } from "@/style/zIndex";
 import { css } from "@emotion/react";
 import { VariationPlacement } from "@popperjs/core";
 import { OffsetModifier } from "@popperjs/core/lib/modifiers/offset";
@@ -166,11 +167,11 @@ function Content({
       {asChild ? (
         children
       ) : (
-        <div ref={(el) => context.setPopperEl(el)} style={{ ...styles.popper, zIndex: 100001 }} {...attributes.popper}>
+        <div ref={(el) => context.setPopperEl(el)} style={{ ...styles.popper, zIndex: Z_INDEX.tooltip }} {...attributes.popper}>
           <div
             css={css`
               position: relative;
-              z-index: 100001;
+              z-index: ${Z_INDEX.tooltip};
               background: ${DESIGN_TOKEN_COLOR.gray900};
               padding: 1rem 1.4rem;
               border-radius: 0.8rem;

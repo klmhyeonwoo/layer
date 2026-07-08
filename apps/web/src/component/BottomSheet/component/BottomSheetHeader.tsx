@@ -1,3 +1,4 @@
+import { Z_INDEX } from "@/style/zIndex";
 import { css } from "@emotion/react";
 
 import { BottomSheetType } from "@/component/BottomSheet/BottomSheet.tsx";
@@ -48,7 +49,7 @@ export function BottomSheetHeader({ title, handler, quitButton }: Pick<BottomShe
             width: 100%;
             position: absolute;
             justify-content: center;
-            z-index: 10;
+            z-index: ${Z_INDEX.localOverlay};
 
             svg:nth-of-type(1) {
               margin-left: auto;
@@ -66,7 +67,7 @@ export function BottomSheetHeader({ title, handler, quitButton }: Pick<BottomShe
           onClick={closeBottomSheet}
           css={css`
             margin-left: auto;
-            z-index: 11;
+            z-index: ${Z_INDEX.localOverlayRaised};
           `}
         >
           <Icon icon={"ic_quit"} size={2.4} color={DESIGN_SYSTEM_COLOR.dark} />

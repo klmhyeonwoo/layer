@@ -1,3 +1,4 @@
+import { templateQueryKeys } from "@/hooks/api/template/queryKeys";
 import { useSuspenseQuery } from "@tanstack/react-query";
 
 import { api } from "@/api";
@@ -17,7 +18,7 @@ export const useGetSimpleTemplateInfo = (templateId: number) => {
 
   return useSuspenseQuery({
     queryFn: () => getSimpleTemplateInfo(),
-    queryKey: ["simpleTemplateInfo", templateId],
+    queryKey: templateQueryKeys.simpleDetail(templateId),
     refetchOnWindowFocus: false,
   });
 };

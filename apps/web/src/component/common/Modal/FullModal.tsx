@@ -1,3 +1,4 @@
+import { Z_INDEX } from "@/style/zIndex";
 import { css } from "@emotion/react";
 
 import { Portal } from "@/component/common/Portal";
@@ -21,7 +22,7 @@ export function FullModal({ children }: FullModalProps) {
           display: flex;
           justify-content: center;
           align-items: center;
-          z-index: 10000;
+          z-index: ${Z_INDEX.overlay};
         `}
       >
         <div

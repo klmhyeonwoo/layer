@@ -1,3 +1,4 @@
+import { templateQueryKeys } from "@/hooks/api/template/queryKeys";
 import { useSuspenseQuery } from "@tanstack/react-query";
 
 import { api } from "@/api";
@@ -10,7 +11,7 @@ export const useGetDefaultTemplateList = () => {
   };
 
   return useSuspenseQuery({
-    queryKey: ["getDefaultTemplates"],
+    queryKey: templateQueryKeys.defaultList,
     queryFn: getDefaultTemplateList,
   });
 };
