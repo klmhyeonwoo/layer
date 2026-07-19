@@ -26,6 +26,8 @@ import { DefaultLayout } from "@/layout/DefaultLayout.tsx";
 import { useMixpanel } from "@/lib/provider/mix-pannel-provider";
 import { DESIGN_TOKEN_COLOR } from "@/style/designTokens.ts";
 import { PATHS } from "@layer/shared";
+import { GA_EVENTS } from "@/lib/google-analytics/events";
+import { trackEvent } from "@/lib/google-analytics";
 
 export type Answer = {
   questionId: number;
@@ -129,6 +131,7 @@ export function Write() {
    * NOTE: Tanstack Post User Data
    * */
   const mutatePostData = () => {
+    trackEvent(GA_EVENTS.RETROSPECT.WRITE_SUBMIT_CONFIRM);
     mutate(
       { data: answers, isTemporarySave: false, spaceId: spaceId, retrospectId: retrospectId, method: editMode.current },
       {
@@ -446,7 +449,8 @@ export function Write() {
           {isComplete ? (
             <Button
               colorSchema={"primary"}
-              onClick={() =>
+              onClick={() => {
+                trackEvent(GA_EVENTS.RETROSPECT.WRITE_SUBMIT_OPEN);
                 open({
                   title: "회고를 제출할까요?",
                   contents: "제출하고 난 뒤에는\n더 이상 회고를 수정할 수 없어요",
@@ -454,8 +458,8 @@ export function Write() {
                     buttonText: ["취소", "제출하기"],
                   },
                   onConfirm: mutatePostData,
-                })
-              }
+                });
+              }}
             >
               제출하기
             </Button>
