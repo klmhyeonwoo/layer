@@ -12,12 +12,11 @@ import RetrospectCard from "@/app/desktop/component/home/RetrospectCard";
 import { LoadingSpinner } from "@/component/space/view/LoadingSpinner";
 import { useSetAtom } from "jotai";
 import { retrospectInitialState } from "@/store/retrospect/retrospectInitial";
-import { useModal } from "@/hooks/useModal";
 import { useFunnelModal } from "@/hooks/useFunnelModal";
-import { useActionModal } from "@/hooks/useActionModal";
 import { RetrospectCreate } from "@/app/desktop/component/retrospectCreate";
-import { TemplateChoice } from "@/app/desktop/component/retrospect/choice";
 import { useApiOptionsGetSpaceInfo } from "@/hooks/api/space/useApiOptionsGetSpaceInfo";
+import { GA_EVENTS } from "@/lib/google-analytics/events";
+import { trackEvent } from "@/lib/google-analytics";
 
 export default function InProgressRetrospects() {
   const { spaceId: rawSpaceId } = useParams();
@@ -29,9 +28,7 @@ export default function InProgressRetrospects() {
   // * 스페이스 정보 조회
   const { data: spaceInfo } = useQuery(useApiOptionsGetSpaceInfo(spaceId));
 
-  const { open } = useModal();
   const { openFunnelModal } = useFunnelModal();
-  const { openActionModal } = useActionModal();
 
   const setRetrospectValue = useSetAtom(retrospectInitialState);
 
@@ -45,25 +42,11 @@ export default function InProgressRetrospects() {
         templateId: spaceInfo.formId,
       }));
 
-      open({
-        title: "전에 진행했던 템플릿이 있어요!\n계속 진행하시겠어요?",
-        contents: "",
-        options: {
-          buttonText: ["재설정", "진행하기"],
-        },
-        onConfirm: () => {
-          openFunnelModal({
-            title: "",
-            step: "retrospectCreate",
-            contents: <RetrospectCreate />,
-          });
-        },
-        onClose: () => {
-          openActionModal({
-            title: "",
-            contents: <TemplateChoice />,
-          });
-        },
+      trackEvent(GA_EVENTS.RETROSPECT.ADD);
+      openFunnelModal({
+        title: "",
+        step: "retrospectCreate",
+        contents: <RetrospectCreate />,
       });
     }
   };

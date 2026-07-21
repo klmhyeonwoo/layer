@@ -1374,7 +1374,7 @@ function CompleteCreateSpace() {
     closeModalDesktop();
     resetRetrospectInfo();
     resetSpaceInfo();
-    branchLayout === "A" ? trackEvent(GA_EVENTS.SPACE.ADD_DONE_B_LAYOUT) : trackEvent(GA_EVENTS.SPACE.ADD_DONE_A_LAYOUT);
+    branchLayout === "A" ? trackEvent(GA_EVENTS.SPACE.ADD_DONE_A_LAYOUT) : trackEvent(GA_EVENTS.SPACE.ADD_DONE_B_LAYOUT);
   };
 
   useEffect(() => {
