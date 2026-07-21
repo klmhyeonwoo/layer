@@ -13,6 +13,8 @@ import { useApiGetSpacePrivate } from "@/hooks/api/space/useGetSpace.ts";
 import { DefaultLayout } from "@/layout/DefaultLayout.tsx";
 import { ANIMATION } from "@/style/common/animation.ts";
 import { PATHS } from "@layer/shared";
+import { GA_EVENTS } from "@/lib/google-analytics/events";
+import { trackEvent } from "@/lib/google-analytics";
 
 type UserInfoType = {
   isLogin: boolean;
@@ -54,6 +56,7 @@ export function RetrospectWriteCompletePage() {
   };
 
   useEffect(() => {
+    trackEvent(GA_EVENTS.RETROSPECT.WRITE_SUBMIT_DONE);
     const timer = setTimeout(() => {
       setAnimation(true);
     }, 700);
